@@ -1,0 +1,23 @@
+﻿@model List<BugTracker.Models.ProjectClasses.ProjectUser>
+@{
+    ViewBag.Title = "UserAssignedToProject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UserAssignedToProject</h2>
+
+<ul>
+    @foreach (var projuser in Model)
+    {
+        <li>
+            Project Id :  @projuser.ProjectId
+            <ol>
+                User Assigned :  @projuser.UserId
+
+            </ol>
+        </li>
+
+    }
+
+</ul>
+@Html.ActionLink("Back to Projects", "Index", "Project")

@@ -189,7 +189,9 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
+    <Compile Include="DAL\ProjectRepo.cs" />
     <Compile Include="DAL\TicketRepo.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -282,6 +284,14 @@
     <Content Include="Views\Admin\DeleteUser.cshtml" />
     <Content Include="Views\Admin\GetAllUsersInfo.cshtml" />
     <Content Include="Views\Ticket\CreateTicket.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Project\UserIndex.cshtml" />
+    <Content Include="Views\Project\AddProject.cshtml" />
+    <Content Include="Views\Project\AssignUsersToProject.cshtml" />
+    <Content Include="Views\Project\UnAssignUserfromProject.cshtml" />
+    <Content Include="Views\Project\UserAssignedToProject.cshtml" />
+    <Content Include="Views\Project\EditProject.cshtml" />
+    <Content Include="Views\Project\CreateTicket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

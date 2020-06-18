@@ -28,7 +28,7 @@ namespace BugTracker.BL
         //GetAllRoles
         public static List<IdentityRole> GetAllRoles()
         {
-            return db.Roles.Where(r => r.Name != "Administrator").ToList();
+            return db.Roles.Where(r => r.Name != "Admin").ToList();
         }
         public static ApplicationUser GetUserById(string userId)
         {

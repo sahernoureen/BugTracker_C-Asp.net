@@ -4,6 +4,17 @@ namespace BugTracker.Models.ProjectClasses
 {
     public class ProjectUser
     {
+        public ProjectUser()
+        {
+
+        }
+
+        public ProjectUser(int projectid, string userId)
+        {
+            ProjectId = projectid;
+            UserId = userId;
+        }
+
         public int Id { get; set; }
 
 

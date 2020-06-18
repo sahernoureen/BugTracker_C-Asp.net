@@ -1,0 +1,38 @@
+﻿@model BugTracker.Models.ProjectClasses.Project
+@{
+    ViewBag.Title = "EditProject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EditProject</h2>
+
+@using (Html.BeginForm("EditProject", "Project", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <h2 class="centerText">Update Project</h2>
+
+    <br />
+    <br />
+    @Html.HiddenFor(m => m.Id)
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Priority, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("Priority", EnumHelper.GetSelectList(typeof(BugTracker.Models.ProjectClasses.Priority)), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Add" />
+        </div>
+    </div>
+}

@@ -1,0 +1,62 @@
+﻿@model List<BugTracker.Models.ApplicationUser>
+@{
+    ViewBag.Title = "AssignUsersToProject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AssignUsersToProject</h2>
+
+<div>
+
+    <ul class="list_user" id="userList">
+        @foreach (var user in Model)
+        {
+            <li>
+                <div class="checkbox">
+                    <input id="check_@user.Id" type="checkbox" name="user"
+                           checked="@user.Id" />
+                    <label for="check_@user.Id">@user.UserName </label>
+                </div>
+
+            </li>
+        }
+        <li>
+            <a class="btn btn-success " onclick="saveList()">Select User</a>
+        </li>
+
+    </ul>
+</div>
+
+
+<script>
+    var saveList = function () {
+
+        var arrUsers = [];
+        var commaSeperatedIds = "";
+        $("#userList li input[type=checkbox]")
+            .each(function (index, val) {
+                var checkId = $(val).attr("Id");
+                var arr = checkId.split("_");
+                var currentCheckBoxId = arr[1];
+                var IsChecked = $("#" + checkId).is(":checked", false);
+                if (IsChecked) {
+                    arrUsers.push(currentCheckBoxId);
+                }
+            })
+        if (arrUsers != 0) {
+            commaSeperatedIds = arrUsers.toString();
+            $.ajax({
+                url: "/Project/AssignUsersToProject",
+                type: "Post",
+                data: { userList: commaSeperatedIds, projectId: parseInt(@ViewBag.projectId)},
+                success: function (data) {
+                    console.log(data);
+                    window.location.href =  '@Url.Action("UserAssignedToProject", "Project")'
+                },
+                Error: function (err) {
+                    console.Error(err);
+                }
+            })
+        }
+    }
+</script> 
