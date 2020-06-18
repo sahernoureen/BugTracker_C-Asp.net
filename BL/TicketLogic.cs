@@ -7,22 +7,24 @@ namespace BugTracker.BL
 {
     public class TicketLogic
     {
-        ApplicationDbContext db = new ApplicationDbContext();
-        TicketRepo repo;
+        TicketRepo TicketRepo = new TicketRepo();
+        TicketTypeRepo TicketTypeRepo = new TicketTypeRepo();
+        TicketPriorityRepo TicketPriorityRepo = new TicketPriorityRepo();
+        TicketStatusRepo TicketStatusRepo = new TicketStatusRepo();
+   
         public void createTicket(CreateTicketViewModel model, string userId)
         {
             TicketType ticketType = new TicketType(model.TicketTypeName);
-            TicketPriority ticketPriority = new TicketPriority(model.TicketPriorityName, model.Priority);
-            TicketStatus ticketStatus = new TicketStatus(model.TicketStatusName, model.Status);
-            db.TicketTypes.Add(ticketType);
-            db.TicketPriorities.Add(ticketPriority);
-            db.TicketStatuses.Add(ticketStatus);
-            db.SaveChanges();
-
-
+            TicketPriority ticketPriority = new TicketPriority(model.Priority);
+            TicketStatus ticketStatus = new TicketStatus(model.Status);
+            TicketTypeRepo.Add(ticketType);
+            TicketPriorityRepo.Add(ticketPriority);
+            TicketStatusRepo.Add(ticketStatus);
+            
             Ticket ticket = new Ticket(model.Title, model.Description, DateTime.Now, 1, ticketType.Id,
                 ticketPriority.Id, ticketStatus.Id, userId);
-            repo.Add(ticket);
+            TicketRepo.Add(ticket);
+
 
         }
 

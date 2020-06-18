@@ -24,10 +24,6 @@ namespace BugTracker.Models
 
 
         //Ticket Priority
-        [Required]
-        [StringLength(30)]
-        [Display(Name = "Ticket Priority Name")]
-        public string TicketPriorityName { get; set; }
 
         [Required]
         [Display(Name = "Ticket Priority")]
@@ -35,10 +31,6 @@ namespace BugTracker.Models
 
 
         //Ticket Status
-        [Required]
-        [StringLength(30)]
-        [Display(Name = "Ticket Status Name")]
-        public string TicketStatusName { get; set; }
 
         [Required]
         [Display(Name = "Ticket Name")]

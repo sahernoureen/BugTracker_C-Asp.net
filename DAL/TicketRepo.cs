@@ -10,17 +10,18 @@ namespace BugTracker.DAL
     {
         ApplicationDbContext db = new ApplicationDbContext();
 
-
         public void Add(Ticket entity)
         {
             db.Tickets.Add(entity);
             db.SaveChanges();
+            db.Dispose();
         }
 
         public void Delete(Ticket entity)
         {
             db.Tickets.Remove(entity);
             db.SaveChanges();
+            db.Dispose();
         }
 
         public Ticket GetEntity(Func<Ticket, bool> where)
@@ -33,6 +34,9 @@ namespace BugTracker.DAL
             return db.Tickets.Where(where).ToList();
         }
 
+        public IList<Ticket> GetList() {
+            return db.Tickets.ToList();
+        }
         public void Update(Ticket entity)
         {
 

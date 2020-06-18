@@ -5,9 +5,8 @@ namespace BugTracker.Models.ProjectClasses
 {
     public class TicketPriority
     {
-        public TicketPriority(string name, Priority priority)
+        public TicketPriority(Priority priority)
         {
-            Name = name;
             Priority = priority;
             Tickets = new HashSet<Ticket>();
         }
