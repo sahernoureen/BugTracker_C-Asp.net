@@ -16,7 +16,7 @@ namespace BugTracker.Controllers
         {
             var users = AdminLogic.GetAllUserExceptAdmin();
             var roles = AdminLogic.GetAllRoles();
-            ViewBag.userId = new SelectList(users, "Id", "Name");
+            ViewBag.userId = new SelectList(users, "Id", "UserName");
             ViewBag.role = new SelectList(roles, "Name", "Name");
             return View();
         }
@@ -26,31 +26,51 @@ namespace BugTracker.Controllers
         {
             var users = AdminLogic.GetAllUserExceptAdmin();
             var roles = AdminLogic.GetAllRoles();
-            ViewBag.userId = new SelectList(users, "Id", "Name");
+            ViewBag.userId = new SelectList(users, "Id", "UserName");
             ViewBag.role = new SelectList(roles, "Name", "Name");
-            AdminLogic.AddUserToRole(userId, role);
-            return View();
+            var result = AdminLogic.AddUserToRole(userId, role);
+
+            if (result) 
+            {
+                return RedirectToAction("Index");
+            }
+            return View(false);
         }
-        public ActionResult RemoveUserFromRole(string userId, string role)
+        //get
+        public ActionResult RemoveUserFromRole()
         {
-            AdminLogic.RemoveUserFromRole(userId, role);
+            ViewBag.userId = AdminLogic.GetAllUserExceptAdmin();
+            ViewBag.role = AdminLogic.GetAllRoles();
+            
             return View();
         }
 
-        public ActionResult DeleteUser(string userId)
+        //post
+
+        [HttpPost]
+        public ActionResult RemoveUserFromRole(string userId, string role)
         {
-            AdminLogic.DeleteUser(userId);
-            return View();
+            ViewBag.userId = AdminLogic.GetAllUserExceptAdmin();
+            ViewBag.role = AdminLogic.GetAllRoles();
+            var result = AdminLogic.RemoveUserFromRole(userId, role);
+            if (result)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(false);
         }
+
+       
 
         public ActionResult GetAllUsersInfo()
         {
             return View();
         }
 
-        public ActionResult AddUser()
+        public ActionResult GetRolesForUser(string userId)
         {
-            return View();
+            var roles = AdminLogic.GetRolesForUser(userId);
+            return Json(roles, JsonRequestBehavior.AllowGet);
         }
     }
 }
