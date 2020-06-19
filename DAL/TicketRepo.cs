@@ -30,9 +30,10 @@ namespace BugTracker.DAL {
             return db.Tickets.Where(where).ToList();
         }
 
-        public IList<Ticket> GetList() {
-            return db.Tickets.ToList();
+        public IList<ApplicationUser> GetList(Func<ApplicationUser, bool> where) {
+            return db.Users.ToList();
         }
+
         public void Update(CreateTicketViewModel model) {
             var ticket = db.Tickets.FirstOrDefault(x => x.Id == model.Id);
             ticket.Title = model.Title;

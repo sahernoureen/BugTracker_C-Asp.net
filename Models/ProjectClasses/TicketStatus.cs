@@ -5,7 +5,8 @@ namespace BugTracker.Models.ProjectClasses
 {
     public class TicketStatus
     {
-
+        public TicketStatus() {
+        }
         public TicketStatus(Status status)
         {
             Status = status;

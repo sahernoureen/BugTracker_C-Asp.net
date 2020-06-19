@@ -22,6 +22,7 @@ namespace BugTracker.DAL {
             db.SaveChanges();
             db.Dispose();
         }
+
         public TicketType GetEntity(Func<TicketType, bool> where) {
             return db.TicketTypes.FirstOrDefault(where);
         }

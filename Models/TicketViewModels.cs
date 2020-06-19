@@ -2,12 +2,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace BugTracker.Models
-{
-    public class CreateTicketViewModel
-    {
+namespace BugTracker.Models {
+    public class CreateTicketViewModel {
         //ticket
-
         public int Id { get; set; }
         [Required]
         [StringLength(30)]
@@ -37,5 +34,11 @@ namespace BugTracker.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Created { get; set; }
 
+    }
+
+    public class AssignTicketViewModel {
+        public int TicketId { get; set; }
+        [Display(Name = "Developer")]
+        public string DeveloperId { get; set; }
     }
 }

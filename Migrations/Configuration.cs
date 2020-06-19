@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace BugTracker.Migrations
 {
+    using BugTracker.Models.ProjectClasses;
     using System;
     using System.Data.Entity.Migrations;
     using System.Linq;

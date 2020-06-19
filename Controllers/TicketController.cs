@@ -14,7 +14,37 @@ namespace BugTracker.Controllers {
             return View(a);
         }
 
-        // GET: Create Ticket
+
+        // GET: Assign Ticket
+        [Authorize(Roles = "Manager")]
+        [HttpGet]
+        public ActionResult AssignTicket(int ticketId) {
+            var ticket = ticketLogic.getTicketById(ticketId);
+            if (ticket == null) {
+                return RedirectToAction("Error");
+            }
+            var userId = User.Identity.GetUserId();
+            var users = ticketLogic.getAllDeveloperUser(userId);
+            ViewBag.Ticket = ticket;
+            ViewBag.DeveloperId = new SelectList(users, "Id", "UserName");
+            return View();
+        }
+
+        // POST: Assign Ticket
+        [Authorize(Roles = "Manager")]
+        [HttpPost]
+        public ActionResult AssignTicket(AssignTicketViewModel model) {
+            if (ModelState.IsValid) {
+                ticketLogic.assignTicket(model);
+                return RedirectToAction("Index");
+            }
+
+            var userId = User.Identity.GetUserId();
+            var users = ticketLogic.getAllDeveloperUser(userId);
+            ViewBag.DeveloperId = new SelectList(users, "Id", "UserName");
+            return View();
+        }
+
         [HttpGet]
         public ActionResult CreateTicket() {
             return View();
@@ -30,6 +60,7 @@ namespace BugTracker.Controllers {
             } 
             return RedirectToAction("Error");
         }
+
         public ActionResult DeleteTicket(int ticketId) {
             var ticket = ticketLogic.getTicketById(ticketId);
             if (ticket == null) {
@@ -39,6 +70,7 @@ namespace BugTracker.Controllers {
             ticketLogic.deleteTicket(ticket);
             return RedirectToAction("Index");
         }
+
         // GET: Update Ticket By Submitter
         [HttpGet]
         public ActionResult UpdateTicketBySubmitter(int ticketId) {

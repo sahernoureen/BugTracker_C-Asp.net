@@ -54,7 +54,7 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId =item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Details", "AssignTicket", new { ticketId = item.Id }) |
             @Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id })
         </td>
     </tr>
