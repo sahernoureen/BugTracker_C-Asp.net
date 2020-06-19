@@ -36,7 +36,7 @@ namespace BugTracker.BL
         }
         public static List<ApplicationUser> GetAllUserExceptAdmin()
         {
-            var adminRoleId = db.Roles.FirstOrDefault(r => r.Name == "Administrator").Id;
+            var adminRoleId = db.Roles.FirstOrDefault(r => r.Name == "Admin").Id;
             return db.Users.Where(u => !u.Roles.Any(r => r.RoleId == adminRoleId)).ToList();
         }
         //ADD ROLE TO USER
@@ -95,13 +95,51 @@ namespace BugTracker.BL
                 }
                 userInfo.Add(ui);
             }
-            return userInfo.Where(u => u.RolesInfo.All(r => r.Name != "Administrator")).ToList();
+            return userInfo.Where(u => u.RolesInfo.All(r => r.Name != "Admin")).ToList();
         }
 
         //CHECKING
         public static bool CheckIfUserIsInRole(string userId, string role)
         {
             var result = userManager.IsInRole(userId, role);
+            return result;
+        }
+
+        //GetRolesForUser
+        public static List<IdentityRole> GetRolesForUser(string userId)
+        {
+            var user = userManager.FindById(userId);
+            if (user != null)
+            {
+                if (user.Roles == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    var roleIds = user.Roles.Select(r => r.RoleId).ToList();
+                    var roles = new List<IdentityRole>();
+                    foreach (var roleId in roleIds)
+                    {
+                        roles.Add(db.Roles.Find(roleId));
+                    }
+                    return roles;
+                }
+
+            }
+
+            return null;
+        }
+
+        public static List<Ticket> GetRelatedTickets(string input)
+        {
+            var result = db.Tickets.Where(t => t.Title.Contains(input)).ToList();
+            return result;
+        }
+
+        public static Ticket GetTicketByTitle(string title) 
+        {
+            var result = db.Tickets.FirstOrDefault(t=>t.Title == title);
             return result;
         }
     }

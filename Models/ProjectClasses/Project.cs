@@ -15,6 +15,13 @@ namespace BugTracker.Models.ProjectClasses
             Priority = priority;
         }
 
+        public Project(int id, string name, Priority priority)
+        {
+            Id = id;
+            Name = name;
+            Priority = priority;
+        }
+
         public int Id { get; set; }
 
         [Required]

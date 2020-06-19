@@ -1,8 +1,73 @@
 ﻿
+@model Nullable<Boolean>
 @{
     ViewBag.Title = "RemoveUserFromRole";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>RemoveUserFromRole</h2>
 
+@if (Model == null)
+{
+    <div class="btn-lg dropdown-toggle">
+        @using (Html.BeginForm())
+        {
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.DropDownList("userId", new SelectList(ViewBag.userId, "Id", "UserName"), "---User---", new { @class = "form-control", @onchange = "GetRoles()" })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.DropDownList("role", new SelectList(ViewBag.role, "Name", "Name"), "---Role ---", new { @class = "form-control" })
+
+                </div>
+            </div>
+            <div>
+                <input type="submit" value="Remove user from the role" class="btn btn-default" style="margin-left: 10px" />
+            </div>
+
+        }
+    </div>
+
+}
+else if (Model == false)
+{
+    <h2>User not in the role</h2>
+}
+
+
+<div class="customFlex">
+    <div class="btn btn-info btn-xs">@Html.ActionLink("Get all Users Info", "GetAllUsersInfo", "Admin")</div>
+    <div class="btn btn-info btn-xs">@Html.ActionLink("Add User to Role", "AddUserToRole", "Admin")</div>
+</div>
+
+<script type="text/javascript" src="~/packages/jQuery.3.4.1/Content/Scripts/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+
+    function GetRoles() {
+        var userId = $("#userId").val();
+        $.ajax({
+            type: "GET",
+            url: 'GetRolesForUser',
+            data: { userId: userId },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+
+            success: function (roles) {
+
+                // Looping over emloyee list and display it
+                $("#role").html("");
+                $.each(roles, function (i, role) {
+                    $("#role").append(
+                        $('<option></option>').val(role.Name).html(role.Name));
+                });
+            },
+
+
+        });
+    }
+</script>

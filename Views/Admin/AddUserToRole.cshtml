@@ -1,4 +1,4 @@
-﻿
+﻿@model Nullable<Boolean>
 @{
     ViewBag.Title = "AddUserToRole";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,19 +8,26 @@
 
 <br />
 <br />
+@if (Model == null)
+{
+    <div class="btn-lg dropdown-toggle">
+        @using (Html.BeginForm())
+        {
+            <span style="margin-left: 200px">@Html.DropDownList("userId")</span>
+            <span style="margin-left: 10px">@Html.DropDownList("role")</span>
 
-<div class="btn-lg dropdown-toggle">
-    @using (Html.BeginForm())
-    {
-        <span style="margin-left: 200px">@Html.DropDownList("userId")</span>
-        <span style="margin-left: 10px">@Html.DropDownList("role")</span>
+            <input type="submit" value="Add To Role" class="btn btn-default" style="margin-left: 10px" />
+        }
+    </div>
 
-        <input type="submit" value="Add To Role" class="btn btn-default" style="margin-left: 10px" />
-    }
-</div>
 
-<br />
-<br />
+}
+else if (Model == false)
+{
+    <h2 class="centerText">User in the role</h2>
+
+}
+
 
 <div class="customFlex">
     <div class="btn btn-info btn-xs">@Html.ActionLink("Get all Users Info", "GetAllUsersInfo", "Admin")</div>
