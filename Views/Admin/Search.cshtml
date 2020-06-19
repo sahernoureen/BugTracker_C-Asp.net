@@ -1,0 +1,62 @@
+﻿@model BugTracker.Models.ProjectClasses.Ticket
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+@if (Model == null)
+{
+    <div class="btn-lg dropdown-toggle">
+        @using (Html.BeginForm())
+        {
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.TextBox("inputStr", null, new { @class = "form-control", @onkeyup = "GetTitles()" })
+                </div>
+            </div>
+
+            <div>
+                <input type="submit" value="Search" class="btn btn-default" style="margin-left: 10px" />
+            </div>
+            <ul id="titles"></ul>
+        }
+    </div>
+}
+
+<script type="text/javascript" src="~/packages/jQuery.3.4.1/Content/Scripts/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+
+    function GetTitles() {
+        var inputStr = $("#inputStr").val();
+
+        if (inputStr == "")
+        {
+            $("#titles").html("");
+        }
+        $.ajax({
+            type: "GET",
+            url: 'GetRelatedTickets',
+            data: { input : inputStr },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (tickets) {
+                console.log(tickets)
+
+                // Looping over emloyee list and display it
+                $("#titles").html("");
+                $.each(tickets, function (i, ticket) {
+
+                    $("#inputStr").append(
+                        $('<li><a href="/Admin/Search/' + ticket.Title +'">' + ticket.Title + '</a></li>').val(ticket.Title));
+
+
+                });
+            },
+
+
+        });
+    }
+</script>

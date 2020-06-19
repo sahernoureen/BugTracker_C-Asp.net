@@ -6,6 +6,7 @@ namespace BugTracker.Models.ProjectClasses
 {
     public class Ticket
     {
+        public Ticket() { }
         public Ticket(string title, string description, DateTime created, int projectId,
             int ticketTypeId, int ticketPriorityId, int ticketStatusId, string ownerUserId)
         {

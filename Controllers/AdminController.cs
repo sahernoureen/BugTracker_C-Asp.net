@@ -5,7 +5,7 @@ namespace BugTracker.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
-    {
+    {   
         public ActionResult Index()
         {
             return View();
@@ -60,8 +60,6 @@ namespace BugTracker.Controllers
             return View(false);
         }
 
-       
-
         public ActionResult GetAllUsersInfo()
         {
             return View();
@@ -71,6 +69,24 @@ namespace BugTracker.Controllers
         {
             var roles = AdminLogic.GetRolesForUser(userId);
             return Json(roles, JsonRequestBehavior.AllowGet);
+        }
+        //get
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+        //post
+        [HttpPost]
+        public ActionResult Search(string id) 
+        {
+            var result = AdminLogic.GetTicketByTitle(id);
+            return View(result);
+        }
+        public ActionResult GetRelatedTickets(string input)
+        {
+            var titles = AdminLogic.GetRelatedTickets(input);
+            return Json(titles, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -280,6 +280,7 @@
     <Content Include="Views\Admin\RemoveUserFromRole.cshtml" />
     <Content Include="Views\Admin\GetAllUsersInfo.cshtml" />
     <Content Include="Views\Ticket\CreateTicket.cshtml" />
+    <Content Include="Views\Admin\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -131,5 +131,16 @@ namespace BugTracker.BL
             return null;
         }
 
+        public static List<Ticket> GetRelatedTickets(string input)
+        {
+            var result = db.Tickets.Where(t => t.Title.Contains(input)).ToList();
+            return result;
+        }
+
+        public static Ticket GetTicketByTitle(string title) 
+        {
+            var result = db.Tickets.FirstOrDefault(t=>t.Title == title);
+            return result;
+        }
     }
 }
