@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace BugTracker.Migrations
 {
-    using BugTracker.Models.ProjectClasses;
     using System;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -60,32 +59,6 @@ namespace BugTracker.Migrations
             userManager.AddToRole(db.Users.FirstOrDefault(n => n.UserName == "Jill")?.Id, "Developer");
             userManager.AddToRole(db.Users.FirstOrDefault(n => n.UserName == "Bob")?.Id, "Submitter");
             userManager.AddToRole(db.Users.FirstOrDefault(n => n.UserName == "Amy")?.Id, "Submitter");
-
-            Project project1 = new Project(1,"Matrix",Priority.High);
-            project1.Tickets = new List<Ticket>();
-            project1.ProjectUsers = new List<ProjectUser>();
-
-            var pjuser1 = new ProjectUser();
-
-            pjuser1.Id = 1;
-            pjuser1.ProjectId = 1;
-            pjuser1.UserId = userManager.FindByName("Bob").Id;
-            var pjuser2 = new ProjectUser();
-            pjuser2.Id = 2;
-            pjuser2.ProjectId = 1;
-            pjuser2.UserId = userManager.FindByName("Amy").Id;
-            project1.ProjectUsers.Add(pjuser1);
-            project1.ProjectUsers.Add(pjuser2);
-
-            Ticket ticket1 = new Ticket("find a bug","this page lost 404",DateTime.Now,1,1,1,1, userManager.FindByName("Bob").Id);
-            Ticket ticket2 = new Ticket("this is a bug", "this page lost 404", DateTime.Now, 1, 2, 1, 1, userManager.FindByName("Amy").Id);
-
-            project1.Tickets.Add(ticket1);
-            project1.Tickets.Add(ticket2);
-            db.Projects.Add(project1);
-            db.Tickets.Add(ticket1);
-            db.Tickets.Add(ticket2);
-
             db.SaveChanges();
         }
     }

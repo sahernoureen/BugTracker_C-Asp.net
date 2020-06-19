@@ -7,13 +7,13 @@ namespace BugTracker.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class AddNullableToTicketStatusIdInTicket : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddNullableToTicketStatusIdInTicket));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "202006182248510_AddNullableToTicketStatusIdInTicket"; }
+            get { return "202006191541269_Initial"; }
         }
         
         string IMigrationMetadata.Source

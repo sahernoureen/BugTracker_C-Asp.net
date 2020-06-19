@@ -101,7 +101,7 @@
                         ProjectId = c.Int(nullable: false),
                         TicketTypeId = c.Int(nullable: false),
                         TicketPriorityId = c.Int(nullable: false),
-                        TicketStatusId = c.Int(nullable: false),
+                        TicketStatusId = c.Int(),
                         OwnerUserId = c.String(nullable: false, maxLength: 128),
                         AssignedToUserId = c.String(maxLength: 128),
                     })
@@ -110,7 +110,7 @@
                 .ForeignKey("dbo.AspNetUsers", t => t.OwnerUserId)
                 .ForeignKey("dbo.Projects", t => t.ProjectId, cascadeDelete: true)
                 .ForeignKey("dbo.TicketPriorities", t => t.TicketPriorityId, cascadeDelete: true)
-                .ForeignKey("dbo.TicketStatus", t => t.TicketStatusId, cascadeDelete: true)
+                .ForeignKey("dbo.TicketStatus", t => t.TicketStatusId)
                 .ForeignKey("dbo.TicketTypes", t => t.TicketTypeId, cascadeDelete: true)
                 .Index(t => t.ProjectId)
                 .Index(t => t.TicketTypeId)

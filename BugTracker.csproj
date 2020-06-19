@@ -194,13 +194,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006181658566_Initial.cs" />
-    <Compile Include="Migrations\202006181658566_Initial.designer.cs">
-      <DependentUpon>202006181658566_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006182248510_AddNullableToTicketStatusIdInTicket.cs" />
-    <Compile Include="Migrations\202006182248510_AddNullableToTicketStatusIdInTicket.designer.cs">
-      <DependentUpon>202006182248510_AddNullableToTicketStatusIdInTicket.cs</DependentUpon>
+    <Compile Include="Migrations\202006191541269_Initial.cs" />
+    <Compile Include="Migrations\202006191541269_Initial.designer.cs">
+      <DependentUpon>202006191541269_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -305,20 +301,21 @@
     <Content Include="Views\Ticket\Index.cshtml" />
     <Content Include="Views\Ticket\UpdateTicketBySubmitter.cshtml" />
     <Content Include="Views\Ticket\AssignTicket.cshtml" />
+    <Content Include="Views\Ticket\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006181658566_Initial.resx">
-      <DependentUpon>202006181658566_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202006191541269_Initial.resx">
+      <DependentUpon>202006191541269_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
