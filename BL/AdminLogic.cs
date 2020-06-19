@@ -37,6 +37,12 @@ namespace BugTracker.BL
         public static List<ApplicationUser> GetAllUserExceptAdmin()
         {
             var adminRoleId = db.Roles.FirstOrDefault(r => r.Name == "Admin").Id;
+            var adminRoleId = db.Roles.FirstOrDefault(r => r.Name == "Admin").Id;
+            return db.Users.Where(u => !u.Roles.Any(r => r.RoleId == adminRoleId)).ToList();
+        }
+        public static List<ApplicationUser> GetAllUserExceptSubmitter()
+        {
+            var adminRoleId = db.Roles.FirstOrDefault(r => r.Name == "Submitter").Id;
             return db.Users.Where(u => !u.Roles.Any(r => r.RoleId == adminRoleId)).ToList();
         }
         //ADD ROLE TO USER

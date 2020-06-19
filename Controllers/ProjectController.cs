@@ -13,14 +13,16 @@ namespace BugTracker.Controllers
 
         public ActionResult Index()
         {
-            var projects = repo.getAllProjects();
-            return View(projects);
-        }
-        public ActionResult UserIndex()
-        {
             var userId = User.Identity.GetUserId();
             var projects = repo.getAllProjectsOfAUser(userId);
             ViewBag.UserId = userId;
+            return View(projects);
+
+           
+        }
+        public ActionResult UserIndex()
+        {
+            var projects = repo.getAllProjects();
             return View(projects);
         }
 
@@ -44,7 +46,7 @@ namespace BugTracker.Controllers
         public ActionResult AssignUsersToProject(int projectId)
         {
             ViewBag.projectId = projectId;
-            var users = AdminLogic.GetAllUserExceptAdmin();
+            var users = AdminLogic.GetAllUserExceptSubmitter();
             return View(users);
         }
 
