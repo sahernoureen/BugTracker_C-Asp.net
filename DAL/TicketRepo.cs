@@ -14,6 +14,13 @@ namespace BugTracker.DAL {
             db.Dispose();
         }
 
+        public void Assign(AssignTicketViewModel model) {
+            var ticket = db.Tickets.FirstOrDefault(x => x.Id == model.TicketId);
+            ticket.AssignedToUserId = model.DeveloperId;
+            db.SaveChanges();
+            db.Dispose();
+        }
+
         public void Delete(Ticket entity) {
             db.Tickets.Remove(entity);
             db.SaveChanges();

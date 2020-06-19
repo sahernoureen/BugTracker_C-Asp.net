@@ -12,12 +12,11 @@ namespace BugTracker.BL {
         TicketTypeRepo TicketTypeRepo = new TicketTypeRepo();
         TicketPriorityRepo TicketPriorityRepo = new TicketPriorityRepo();
         TicketStatusRepo TicketStatusRepo = new TicketStatusRepo();
-        //UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
 
         //ASSIGNED TICKET
         //project manager assign ticket to developer
         public void assignTicket(AssignTicketViewModel model) {
-
+            TicketRepo.Assign(model);
         }
 
         //CREATE TICKET
@@ -73,8 +72,6 @@ namespace BugTracker.BL {
             ticketViewModel.TicketTypeName = ticketCopy.TicketType.Name;
             ticketViewModel.Priority = ticketCopy.TicketPriority.Priority;
             ticketViewModel.Created = ticketCopy.Created;
-
-
             return ticketViewModel;
         }
 
@@ -82,14 +79,10 @@ namespace BugTracker.BL {
         public void updateTicket(CreateTicketViewModel model) {
             var ticketCopy = TicketRepo.GetEntity(x => x.Id == model.Id);
             TicketTypeRepo.Update(ticketCopy.TicketTypeId, model.TicketTypeName);
-            TicketPriorityRepo.Update(ticketCopy.ProjectId, model.Priority);
+            TicketPriorityRepo.Update(ticketCopy.TicketPriorityId, model.Priority);
             TicketRepo.Update(model);
         }
 
-        //public bool CheckIfUserIsInRole(string userId, string role) {
-        //    var result = userManager.IsInRole(userId, role);
-        //    return result;
-        //}
 
     }
 }
