@@ -37,7 +37,6 @@ namespace BugTracker.BL
         public static List<ApplicationUser> GetAllUserExceptAdmin()
         {
             var adminRoleId = db.Roles.FirstOrDefault(r => r.Name == "Admin").Id;
-            var adminRoleId = db.Roles.FirstOrDefault(r => r.Name == "Admin").Id;
             return db.Users.Where(u => !u.Roles.Any(r => r.RoleId == adminRoleId)).ToList();
         }
         public static List<ApplicationUser> GetAllUserExceptSubmitter()
@@ -143,9 +142,9 @@ namespace BugTracker.BL
             return result;
         }
 
-        public static Ticket GetTicketByTitle(string title) 
+        public static Ticket GetTicketByTitle(string title)
         {
-            var result = db.Tickets.FirstOrDefault(t=>t.Title == title);
+            var result = db.Tickets.FirstOrDefault(t => t.Title == title);
             return result;
         }
     }
