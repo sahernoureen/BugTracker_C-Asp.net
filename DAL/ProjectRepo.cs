@@ -14,7 +14,6 @@ namespace BugTracker.Repo
             return db.Users.Where(x => x.Id == userId).FirstOrDefault();
         }
 
-
         //PROJECT
         public Project getProjectById(int id)
         {
