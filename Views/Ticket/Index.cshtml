@@ -1,0 +1,82 @@
+﻿@model List<BugTracker.Models.ProjectClasses.Ticket>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            owner
+        </th>
+        <th>
+            project
+        </th>
+        <th>
+            name
+        </th>
+        <th>
+            title
+        </th>
+        <th>
+            descrip
+        </th>
+        <th>
+            date
+        </th>
+        <th>
+            devId
+        </th>
+        <th>
+            priority
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.OwnerUserId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProjectId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TicketTypeId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Created)
+    </td>
+    @if (item.AssignedToUserId != null) {
+        <td>
+            @Html.DisplayFor(modelItem => item.AssignedToUserId);
+        </td>
+    } else {
+        <td>
+            no developer assign
+        </td>
+    }
+    <td>
+        @Html.DisplayFor(modelItem => item.TicketPriorityId)
+    </td>
+
+    <td>
+        @Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |
+        @Html.ActionLink("Details", "AssignTicket", new { ticketId = item.Id }) |
+        @Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id })
+    </td>
+</tr>
+    }
+
+</table>

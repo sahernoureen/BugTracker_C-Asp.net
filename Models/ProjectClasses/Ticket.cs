@@ -8,7 +8,7 @@ namespace BugTracker.Models.ProjectClasses
     {
         public Ticket() { }
         public Ticket(string title, string description, DateTime created, int projectId,
-            int ticketTypeId, int ticketPriorityId, int ticketStatusId, string ownerUserId)
+            int ticketTypeId, int ticketPriorityId, string ownerUserId)
         {
             Title = title;
             Description = description;
@@ -16,7 +16,6 @@ namespace BugTracker.Models.ProjectClasses
             ProjectId = projectId;
             TicketTypeId = ticketTypeId;
             TicketPriorityId = ticketPriorityId;
-            TicketStatusId = ticketStatusId;
             OwnerUserId = ownerUserId;
         }
         public int Id { get; set; }
@@ -26,14 +25,17 @@ namespace BugTracker.Models.ProjectClasses
         [Display(Name = "Title")]
         public string Title { get; set; }
 
+
         [Required]
         [Display(Name = "Description")]
         public string Description { get; set; }
+
 
         [Display(Name = "Date Created")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Created { get; set; }
+
 
         [Display(Name = "Date Updated")]
         [DataType(DataType.Date)]
@@ -41,11 +43,9 @@ namespace BugTracker.Models.ProjectClasses
         public DateTime? Updated { get; set; }
 
 
-
         [ForeignKey("Project")]
         public int ProjectId { get; set; }
         public virtual Project Project { get; set; }
-
 
 
         [ForeignKey("TicketType")]
@@ -59,17 +59,13 @@ namespace BugTracker.Models.ProjectClasses
         public virtual TicketPriority TicketPriority { get; set; }
 
 
-
         [ForeignKey("TicketStatus")]
-        public int TicketStatusId { get; set; }
+        public int? TicketStatusId { get; set; }
         public virtual TicketStatus TicketStatus { get; set; }
-
-
 
 
         public string OwnerUserId { get; set; }
         public virtual ApplicationUser OwnerUser { get; set; }
-
 
         public string AssignedToUserId { get; set; }
         public virtual ApplicationUser AssignedToUser { get; set; }

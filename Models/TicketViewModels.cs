@@ -1,11 +1,11 @@
 ﻿using BugTracker.Models.ProjectClasses;
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace BugTracker.Models
-{
-    public class CreateTicketViewModel
-    {
+namespace BugTracker.Models {
+    public class CreateTicketViewModel {
         //ticket
+        public int Id { get; set; }
         [Required]
         [StringLength(30)]
         [Display(Name = "Title")]
@@ -25,23 +25,20 @@ namespace BugTracker.Models
 
         //Ticket Priority
         [Required]
-        [StringLength(30)]
-        [Display(Name = "Ticket Priority Name")]
-        public string TicketPriorityName { get; set; }
-
-        [Required]
         [Display(Name = "Ticket Priority")]
         public Priority Priority { get; set; }
 
+        //Ticket Date
+        [Display(Name = "Date Created")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime Created { get; set; }
 
-        //Ticket Status
-        [Required]
-        [StringLength(30)]
-        [Display(Name = "Ticket Status Name")]
-        public string TicketStatusName { get; set; }
+    }
 
-        [Required]
-        [Display(Name = "Ticket Name")]
-        public Status Status { get; set; }
+    public class AssignTicketViewModel {
+        public int TicketId { get; set; }
+        [Display(Name = "Developer")]
+        public string DeveloperId { get; set; }
     }
 }

@@ -65,6 +65,8 @@ namespace BugTracker.Models
                 .WithMany(t => t.TicketOwnerUser)
                 .HasForeignKey(u => u.OwnerUserId)
                 .WillCascadeOnDelete(false);
+          
+
         }
 
 
