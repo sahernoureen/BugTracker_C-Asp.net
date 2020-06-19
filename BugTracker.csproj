@@ -187,13 +187,20 @@
     <Compile Include="Controllers\SubmitterController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="DAL\ProjectRepo.cs" />
+    <Compile Include="DAL\TicketPriorityRepo.cs" />
     <Compile Include="DAL\TicketRepo.cs" />
+    <Compile Include="DAL\TicketStatusRepo.cs" />
+    <Compile Include="DAL\TicketTypeRepo.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202006181658566_Initial.cs" />
     <Compile Include="Migrations\202006181658566_Initial.designer.cs">
       <DependentUpon>202006181658566_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006182248510_AddNullableToTicketStatusIdInTicket.cs" />
+    <Compile Include="Migrations\202006182248510_AddNullableToTicketStatusIdInTicket.designer.cs">
+      <DependentUpon>202006182248510_AddNullableToTicketStatusIdInTicket.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -295,6 +302,9 @@
     <Content Include="Views\Developer\Index.cshtml" />
     <Content Include="Views\Manager\Index.cshtml" />
     <Content Include="Views\Admin\Search.cshtml" />
+    <Content Include="Views\Ticket\Index.cshtml" />
+    <Content Include="Views\Ticket\UpdateTicketBySubmitter.cshtml" />
+    <Content Include="Views\Ticket\AssignTicket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -303,6 +313,14 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202006181658566_Initial.resx">
       <DependentUpon>202006181658566_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202006181658566_Initial.resx">
+      <DependentUpon>202006181658566_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006182248510_AddNullableToTicketStatusIdInTicket.resx">
+      <DependentUpon>202006182248510_AddNullableToTicketStatusIdInTicket.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -5,10 +5,10 @@ namespace BugTracker.Models.ProjectClasses
 {
     public class TicketStatus
     {
-
-        public TicketStatus(string name, Status status)
+        public TicketStatus() {
+        }
+        public TicketStatus(Status status)
         {
-            Name = name;
             Status = status;
             Tickets = new HashSet<Ticket>();
         }
