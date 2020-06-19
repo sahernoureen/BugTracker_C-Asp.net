@@ -5,6 +5,8 @@ namespace BugTracker.Models.ProjectClasses
 {
     public class TicketType
     {
+        public TicketType() {
+        }
         public TicketType(string name)
         {
             Name = name;

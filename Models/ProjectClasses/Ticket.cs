@@ -10,7 +10,7 @@ namespace BugTracker.Models.ProjectClasses
         }
 
         public Ticket(string title, string description, DateTime created, int projectId,
-            int ticketTypeId, int ticketPriorityId, int ticketStatusId, string ownerUserId)
+            int ticketTypeId, int ticketPriorityId, string ownerUserId)
         {
             Title = title;
             Description = description;
@@ -18,7 +18,6 @@ namespace BugTracker.Models.ProjectClasses
             ProjectId = projectId;
             TicketTypeId = ticketTypeId;
             TicketPriorityId = ticketPriorityId;
-            TicketStatusId = ticketStatusId;
             OwnerUserId = ownerUserId;
         }
         public int Id { get; set; }
@@ -63,7 +62,7 @@ namespace BugTracker.Models.ProjectClasses
 
 
         [ForeignKey("TicketStatus")]
-        public int TicketStatusId { get; set; }
+        public int? TicketStatusId { get; set; }
         public virtual TicketStatus TicketStatus { get; set; }
 
 

@@ -12,10 +12,10 @@
 <table class="table">
     <tr>
         <th>
-           Assign
+           owner
         </th>
         <th>
-           projecr
+           project
         </th>
         <th>
             name
@@ -24,10 +24,10 @@
            title
         </th>
         <th>
-            dexs
+            descrip
         </th>
         <th>
-           crer
+           date
         </th>
         <th></th>
     </tr>
@@ -35,13 +35,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.AssignedToUser.Email)
+            @Html.DisplayFor(modelItem => item.OwnerUserId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Project.Name)
+            @Html.DisplayFor(modelItem => item.ProjectId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TicketType.Name)
+            @Html.DisplayFor(modelItem => item.TicketTypeId)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
@@ -53,9 +53,9 @@
             @Html.DisplayFor(modelItem => item.Created)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId =item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id })
         </td>
     </tr>
 }

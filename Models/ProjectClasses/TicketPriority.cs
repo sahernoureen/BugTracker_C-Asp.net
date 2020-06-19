@@ -5,6 +5,9 @@ namespace BugTracker.Models.ProjectClasses
 {
     public class TicketPriority
     {
+        public TicketPriority() {
+        }
+
         public TicketPriority(Priority priority)
         {
             Priority = priority;
