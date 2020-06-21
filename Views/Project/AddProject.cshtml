@@ -4,15 +4,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (User.IsInRole("Admin"))
+{
+    <h2 class="centerTextAdmin">Create a new Project</h2>
+}
+else
+{
+<h2 class="centerTextManager">Create a new Project</h2>
+}
+
+<br />
 
 @using (Html.BeginForm("AddProject", "Project", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-
-    <h2 class="centerText">Create a new Project</h2>
-
-    <br />
-    <br />
 
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
@@ -35,6 +40,10 @@
     </div>
 }
 
-<div class="btn btn-info btn-xs">
-    @Html.ActionLink("Back To DashBoard", "Index", "Project")
+
+<br />
+<br />
+
+<div>
+    <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Project")</span>
 </div>

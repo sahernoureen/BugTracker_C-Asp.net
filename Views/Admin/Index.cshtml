@@ -4,10 +4,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="centerTextAdmin">Admin's Dashboard</h2>
+
+<br />
+<br />
+<br />
+<br />
 
 <div>
-    <div class="btn btn-info btn-xs">@Html.ActionLink("Get all Users Info", "GetAllUsersInfo", "Admin")</div>
-    <div class="btn btn-info btn-xs">@Html.ActionLink("Add User to Role", "AddUserToRole", "Admin")</div>
+    <div class="btn btn-info btn-lg">@Html.ActionLink("Add new User", "AddUser", "Admin")</div>
+    <div class="btn btn-info btn-lg">@Html.ActionLink("Add new Role", "AddRole", "Admin")</div>
+    <div class="btn btn-info btn-lg">@Html.ActionLink("Assign User to Role", "AddUserToRole", "Admin")</div>
+    <div class="btn btn-info btn-lg">@Html.ActionLink("Unassign User from Role", "RemoveUserFromRole", "Admin")</div>
+    <div class="btn btn-info btn-lg">@Html.ActionLink("Get all Users Info", "GetAllUsersInfo", "Admin")</div>
 </div>
 
+<br />
+<br />
+<br />
+
+<div>
+    <div class="btn btn-warning btn-lg">@Html.ActionLink("Go to Projects", "Index", "Project")</div>
+    <div class="btn btn-warning btn-lg">@Html.ActionLink("Go to Tickets", "Index", "Ticket")</div>
+</div>

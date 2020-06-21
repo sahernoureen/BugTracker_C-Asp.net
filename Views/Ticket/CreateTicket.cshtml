@@ -4,14 +4,28 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (User.IsInRole("Admin"))
+{
+    <h2 class="centerTextAdmin">Create Ticket</h2>
+}
+else if (User.IsInRole("Manager"))
+{
+    <h2 class="centerTextManager">Create Ticket</h2>
+}
+else if (User.IsInRole("Developer"))
+{
+    <h2 class="centerTextDev">Create Ticket</h2>
+}
+else if (User.IsInRole("Submitter"))
+{
+    <h2 class="centerTextSubmitter">Create Ticket</h2>
+}
+
+<br />
+
 @using (Html.BeginForm("CreateTicket", "Ticket", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-
-    <h2>Create Ticket</h2>
-
-    <br />
-    <br />
 
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
@@ -49,3 +63,17 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
+<br />
+<br />
+
+<div>
+    <span class="btn btn-info btn-default btnBorder">@Html.ActionLink("Back To Tickets", "Index", "Ticket")</span>
+    @if (User.IsInRole("Admin"))
+    {
+        <span class="btn btn-info btn-default btnBorder">@Html.ActionLink("Back To DashBoard", "Index", "Admin")</span>
+    }
+    else
+    {
+        <span class="btn btn-info btn-default btnBorder">@Html.ActionLink("Back To DashBoard", "Index", "Manager")</span>
+    }
+</div>

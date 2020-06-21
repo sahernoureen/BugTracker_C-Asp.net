@@ -4,5 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="centerTextManager">Manager's Dashboard</h2>
+
+<br />
+<br />
+<br />
+<br />
+
+<div>
+    <div class="btn btn-warning btn-lg">@Html.ActionLink("Go to Projects", "Index", "Project")</div>
+    <div class="btn btn-warning btn-lg">@Html.ActionLink("Go to Tickets", "Index", "Ticket")</div>
+</div>
 

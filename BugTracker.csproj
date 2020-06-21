@@ -176,6 +176,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BL\AdminLogic.cs" />
+    <Compile Include="BL\SearchLogic.cs" />
     <Compile Include="BL\TicketLogic.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -224,6 +225,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\custom.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -297,11 +299,14 @@
     <Content Include="Views\Submitter\Index.cshtml" />
     <Content Include="Views\Developer\Index.cshtml" />
     <Content Include="Views\Manager\Index.cshtml" />
-    <Content Include="Views\Admin\Search.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Ticket\Index.cshtml" />
     <Content Include="Views\Ticket\UpdateTicketBySubmitter.cshtml" />
     <Content Include="Views\Ticket\AssignTicket.cshtml" />
     <Content Include="Views\Ticket\Create.cshtml" />
+    <Content Include="Views\Admin\AddUser.cshtml" />
+    <Content Include="Views\Admin\AddRole.cshtml" />
+    <Content Include="Views\Admin\GetAllRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

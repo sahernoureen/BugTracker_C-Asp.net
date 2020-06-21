@@ -4,16 +4,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>EditProject</h2>
+@if (User.IsInRole("Admin"))
+{
+    <h2 class="centerTextAdmin">Edit Project</h2>
+}
+else
+{
+    <h2 class="centerTextManager">Edit Project</h2>
+}
+
+<br />
 
 @using (Html.BeginForm("EditProject", "Project", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
-    <h2 class="centerText">Update Project</h2>
+    <br />
+    <br />
 
-    <br />
-    <br />
     @Html.HiddenFor(m => m.Id)
 
     @Html.ValidationSummary("", new { @class = "text-danger" })
@@ -36,3 +44,18 @@
         </div>
     </div>
 }
+
+<br />
+<br />
+
+<div>
+    <span class="btn btn-default btnShadow">@Html.ActionLink("Back To Project", "Index", "Project")</span>
+    @if (User.IsInRole("Admin"))
+    {
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Admin")</span>
+    }
+    else
+    {
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Manager")</span>
+    }
+</div>

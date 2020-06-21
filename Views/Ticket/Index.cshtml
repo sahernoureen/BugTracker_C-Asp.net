@@ -4,79 +4,125 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+@if (User.IsInRole("Admin"))
+{
+    <h2 class="centerTextAdmin">Tickets</h2>
+}
+else if (User.IsInRole("Manager"))
+{
+    <h2 class="centerTextManager">Tickets</h2>
+}
+else if (User.IsInRole("Developer"))
+{
+    <h2 class="centerTextDev">Tickets</h2>
+}
+else if (User.IsInRole("Submitter"))
+{
+    <h2 class="centerTextSubmitter">Tickets</h2>
+}
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+<p class="btn btn-info btn-lg btnBorder">
+    @Html.ActionLink("Create New", "CreateTicket")
 </p>
+
+<br />
+<br />
+
 <table class="table">
     <tr>
         <th>
-            owner
+            Name
         </th>
         <th>
-            project
+            Project
         </th>
         <th>
-            name
+            Id
         </th>
         <th>
-            title
+            Title
         </th>
         <th>
-            descrip
+            Description
         </th>
         <th>
-            date
+
+            Date
         </th>
         <th>
-            devId
+            DevId
         </th>
         <th>
-            priority
+            Priority
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.OwnerUserId)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.ProjectId)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TicketTypeId)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Title)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Description)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Created)
-    </td>
-    @if (item.AssignedToUserId != null) {
-        <td>
-            @Html.DisplayFor(modelItem => item.AssignedToUserId);
-        </td>
-    } else {
-        <td>
-            no developer assign
-        </td>
-    }
-    <td>
-        @Html.DisplayFor(modelItem => item.TicketPriorityId)
-    </td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerUserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketTypeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            @if (item.AssignedToUserId != null)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssignedToUserId);
+                </td>
+            }
+            else
+            {
+                <td>
+                    Not assigned
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketPriorityId)
+            </td>
 
-    <td>
-        @Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |
-        @Html.ActionLink("Details", "AssignTicket", new { ticketId = item.Id }) |
-        @Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id })
-    </td>
-</tr>
+            <td>
+                @Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id }) |
+                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                {
+                    @Html.ActionLink("Assign", "AssignTicket", new { ticketId = item.Id })
+                }
+            </td>
+        </tr>
     }
 
 </table>
+
+<br />
+<br />
+
+<div>
+    @if (User.IsInRole("Admin"))
+    {
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Admin")</span>
+    }
+    else if (User.IsInRole("Manager"))
+    {
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Manager")</span>
+    }
+    else if (User.IsInRole("Developer"))
+    {
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Developer")</span>
+
+    }
+</div>

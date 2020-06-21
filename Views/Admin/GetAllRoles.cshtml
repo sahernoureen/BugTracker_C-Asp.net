@@ -1,0 +1,30 @@
+﻿@model List<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@{
+    ViewBag.Title = "GetAllRoles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="centerTextAdmin">Get all Roles</h2>
+
+<br />
+<br />
+
+<div>
+    <ul>
+        @foreach (var role in Model)
+        {
+            <li>
+                @role.Name
+                @Html.ActionLink("Delete", "RemoveUserFromRole", "Admin")
+            </li>
+        }
+    </ul>
+</div>
+
+<br />
+<br />
+
+<div>
+    <span class="btn btn-info btn-default">@Html.ActionLink("Go back", "Index", "Admin")</span>
+</div>
+

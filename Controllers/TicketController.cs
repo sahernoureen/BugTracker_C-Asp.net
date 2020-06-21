@@ -18,7 +18,7 @@ namespace BugTracker.Controllers
 
 
         // GET: Assign Ticket
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Admin, Manager")]
         [HttpGet]
         public ActionResult AssignTicket(int ticketId)
         {
@@ -35,7 +35,7 @@ namespace BugTracker.Controllers
         }
 
         // POST: Assign Ticket
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         public ActionResult AssignTicket(AssignTicketViewModel model)
         {

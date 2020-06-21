@@ -4,13 +4,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("UpdateTicketBySubmitter", "Ticket", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+@if (User.IsInRole("Admin"))
+{
+    <h2 class="centerTextAdmin">Update Ticket</h2>
+}
+else if (User.IsInRole("Manager"))
+{
+<h2 class="centerTextManager">Update Ticket</h2>
+}
+else if (User.IsInRole("Developer"))
+{
+<h2 class="centerTextDev">Update Ticket</h2>
+}
+else if (User.IsInRole("Submitter"))
+{
+<h2 class="centerTextSubmitter">Update Ticket</h2>
+}
+
+<br />
+
+@using (Html.BeginForm("UpdateTicketBySubmitter", "Ticket", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
-    <h2>Create Ticket</h2>
-
-    <br />
-    <br />
 
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
@@ -44,7 +60,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-md-2 col-md-10">
+        <div class="col-md-2 col-md-10 col-lg-offset-2">
             <input type="submit" class="btn btn-default" value="Update" />
         </div>
     </div>
@@ -54,3 +70,17 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
+<br />
+<br />
+
+<div>
+    <span class="btn btn-default btnShadow">@Html.ActionLink("Back To Tickets", "Index", "Ticket")</span>
+    @if (User.IsInRole("Admin"))
+    {
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Admin")</span>
+    }
+    else
+    {
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Manager")</span>
+    }
+</div>

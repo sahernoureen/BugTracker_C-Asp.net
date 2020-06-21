@@ -4,7 +4,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>UnAssignUserfromProject</h2>
+@if (User.IsInRole("Admin"))
+{
+    <h2 class="centerTextAdmin">Unassign User from Project</h2>
+}
+else
+{
+<h2 class="centerTextManager">Unassign User from Project</h2>
+}
+
+<br />
 
 <div>
 
@@ -20,10 +29,11 @@
 
             </li>
         }
+        <br />
         <li>
             <a class="btn btn-success " onclick="saveList()">Select User</a>
         </li>
-
+        <br />
     </ul>
 </div>
 
@@ -51,7 +61,7 @@
                 data: { userList: commaSeperatedIds, projectId: parseInt(@ViewBag.projectId)},
                 success: function (data) {
                     console.log(data);
-                    window.location.href =  '@Url.Action("UserAssignedToProject", "Project")'
+                    window.location.href =  '@Url.Action("UserIndex", "Project")'
                 },
                 Error: function (err) {
                     console.Error(err);
@@ -59,8 +69,19 @@
             })
         }
     }
-</script> 
+</script>
 
-<div class="btn btn-info btn-xs">
-    @Html.ActionLink("Back To Projects", "Index", "Project")
+<br />
+<br />
+
+<div>
+    <span class="btn btn-default btnShadow">@Html.ActionLink("Back To Project", "Index", "Project")</span>
+    @if (User.IsInRole("Admin"))
+    {
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Admin")</span>
+    }
+    else
+    {
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Manager")</span>
+    }
 </div>

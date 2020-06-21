@@ -4,15 +4,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>UserAssignedToProject</h2>
+@if (User.IsInRole("Admin"))
+{
+    <h2 class="centerTextAdmin">User assigned to Project</h2>
+}
+else
+{
+    <h2 class="centerTextManager">User assigned to Project</h2>
+}
+
+<br />
 
 <ul>
     @foreach (var projuser in Model)
     {
         <li>
-            Project Id :  @projuser.ProjectId
+            <label>Project Id :</label>  @projuser.ProjectId
             <ol>
-                User Assigned :  @projuser.UserId
+                <label>User Assigned :</label>  @projuser.UserId
 
             </ol>
         </li>
@@ -20,4 +29,18 @@
     }
 
 </ul>
-@Html.ActionLink("Back to Projects", "Index", "Project")
+
+<br />
+<br />
+
+<div>
+    <span class="btn btn-info btn-default btnBorder">@Html.ActionLink("Back To Project", "Index", "Project")</span>
+    @if (User.IsInRole("Admin"))
+    {
+        <span class="btn btn-info btn-default btnBorder">@Html.ActionLink("Back To DashBoard", "Index", "Admin")</span>
+    }
+    else
+    {
+        <span class="btn btn-info btn-default btnBorder">@Html.ActionLink("Back To DashBoard", "Index", "Manager")</span>
+    }
+</div>

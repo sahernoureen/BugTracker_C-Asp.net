@@ -4,15 +4,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Assign Ticket</h2>
-<p>Title @ViewBag.Ticket.Title</p>
-<p>Description @ViewBag.Ticket.Description</p>
+@if (User.IsInRole("Admin"))
+{
+    <h2 class="centerTextAdmin">Assign Ticket</h2>
+}
+else if (User.IsInRole("Manager"))
+{
+    <h2 class="centerTextManager">Assign Ticket</h2>
+}
 
+<br />
 
-@using (Html.BeginForm("AssignTicket", "Ticket", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+<p><label>Title :</label> @ViewBag.Ticket.Title</p>
+<p><label>Description :</label> @ViewBag.Ticket.Description</p>
+
+<br />
+
+@using (Html.BeginForm("AssignTicket", "Ticket", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
     @Html.AntiForgeryToken()
 
-    @Html.HiddenFor(m => m.TicketId, new {Value = @ViewBag.Ticket.Id } )
+    @Html.HiddenFor(m => m.TicketId, new { Value = @ViewBag.Ticket.Id })
     <div class="form-group">
         @Html.LabelFor(m => m.DeveloperId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
@@ -29,3 +41,18 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<br />
+<br />
+
+<div>
+    <span class="btn btn-default btnShadow">@Html.ActionLink("Back To Tickets", "Index", "Ticket")</span>
+    @if (User.IsInRole("Admin"))
+    {
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Admin")</span>
+    }
+    else
+    {
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Manager")</span>
+    }
+</div>

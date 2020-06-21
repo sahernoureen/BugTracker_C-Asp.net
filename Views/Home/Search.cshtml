@@ -28,35 +28,27 @@
 <script type="text/javascript" src="~/packages/jQuery.3.4.1/Content/Scripts/jquery-3.4.1.min.js"></script>
 
 <script type="text/javascript">
-
     function GetTitles() {
         var inputStr = $("#inputStr").val();
-
-        if (inputStr == "")
-        {
+        console.log(inputStr);
+        if (inputStr == "") {
             $("#titles").html("");
+            return;
         }
         $.ajax({
             type: "GET",
             url: 'GetRelatedTickets',
-            data: { input : inputStr },
+            data: { input: inputStr },
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (tickets) {
-                console.log(tickets)
-
                 // Looping over emloyee list and display it
                 $("#titles").html("");
                 $.each(tickets, function (i, ticket) {
-
-                    $("#inputStr").append(
-                        $('<li><a href="/Admin/Search/' + ticket.Title +'">' + ticket.Title + '</a></li>').val(ticket.Title));
-
-
+                    $("#titles").append(
+                        $('<li><a href="/Admin/Search/' + ticket.Title + '">' + ticket.Title + '</a></li>').val(ticket.Title));
                 });
             },
-
-
         });
     }
 </script>
