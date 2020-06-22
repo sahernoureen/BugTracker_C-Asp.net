@@ -101,6 +101,8 @@ else if (User.IsInRole("Submitter"))
                 {
                     <span>@Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |</span>
                     <span>@Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id })</span>
+                    <span>@Html.ActionLink("Comments", "Index", "TicketComment", new { ticketId = item.Id }, null) |</span>
+                    <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>    
                 }
 
                 @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
@@ -108,6 +110,9 @@ else if (User.IsInRole("Submitter"))
                     <span>@Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |</span>
                     <span>@Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id }) |</span>
                     <span>@Html.ActionLink("Assign", "AssignTicket", new { ticketId = item.Id })</span>
+                    <span>@Html.ActionLink("Comments", "Index", "TicketComment", new { ticketId = item.Id }, null) |</span>
+                    <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>    
+
                 }
             </td>
         </tr>
