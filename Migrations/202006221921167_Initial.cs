@@ -120,35 +120,6 @@
                 .Index(t => t.AssignedToUserId);
             
             CreateTable(
-                "dbo.TicketPriorities",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(maxLength: 30),
-                        Priority = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.TicketStatus",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(maxLength: 30),
-                        Status = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.TicketTypes",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 30),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
                 "dbo.TicketAttachments",
                 c => new
                     {
@@ -205,6 +176,7 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        IsNew = c.Boolean(nullable: false),
                         UserId = c.String(maxLength: 128),
                         TicketId = c.Int(nullable: false),
                     })
@@ -213,6 +185,35 @@
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId)
                 .Index(t => t.UserId)
                 .Index(t => t.TicketId);
+            
+            CreateTable(
+                "dbo.TicketPriorities",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(maxLength: 30),
+                        Priority = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.TicketStatus",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(maxLength: 30),
+                        Status = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.TicketTypes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 30),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -230,6 +231,9 @@
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.ProjectUsers", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Tickets", "TicketTypeId", "dbo.TicketTypes");
+            DropForeignKey("dbo.Tickets", "TicketStatusId", "dbo.TicketStatus");
+            DropForeignKey("dbo.Tickets", "TicketPriorityId", "dbo.TicketPriorities");
             DropForeignKey("dbo.TicketNotifications", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.TicketNotifications", "TicketId", "dbo.Tickets");
             DropForeignKey("dbo.TicketHistories", "UserId", "dbo.AspNetUsers");
@@ -238,9 +242,6 @@
             DropForeignKey("dbo.TicketComments", "TicketId", "dbo.Tickets");
             DropForeignKey("dbo.TicketAttachments", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.TicketAttachments", "TicketId", "dbo.Tickets");
-            DropForeignKey("dbo.Tickets", "TicketTypeId", "dbo.TicketTypes");
-            DropForeignKey("dbo.Tickets", "TicketStatusId", "dbo.TicketStatus");
-            DropForeignKey("dbo.Tickets", "TicketPriorityId", "dbo.TicketPriorities");
             DropForeignKey("dbo.Tickets", "ProjectId", "dbo.Projects");
             DropForeignKey("dbo.Tickets", "OwnerUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Tickets", "AssignedToUserId", "dbo.AspNetUsers");
@@ -271,13 +272,13 @@
             DropIndex("dbo.ProjectUsers", new[] { "UserId" });
             DropIndex("dbo.ProjectUsers", new[] { "ProjectId" });
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.TicketTypes");
+            DropTable("dbo.TicketStatus");
+            DropTable("dbo.TicketPriorities");
             DropTable("dbo.TicketNotifications");
             DropTable("dbo.TicketHistories");
             DropTable("dbo.TicketComments");
             DropTable("dbo.TicketAttachments");
-            DropTable("dbo.TicketTypes");
-            DropTable("dbo.TicketStatus");
-            DropTable("dbo.TicketPriorities");
             DropTable("dbo.Tickets");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");

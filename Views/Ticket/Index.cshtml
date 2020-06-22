@@ -12,7 +12,7 @@
 <br />
 <span style="float: right">
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchBy = Request.QueryString["seacrhBy"], search = Request.QueryString["search"] }))
 </span>
 
 @if (User.IsInRole("Submitter"))
@@ -74,7 +74,7 @@
             </td>
             @if (item.AssignedToUserId != null) {
                 <td>
-                    @Html.DisplayFor(modelItem => item.AssignedToUser.UserName);
+                    @Html.DisplayFor(modelItem => item.AssignedToUser.UserName)
                 </td>
             } else {
                 <td>

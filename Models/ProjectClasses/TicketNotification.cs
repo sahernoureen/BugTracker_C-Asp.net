@@ -5,7 +5,7 @@ namespace BugTracker.Models.ProjectClasses
     public class TicketNotification
     {
         public int Id { get; set; }
-
+        public bool IsNew { get; set; }
 
 
         [ForeignKey("User")]
