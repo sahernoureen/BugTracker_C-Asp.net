@@ -17,7 +17,7 @@
 .centerTextManager {
     margin: auto;
     text-align: center;
-    background-color: turquoise;
+    background-color: orange;
     max-width: 330px;
     border-radius: 20px;
     padding-top: 20px;
@@ -25,7 +25,7 @@
 }
 
 .manager {
-    background-color: turquoise;
+    background-color: orange;
     border-radius: 10px;
 }
 

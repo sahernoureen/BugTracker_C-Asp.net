@@ -34,13 +34,13 @@ else
 <br />
 
 <div>
-    <span class="btn btn-info btn-default btnBorder">@Html.ActionLink("Back To Project", "Index", "Project")</span>
+    <span class="btn btn-default btnShadow">@Html.ActionLink("Back To Project", "Index", "Project")</span>
     @if (User.IsInRole("Admin"))
     {
-        <span class="btn btn-info btn-default btnBorder">@Html.ActionLink("Back To DashBoard", "Index", "Admin")</span>
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Admin")</span>
     }
     else
     {
-        <span class="btn btn-info btn-default btnBorder">@Html.ActionLink("Back To DashBoard", "Index", "Manager")</span>
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Manager")</span>
     }
 </div>

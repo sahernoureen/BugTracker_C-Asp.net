@@ -120,16 +120,5 @@ namespace BugTracker.Controllers
 
             return View(ticketHistory);
         }
-
-
-        public ActionResult Error()
-        {
-            return View();
-        }
-
-        public ActionResult Create()
-        {
-            return View();
-        }
     }
 }
