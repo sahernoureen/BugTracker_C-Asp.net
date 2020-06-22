@@ -1,15 +1,14 @@
 ﻿using BugTracker.BL;
 using BugTracker.Models;
+using BugTracker.Models.ProjectClasses;
 using Microsoft.AspNet.Identity;
 using PagedList;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace BugTracker.Controllers
-{
-    public class TicketController : Controller
-    {
-        ApplicationDbContext db = new ApplicationDbContext();
+namespace BugTracker.Controllers {
+    public class TicketController : Controller {
         TicketLogic ticketLogic = new TicketLogic();
         public ActionResult Index(int? page)
         {
@@ -42,15 +41,20 @@ namespace BugTracker.Controllers
         // GET: Assign Ticket
         [Authorize(Roles = "Admin, Manager")]
         [HttpGet]
-        public ActionResult AssignTicket(int ticketId)
-        {
+        public ActionResult AssignTicket(int ticketId) {
             var ticket = ticketLogic.getTicketById(ticketId);
             if (ticket == null)
             {
                 return Redirect("Shared/Error");
             }
             var userId = User.Identity.GetUserId();
-            var users = ticketLogic.getAllDeveloperUser(userId);
+            var users = new List<ApplicationUser>();
+            if (AdminLogic.CheckIfUserIsInRole(userId, "Admin")) {
+                users = ticketLogic.getAllManagerAndDeveloperUser(userId);
+            } else {
+                users = ticketLogic.getAllDeveloperUser(userId);
+            }
+
             ViewBag.Ticket = ticket;
             ViewBag.DeveloperId = new SelectList(users, "Id", "UserName");
             return View();
@@ -59,32 +63,38 @@ namespace BugTracker.Controllers
         // POST: Assign Ticket
         [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
-        public ActionResult AssignTicket(AssignTicketViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
+        public ActionResult AssignTicket(AssignTicketViewModel model) {
+            if (ModelState.IsValid) {
                 ticketLogic.assignTicket(model);
                 return RedirectToAction("Index");
             }
 
             var userId = User.Identity.GetUserId();
-            var users = ticketLogic.getAllDeveloperUser(userId);
+            var users = new List<ApplicationUser>();
+            if (AdminLogic.CheckIfUserIsInRole(userId, "Admin")) {
+                users = ticketLogic.getAllManagerAndDeveloperUser(userId);
+            } else {
+                users = ticketLogic.getAllDeveloperUser(userId);
+            }
             ViewBag.DeveloperId = new SelectList(users, "Id", "UserName");
             return View();
         }
 
+        [Authorize(Roles = "Submitter")]
         [HttpGet]
-        public ActionResult CreateTicket()
-        {
+        public ActionResult CreateTicket() {
+            var projects = projectLogic.getAllProjects();
+            ViewBag.ProjectId = new SelectList(projects, "Id", "Name");
             return View();
         }
 
         // POST: Create Ticket
         [HttpPost]
-        public ActionResult CreateTicket(CreateTicketViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
+        public ActionResult CreateTicket(CreateTicketViewModel model) {
+            var projects = projectLogic.getAllProjects();
+            ViewBag.ProjectId = new SelectList(projects, "Id", "Name");
+
+            if (ModelState.IsValid) {
                 var userId = User.Identity.GetUserId();
                 ticketLogic.createTicket(model, userId);
                 return RedirectToAction("Index");
@@ -92,8 +102,7 @@ namespace BugTracker.Controllers
             return Redirect("Shared/Error");
         }
 
-        public ActionResult DeleteTicket(int ticketId)
-        {
+        public ActionResult DeleteTicket(int ticketId) {
             var ticket = ticketLogic.getTicketById(ticketId);
             if (ticket == null)
             {
@@ -106,8 +115,7 @@ namespace BugTracker.Controllers
 
         // GET: Update Ticket By Submitter
         [HttpGet]
-        public ActionResult UpdateTicketBySubmitter(int ticketId)
-        {
+        public ActionResult UpdateTicketBySubmitter(int ticketId) {
             var ticket = ticketLogic.updateTicketById(ticketId);
             if (ticket == null)
             {
@@ -119,10 +127,8 @@ namespace BugTracker.Controllers
 
         // POST: Update Ticket By Submitter
         [HttpPost]
-        public ActionResult UpdateTicketBySubmitter(CreateTicketViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
+        public ActionResult UpdateTicketBySubmitter(CreateTicketViewModel model) {
+            if (ModelState.IsValid) {
                 var userId = User.Identity.GetUserId();
                 ticketLogic.updateTicket(model, userId);
                 return RedirectToAction("Index");
@@ -132,8 +138,7 @@ namespace BugTracker.Controllers
 
 
         [HttpGet]
-        public ActionResult History(int ticketId)
-        {
+        public ActionResult History(int ticketId) {
             var ticketHistory = ticketLogic.GetHistoryOfTicket(ticketId);
             if (ticketHistory == null)
             {
@@ -141,6 +146,9 @@ namespace BugTracker.Controllers
             }
 
             return View(ticketHistory);
+        }
+        public ActionResult Error() {
+            return View();
         }
     }
 }

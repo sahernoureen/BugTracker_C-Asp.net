@@ -11,7 +11,7 @@ namespace BugTracker.DAL {
         public void Add(Ticket entity) {
             db.Tickets.Add(entity);
             db.SaveChanges();
-         //   db.Dispose();
+          //  db.Dispose();
         }
 
         public void Assign(AssignTicketViewModel model) {
@@ -33,12 +33,21 @@ namespace BugTracker.DAL {
                 .FirstOrDefault(where);
         }
 
-        public IList<Ticket> GetList(Func<Ticket, bool> where) {
+        public IList<Ticket> GetTicketList(Func<Ticket, bool> where) {
             return db.Tickets.Where(where).ToList();
         }
 
-        public IList<ApplicationUser> GetList(Func<ApplicationUser, bool> where) {
+        public IList<ApplicationUser> GetAllUserList(Func<ApplicationUser, bool> where) {
             return db.Users.ToList();
+        }
+
+        public List<Ticket> GetAllTicketList() {
+            return db.Tickets.Include("Project")
+                .Include("TicketPriority")
+                .Include("OwnerUser")
+                .Include("AssignedToUser")
+                .ToList();
+            
         }
 
         public void Update(CreateTicketViewModel model) {

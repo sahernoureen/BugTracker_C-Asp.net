@@ -323,6 +323,7 @@
     <Content Include="Views\TicketComment\CreateTicketComment.cshtml" />
     <Content Include="Views\TicketComment\UpdateTicketComment.cshtml" />
     <Content Include="Views\Ticket\History.cshtml" />
+    <Content Include="Views\Ticket\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

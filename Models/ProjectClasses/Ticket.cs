@@ -74,6 +74,6 @@ namespace BugTracker.Models.ProjectClasses
         public string AssignedToUserId { get; set; }
         public virtual ApplicationUser AssignedToUser { get; set; }
 
-
+        
     }
 }
