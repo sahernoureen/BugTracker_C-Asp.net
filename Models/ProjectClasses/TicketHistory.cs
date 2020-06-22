@@ -4,6 +4,19 @@ namespace BugTracker.Models.ProjectClasses
 {
     public class TicketHistory
     {
+        public TicketHistory()
+        {
+
+        }
+        public TicketHistory(int ticketId, string Property, string OldValue, string NewValue, bool Changed, string userId)
+        {
+            this.TicketId = ticketId;
+            this.Property = Property;
+            this.OldValue = OldValue;
+            this.NewValue = NewValue;
+            this.Changed = Changed;
+            this.UserId = userId;
+        }
         public int Id { get; set; }
         public string Property { get; set; }
         public string OldValue { get; set; }

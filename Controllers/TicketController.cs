@@ -102,10 +102,23 @@ namespace BugTracker.Controllers
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
-                ticketLogic.updateTicket(model);
+                ticketLogic.updateTicket(model, userId);
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Error");
+        }
+
+
+        [HttpGet]
+        public ActionResult History(int ticketId)
+        {
+            var ticketHistory = ticketLogic.GetHistoryOfTicket(ticketId);
+            if (ticketHistory == null)
+            {
+                return RedirectToAction("Error");
+            }
+
+            return View(ticketHistory);
         }
 
 

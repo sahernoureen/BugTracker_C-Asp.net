@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,7 +7,9 @@ namespace BugTracker.Models.ProjectClasses
 {
     public class Ticket
     {
-        public Ticket() { }
+        public Ticket() 
+        { 
+        }
         public Ticket(string title, string description, DateTime created, int projectId,
             int ticketTypeId, int ticketPriorityId, string ownerUserId)
         {
@@ -17,6 +20,7 @@ namespace BugTracker.Models.ProjectClasses
             TicketTypeId = ticketTypeId;
             TicketPriorityId = ticketPriorityId;
             OwnerUserId = ownerUserId;
+
         }
         public int Id { get; set; }
 
@@ -69,6 +73,7 @@ namespace BugTracker.Models.ProjectClasses
 
         public string AssignedToUserId { get; set; }
         public virtual ApplicationUser AssignedToUser { get; set; }
+
 
     }
 }

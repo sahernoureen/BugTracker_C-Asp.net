@@ -13,14 +13,19 @@ namespace BugTracker.Models.ProjectClasses
         {
             Name = name;
             Priority = priority;
+            this.ProjectUsers = new HashSet<ProjectUser>();
+            this.Tickets = new HashSet<Ticket>();
+
         }
 
-        public Project(int id, string name, Priority priority)
-        {
-            Id = id;
-            Name = name;
-            Priority = priority;
-        }
+        //public Project(int id, string name, Priority priority)
+        //{
+        //    Id = id;
+        //    Name = name;
+        //    Priority = priority;
+        //    this.ProjectUsers = new HashSet<ProjectUser>();
+        //    this.Tickets = new HashSet<Ticket>();
+        //}
 
         public int Id { get; set; }
 

@@ -1,0 +1,51 @@
+﻿@model List<BugTracker.Models.ProjectClasses.TicketComment>
+
+@{
+    ViewBag.Title = "Index";
+    //     ViewBag.TicketId = ticketId;
+    var ticketId = ViewBag.ticketId;
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("New Comment", "CreateTicketComment", "TicketComment", new { ticketId = ticketId }, null)
+ 
+</p>
+<table class="table">
+    <tr>
+        <th>
+           Comment
+        </th>
+        <th>
+         UserID
+        </th>
+        <th>
+           TicketId
+        </th>
+     @*  <th></th>*@
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketId)
+            </td>
+          
+
+            <td>
+                @Html.ActionLink("Update", "UpdateTicketComment", "TicketComment",  new { ticketCommentId = item.Id }, null)|
+                @Html.ActionLink("Delete", "DeleteTicketComment", "TicketComment",  new { ticketCommentId = item.Id }, null)
+              
+            </td>
+        </tr>
+    }
+
+</table>

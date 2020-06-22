@@ -25,6 +25,7 @@ namespace BugTracker.DAL {
             return db.TicketPriorities.FirstOrDefault(where);
         }
 
+
         public void Update(int ticketPriorityId, Priority priority) {
             var ticketPriority = db.TicketPriorities.FirstOrDefault(x => x.Id == ticketPriorityId);
             ticketPriority.Priority = priority;

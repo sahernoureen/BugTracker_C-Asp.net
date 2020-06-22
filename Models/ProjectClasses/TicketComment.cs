@@ -6,6 +6,17 @@ namespace BugTracker.Models.ProjectClasses
 {
     public class TicketComment
     {
+        public TicketComment()
+        {
+
+        }
+        public TicketComment(string Comment, DateTime Created, string UserId, int TicketId)
+        {
+            this.Comment = Comment;
+            this.UserId = UserId;
+            this.TicketId = TicketId;
+            this.Created = Created;
+        }
         public int Id { get; set; }
 
         [Required]
