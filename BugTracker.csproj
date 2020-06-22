@@ -176,6 +176,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BL\AdminLogic.cs" />
+    <Compile Include="BL\ProjectLogic.cs" />
+    <Compile Include="BL\TicketCommentLogic.cs" />
     <Compile Include="BL\TicketLogic.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -185,8 +187,12 @@
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\SubmitterController.cs" />
+    <Compile Include="Controllers\TicketCommentController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="DAL\ProjectRepo.cs" />
+    <Compile Include="DAL\ProjectUserRepo.cs" />
+    <Compile Include="DAL\TicketCommentRepo.cs" />
+    <Compile Include="DAL\TicketHistoryRepo.cs" />
     <Compile Include="DAL\TicketPriorityRepo.cs" />
     <Compile Include="DAL\TicketRepo.cs" />
     <Compile Include="DAL\TicketStatusRepo.cs" />
@@ -302,20 +308,24 @@
     <Content Include="Views\Ticket\UpdateTicketBySubmitter.cshtml" />
     <Content Include="Views\Ticket\AssignTicket.cshtml" />
     <Content Include="Views\Ticket\Create.cshtml" />
+    <Content Include="Views\TicketComment\Index.cshtml" />
+    <Content Include="Views\TicketComment\CreateTicketComment.cshtml" />
+    <Content Include="Views\TicketComment\UpdateTicketComment.cshtml" />
+    <Content Include="Views\Ticket\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Migrations\202006191541269_Initial.resx">
       <DependentUpon>202006191541269_Initial.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

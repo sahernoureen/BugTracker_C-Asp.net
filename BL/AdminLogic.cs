@@ -44,6 +44,20 @@ namespace BugTracker.BL
             var adminRoleId = db.Roles.FirstOrDefault(r => r.Name == "Submitter").Id;
             return db.Users.Where(u => !u.Roles.Any(r => r.RoleId == adminRoleId)).ToList();
         }
+
+        public static List<ApplicationUser> GetAllDevelopers()
+        {
+            var DeveloperRoleId = db.Roles.FirstOrDefault(r => r.Name == "Developer").Id;
+            return db.Users.Where(u => u.Roles.Any(r => r.RoleId == DeveloperRoleId)).ToList();
+        }
+
+        public static List<ApplicationUser> GetAllDevelopersAndManagers()
+        {
+            var DeveloperRoleId = db.Roles.FirstOrDefault(r => r.Name == "Developer").Id;
+            var ManagerRoleId = db.Roles.FirstOrDefault(r => r.Name == "Manager").Id;
+            return db.Users.Where(u => u.Roles.Any(r => r.RoleId == DeveloperRoleId || r.RoleId == ManagerRoleId)).ToList();
+        }
+
         //ADD ROLE TO USER
         public static bool AddUserToRole(string userId, string role)
         {

@@ -1,0 +1,34 @@
+﻿@model List<BugTracker.Models.ProjectClasses.TicketHistory>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Ticket History</h2>
+
+
+<table class="table">
+    <tr>
+      
+      
+        <th>
+            Ticket Description
+        </th>
+       
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+          
+          
+            <td>
+                @Html.DisplayFor(modelItem => item.NewValue)
+            </td>
+           
+           
+
+        </tr>
+    }
+
+</table>

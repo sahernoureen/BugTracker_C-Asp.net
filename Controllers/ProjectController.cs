@@ -1,7 +1,9 @@
 ﻿using BugTracker.BL;
+using BugTracker.Models;
 using BugTracker.Models.ProjectClasses;
 using BugTracker.Repo;
 using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace BugTracker.Controllers
@@ -9,12 +11,12 @@ namespace BugTracker.Controllers
     [Authorize(Roles = "Manager,Admin")]
     public class ProjectController : Controller
     {
-        ProjectRepo repo = new ProjectRepo();
+        ProjectLogic projectLogic = new ProjectLogic();
 
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
-            var projects = repo.getAllProjectsOfAUser(userId);
+            var projects = projectLogic.getAllProjectsOfAUser(userId);
             ViewBag.UserId = userId;
             return View(projects);
 
@@ -22,7 +24,7 @@ namespace BugTracker.Controllers
         }
         public ActionResult UserIndex()
         {
-            var projects = repo.getAllProjects();
+            var projects = projectLogic.getAllProjects();
             return View(projects);
         }
 
@@ -37,7 +39,7 @@ namespace BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                repo.createProject(model.Name, model.Priority);
+                projectLogic.createProject(model.Name, model.Priority);
             }
             return RedirectToAction("Index", "Project");
         }
@@ -46,7 +48,22 @@ namespace BugTracker.Controllers
         public ActionResult AssignUsersToProject(int projectId)
         {
             ViewBag.projectId = projectId;
-            var users = AdminLogic.GetAllUserExceptSubmitter();
+            var userId = User.Identity.GetUserId();
+
+            List<ApplicationUser> users = new List<ApplicationUser>();
+
+            if (AdminLogic.CheckIfUserIsInRole(userId, "Admin"))
+            {
+                 users = AdminLogic.GetAllDevelopersAndManagers();
+
+            }
+            else
+               if (AdminLogic.CheckIfUserIsInRole(userId, "Manager"))
+
+            {
+                users = AdminLogic.GetAllDevelopersAndManagers();
+            }
+          
             return View(users);
         }
 
@@ -56,7 +73,7 @@ namespace BugTracker.Controllers
             string[] arr = userList.Split(',');
             foreach (var id in arr)
             {
-                repo.AssignProjectToUser(projectId, id);
+                projectLogic.AssignProjectToUser(projectId, id);
             }
             ViewBag.projectId = projectId;
             return Json("", JsonRequestBehavior.AllowGet);
@@ -67,7 +84,7 @@ namespace BugTracker.Controllers
         public ActionResult UnAssignUserfromProject(int projectId)
         {
             ViewBag.projectId = projectId;
-            var users = repo.getAllAssignedusersToProject(projectId);
+            var users = projectLogic.getAllAssignedusersToProject(projectId);
             return View(users);
         }
 
@@ -77,7 +94,7 @@ namespace BugTracker.Controllers
             string[] arr = userList.Split(',');
             foreach (var id in arr)
             {
-                repo.UnAssignUserfromProject(projectId, id);
+                projectLogic.UnAssignUserfromProject(projectId, id);
             }
             ViewBag.projectId = projectId;
             return Json("", JsonRequestBehavior.AllowGet);
@@ -85,14 +102,14 @@ namespace BugTracker.Controllers
 
         public ActionResult UserAssignedToProject()
         {
-            var projuser = repo.getAllProjectUsers();
+            var projuser = projectLogic.getAllProjectUsers();
             return View(projuser);
         }
 
         [HttpGet]
         public ActionResult EditProject(int projectId)
         {
-            var project = repo.getProjectById(projectId);
+            var project = projectLogic.getProjectById(projectId);
             ViewBag.projectId = projectId;
             return View(project);
         }
@@ -101,14 +118,14 @@ namespace BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                repo.EditProject(model.Id, model.Name, model.Priority);
+                projectLogic.EditProject(model.Id, model.Name, model.Priority);
             }
             return RedirectToAction("Index", "Project");
         }
 
         public ActionResult DeleteProject(int projectId)
         {
-            repo.deleteProject(projectId);
+            projectLogic .deleteProject(projectId);
             return RedirectToAction("Index", "Project");
         }
 
