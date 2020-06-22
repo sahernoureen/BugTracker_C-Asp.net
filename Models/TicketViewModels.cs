@@ -15,6 +15,11 @@ namespace BugTracker.Models {
         [Display(Name = "Description")]
         public string Description { get; set; }
 
+        //project
+        [Required]
+        [Display(Name = "Project Name")]
+        public int ProjectId { get; set; }
+
 
         //Ticket Type
         [Required]

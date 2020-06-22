@@ -4,27 +4,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (User.IsInRole("Admin"))
-{
+@if (User.IsInRole("Admin")) {
     <h2 class="centerTextAdmin">Create Ticket</h2>
-}
-else if (User.IsInRole("Manager"))
-{
+} else if (User.IsInRole("Manager")) {
     <h2 class="centerTextManager">Create Ticket</h2>
-}
-else if (User.IsInRole("Developer"))
-{
+} else if (User.IsInRole("Developer")) {
     <h2 class="centerTextDev">Create Ticket</h2>
-}
-else if (User.IsInRole("Submitter"))
-{
+} else if (User.IsInRole("Submitter")) {
     <h2 class="centerTextSubmitter">Create Ticket</h2>
 }
 
 <br />
 
-@using (Html.BeginForm("CreateTicket", "Ticket", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
+@using (Html.BeginForm("CreateTicket", "Ticket", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
     @Html.AntiForgeryToken()
 
     @Html.ValidationSummary("", new { @class = "text-danger" })
@@ -38,6 +30,12 @@ else if (User.IsInRole("Submitter"))
         @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProjectId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("ProjectId", (SelectList)ViewBag.ProjectId, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
@@ -68,12 +66,9 @@ else if (User.IsInRole("Submitter"))
 
 <div>
     <span class="btn btn-default btnShadow">@Html.ActionLink("Back To Tickets", "Index", "Ticket")</span>
-    @if (User.IsInRole("Admin"))
-    {
+    @if (User.IsInRole("Admin")) {
         <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Admin")</span>
-    }
-    else
-    {
+    } else {
         <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Manager")</span>
     }
 </div>

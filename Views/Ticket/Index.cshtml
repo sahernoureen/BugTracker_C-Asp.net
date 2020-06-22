@@ -5,20 +5,13 @@
     ViewBag.Title = "Index";
 }
 
-@if (User.IsInRole("Admin"))
-{
+@if (User.IsInRole("Admin")) {
     <h2 class="centerTextAdmin">Tickets</h2>
-}
-else if (User.IsInRole("Manager"))
-{
+} else if (User.IsInRole("Manager")) {
     <h2 class="centerTextManager">Tickets</h2>
-}
-else if (User.IsInRole("Developer"))
-{
+} else if (User.IsInRole("Developer")) {
     <h2 class="centerTextDev">Tickets</h2>
-}
-else if (User.IsInRole("Submitter"))
-{
+} else if (User.IsInRole("Submitter")) {
     <h2 class="centerTextSubmitter">Tickets</h2>
 }
 
@@ -32,14 +25,11 @@ else if (User.IsInRole("Submitter"))
 <table class="table">
     <tr>
         <th>
-            Name
+            Ticket Creator
         </th>
         <th>
-            Project
+            Project Name
         </th>
-        @*<th>
-            Id
-        </th>*@
         <th>
             Title
         </th>
@@ -47,30 +37,26 @@ else if (User.IsInRole("Submitter"))
             Description
         </th>
         <th>
-
-            Date
+            Date Created
         </th>
         <th>
-            DevId
-        </th>
-        @*<th>
             Priority
-        </th>*@
+        </th>
+        <th>
+            Developer Assign
+        </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
+    @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.OwnerUserId)
+                @Html.DisplayFor(modelItem => item.OwnerUser.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProjectId)
+                @Html.DisplayFor(modelItem => item.Project.Name)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.TicketTypeId)
-            </td>*@
+
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
@@ -80,38 +66,33 @@ else if (User.IsInRole("Submitter"))
             <td>
                 @Html.DisplayFor(modelItem => item.Created)
             </td>
-            @if (item.AssignedToUserId != null)
-            {
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketPriority.Priority)
+            </td>
+            @if (item.AssignedToUserId != null) {
                 <td>
-                    @Html.DisplayFor(modelItem => item.AssignedToUserId);
+                    @Html.DisplayFor(modelItem => item.AssignedToUser.UserName);
                 </td>
-            }
-            else
-            {
+            } else {
                 <td>
                     Not assigned
                 </td>
             }
-            @*<td>
-                @Html.DisplayFor(modelItem => item.TicketPriorityId)
-            </td>*@
 
             <td>
-                @if (this.User.Identity.GetUserId() == item.OwnerUserId && !(User.IsInRole("Admin") || User.IsInRole("Manager")))
-                {
-                    <span>@Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |</span>
-                    <span>@Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id })</span>
-                    <span>@Html.ActionLink("Comments", "Index", "TicketComment", new { ticketId = item.Id }, null) |</span>
-                    <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>    
-                }
-
-                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
-                {
+                @if (this.User.Identity.GetUserId() == item.OwnerUserId && !(User.IsInRole("Admin") || User.IsInRole("Manager"))) {
                     <span>@Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |</span>
                     <span>@Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id }) |</span>
-                    <span>@Html.ActionLink("Assign", "AssignTicket", new { ticketId = item.Id })</span>
                     <span>@Html.ActionLink("Comments", "Index", "TicketComment", new { ticketId = item.Id }, null) |</span>
-                    <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>    
+                    <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>
+                }
+
+                @if (User.IsInRole("Admin") || User.IsInRole("Manager")) {
+                    <span>@Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |</span>
+                    <span>@Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id }) |</span>
+                    <span>@Html.ActionLink("Assign", "AssignTicket", new { ticketId = item.Id }) |</span>
+                    <span>@Html.ActionLink("Comments", "Index", "TicketComment", new { ticketId = item.Id }, null) |</span>
+                    <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>
 
                 }
             </td>
@@ -124,16 +105,11 @@ else if (User.IsInRole("Submitter"))
 <br />
 
 <div>
-    @if (User.IsInRole("Admin"))
-    {
+    @if (User.IsInRole("Admin")) {
         <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Admin")</span>
-    }
-    else if (User.IsInRole("Manager"))
-    {
+    } else if (User.IsInRole("Manager")) {
         <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Manager")</span>
-    }
-    else if (User.IsInRole("Developer"))
-    {
+    } else if (User.IsInRole("Developer")) {
         <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Developer")</span>
 
     }

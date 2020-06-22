@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BugTracker.BL {
     public class TicketLogic {
@@ -26,10 +27,10 @@ namespace BugTracker.BL {
             TicketPriority ticketPriority = new TicketPriority(model.Priority);
             TicketTypeRepo.Add(ticketType);
             TicketPriorityRepo.Add(ticketPriority);
-            Ticket ticket = new Ticket(model.Title, model.Description, DateTime.Now, 1, ticketType.Id,
+            Ticket ticket = new Ticket(model.Title, model.Description, DateTime.Now, model.ProjectId, ticketType.Id,
                 ticketPriority.Id, userId);
             TicketRepo.Add(ticket);
-            var copyTicket =TicketRepo.GetEntity(x => x.Id == ticket.Id);
+            var copyTicket = TicketRepo.GetEntity(x => x.Id == ticket.Id);
 
             TicketHistory history = new TicketHistory(copyTicket.Id, "property", model.Description, model.Description, true, userId);
             TicketHistoryRepo.Add(history);
@@ -43,14 +44,12 @@ namespace BugTracker.BL {
             var ticketComments = TicketCommentRepo.GetList(x => x.TicketId == ticket.Id);
             var ticketHistory = TicketHistoryRepo.GetList(x => x.TicketId == ticket.Id);
 
-            
-            foreach(var comment in ticketComments)
-            {
+
+            foreach (var comment in ticketComments) {
                 TicketCommentRepo.Delete(comment);
             }
 
-            foreach(var history in ticketHistory)
-            {
+            foreach (var history in ticketHistory) {
                 TicketHistoryRepo.Delete(history);
             }
 
@@ -58,7 +57,7 @@ namespace BugTracker.BL {
             TicketTypeRepo.Delete(ticketType);
             TicketPriorityRepo.Delete(ticketPriority);
 
-            if(ticketStatus != null) {
+            if (ticketStatus != null) {
                 TicketStatusRepo.Delete(ticketStatus);
             }
         }
@@ -69,9 +68,25 @@ namespace BugTracker.BL {
             return TicketRepo.GetEntity(x => x.Id == ticketId);
         }
 
+        public List<Ticket> getAllTicket() {
+            return TicketRepo.GetAllTicketList();
+        }
+
         //GET USER
+        public List<ApplicationUser> getAllManagerAndDeveloperUser(string adminId) {
+            var users = TicketRepo.GetAllUserList(x => x.Id != adminId);
+            List<ApplicationUser> developers = new List<ApplicationUser>();
+            // var list = users.Where(x => UserManager.IsInRole(x.Id, "NormalUser")).ToList();
+            foreach (var user in users) {
+                if (AdminLogic.CheckIfUserIsInRole(user.Id, "Developer") || AdminLogic.CheckIfUserIsInRole(user.Id, "Manager")) {
+                    developers.Add(user);
+                }
+            }
+            return developers;
+        }
+
         public List<ApplicationUser> getAllDeveloperUser(string projectManagerId) {
-            var users = TicketRepo.GetList(x => x.Id != projectManagerId);
+            var users = TicketRepo.GetAllUserList(x => x.Id != projectManagerId);
             List<ApplicationUser> developers = new List<ApplicationUser>();
             foreach (var user in users) {
                 if (AdminLogic.CheckIfUserIsInRole(user.Id, "Developer")) {
@@ -111,8 +126,7 @@ namespace BugTracker.BL {
         }
 
 
-        public IList<TicketHistory> GetHistoryOfTicket(int ticketId)
-        {
+        public IList<TicketHistory> GetHistoryOfTicket(int ticketId) {
             return TicketHistoryRepo.GetList(x => x.TicketId == ticketId);
         }
     }
