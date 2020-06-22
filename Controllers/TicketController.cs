@@ -1,6 +1,7 @@
 ﻿using BugTracker.BL;
 using BugTracker.Models;
 using Microsoft.AspNet.Identity;
+using PagedList;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -10,9 +11,30 @@ namespace BugTracker.Controllers
     {
         ApplicationDbContext db = new ApplicationDbContext();
         TicketLogic ticketLogic = new TicketLogic();
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var a = db.Tickets.ToList();
+
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.classView = "centerTextAdmin";
+            }
+            else if (User.IsInRole("Manager"))
+            {
+                ViewBag.classView = "centerTextManager";
+            }
+            else if (User.IsInRole("Developer"))
+            {
+                ViewBag.classView = "centerTextDev";
+            }
+            else if (User.IsInRole("Submitter"))
+            {
+                ViewBag.classView = "centerTextSubmitter";
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            var a = db.Tickets.OrderByDescending(s => s.Id).ToPagedList(pageNumber, pageSize);
+
             return View(a);
         }
 
@@ -25,7 +47,7 @@ namespace BugTracker.Controllers
             var ticket = ticketLogic.getTicketById(ticketId);
             if (ticket == null)
             {
-                return RedirectToAction("Error");
+                return Redirect("Shared/Error");
             }
             var userId = User.Identity.GetUserId();
             var users = ticketLogic.getAllDeveloperUser(userId);
@@ -67,7 +89,7 @@ namespace BugTracker.Controllers
                 ticketLogic.createTicket(model, userId);
                 return RedirectToAction("Index");
             }
-            return RedirectToAction("Error");
+            return Redirect("Shared/Error");
         }
 
         public ActionResult DeleteTicket(int ticketId)
@@ -75,7 +97,7 @@ namespace BugTracker.Controllers
             var ticket = ticketLogic.getTicketById(ticketId);
             if (ticket == null)
             {
-                return RedirectToAction("Error");
+                return Redirect("Shared/Error");
             }
 
             ticketLogic.deleteTicket(ticket);
@@ -89,7 +111,7 @@ namespace BugTracker.Controllers
             var ticket = ticketLogic.updateTicketById(ticketId);
             if (ticket == null)
             {
-                return RedirectToAction("Error");
+                return Redirect("Shared/Error");
             }
 
             return View(ticket);
@@ -105,7 +127,7 @@ namespace BugTracker.Controllers
                 ticketLogic.updateTicket(model, userId);
                 return RedirectToAction("Index");
             }
-            return RedirectToAction("Error");
+            return Redirect("Shared/Error");
         }
 
 
@@ -115,7 +137,7 @@ namespace BugTracker.Controllers
             var ticketHistory = ticketLogic.GetHistoryOfTicket(ticketId);
             if (ticketHistory == null)
             {
-                return RedirectToAction("Error");
+                return Redirect("Shared/Error");
             }
 
             return View(ticketHistory);
