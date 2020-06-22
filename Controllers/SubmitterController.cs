@@ -8,7 +8,7 @@ namespace BugTracker.Controllers
         // GET: Submitter
         public ActionResult Index()
         {
-            return View();
+            return this.RedirectToAction("Index", "Ticket");
         }
     }
 }
