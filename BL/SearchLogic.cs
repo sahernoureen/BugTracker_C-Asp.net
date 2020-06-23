@@ -1,5 +1,6 @@
 ﻿using BugTracker.Models;
 using BugTracker.Models.ProjectClasses;
+using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,17 +8,26 @@ namespace BugTracker.BL
 {
     public class SearchLogic
     {
-        static ApplicationDbContext db = new ApplicationDbContext();
-
+        public static ApplicationDbContext db = new ApplicationDbContext();
+        public string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
         public static List<Ticket> GetRelatedTickets(string input)
         {
-            var result = db.Tickets.Where(t => t.Title.Contains(input)).ToList();
+
+            return db.Tickets.Where(t => t.Title.Contains(input)).ToList();
+
+        }
+
+        public static List<Ticket> GetTicketById(int titleId)
+        {
+
+            var result = db.Tickets.Where(t => t.Id == titleId).ToList();
             return result;
         }
 
-        public static Ticket GetTicketByTitle(string title)
+        public static List<Ticket> GetTicketByTitle(string title)
         {
-            var result = db.Tickets.FirstOrDefault(t => t.Title == title);
+
+            var result = db.Tickets.Where(t => t.Title == title).ToList();
             return result;
         }
     }

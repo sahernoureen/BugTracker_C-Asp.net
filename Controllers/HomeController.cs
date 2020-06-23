@@ -18,11 +18,11 @@ namespace BugTracker.Controllers
 
         //post
         [HttpPost]
-        public ActionResult Search(string id)
-        {
-            var result = SearchLogic.GetTicketByTitle(id);
-            return View(result);
-        }
+        //public ActionResult Search(string id)
+        //{
+        //    var result = SearchLogic.GetTicketByTitle(id);
+        //    return View(result);
+        //}
         public ActionResult GetRelatedTickets(string input)
         {
             var titles = SearchLogic.GetRelatedTickets(input);

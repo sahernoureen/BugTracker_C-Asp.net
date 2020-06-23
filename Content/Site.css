@@ -95,3 +95,25 @@ textarea {
     justify-content: space-between;
 }
 
+.SearchBar {
+    position: relative;
+}
+
+#titles {
+    position: absolute;
+    z-index: 1;
+    left: 1px;
+    top: 55px;
+    text-align: left;
+    background-color: white;
+    padding-left: 15px;
+    font-size: 20px;
+}
+
+#titles li {
+    list-style: none;
+}
+
+#titles li a {
+    text-decoration: none;
+}

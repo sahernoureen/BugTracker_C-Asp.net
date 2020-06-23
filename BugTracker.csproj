@@ -200,6 +200,7 @@
     <Compile Include="DAL\ProjectUserRepo.cs" />
     <Compile Include="DAL\TicketCommentRepo.cs" />
     <Compile Include="DAL\TicketHistoryRepo.cs" />
+    <Compile Include="DAL\TicketNotificationRepo.cs" />
     <Compile Include="DAL\TicketPriorityRepo.cs" />
     <Compile Include="DAL\TicketRepo.cs" />
     <Compile Include="DAL\TicketStatusRepo.cs" />
@@ -324,6 +325,8 @@
     <Content Include="Views\TicketComment\UpdateTicketComment.cshtml" />
     <Content Include="Views\Ticket\History.cshtml" />
     <Content Include="Views\Ticket\Error.cshtml" />
+    <Content Include="Views\Developer\DeveloperNotifications.cshtml" />
+    <Content Include="Views\Developer\UpdateNotifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
