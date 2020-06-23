@@ -1,0 +1,60 @@
+﻿@model IList<BugTracker.Models.ProjectClasses.TicketNotification>
+@{
+    ViewBag.Title = "DeveloperNotifications";
+}
+
+<h2>Notifications</h2>
+<div class="Notifi">
+    @if (Model.Count > 0)
+    {
+        <br /><br />
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    TicketID
+                </th>
+                
+                <th></th>
+            </tr>
+
+            @foreach (var Notifi in Model)
+            {
+                if (Notifi.IsNew == true)
+                {
+               <tr style="background-color:lightgray">
+                 
+                   @{int TicketId = Notifi.TicketId;
+                       string ticket = TicketId.ToString();}
+         
+
+
+            <td>
+                @Html.ActionLink(ticket, "UpdateNotifications", "Developer",new { NotifiId = Notifi.Id }, null)
+              
+            </td>
+        </tr>
+                }
+                else
+                {
+        <tr>
+            @{int TicketId = Notifi.TicketId;
+                string ticket = TicketId.ToString();}
+
+            <td>
+                @Html.ActionLink(ticket, "UpdateNotifications", "Developer",new { NotifiId = Notifi.Id }, null)
+            
+            </td>
+        </tr>
+                }
+
+
+            }
+
+        </table>
+
+
+    }
+    @Html.ActionLink("Back To Developer DashBoard", "Index", "Developer")
+</div>
+
+

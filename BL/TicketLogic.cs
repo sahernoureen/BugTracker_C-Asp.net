@@ -15,10 +15,20 @@ namespace BugTracker.BL {
         TicketStatusRepo TicketStatusRepo = new TicketStatusRepo();
         TicketHistoryRepo TicketHistoryRepo = new TicketHistoryRepo();
         TicketCommentRepo TicketCommentRepo = new TicketCommentRepo();
+        TicketNotificationRepo TicketNotificationRepo = new TicketNotificationRepo();
+
         //ASSIGNED TICKET
         //project manager assign ticket to developer
         public void assignTicket(AssignTicketViewModel model) {
             TicketRepo.Assign(model);
+            TicketNotification notification = new TicketNotification(model.DeveloperId, model.TicketId, true);
+            TicketNotificationRepo.Add(notification);
+        }
+
+        public void UpdateTicketNotification(int notificationId)
+        {
+            var notification = TicketNotificationRepo.GetEntity(x => x.Id == notificationId);
+            TicketNotificationRepo.Update(notification.Id);
         }
 
         //CREATE TICKET
@@ -66,6 +76,11 @@ namespace BugTracker.BL {
         //GET TICKET
         public Ticket getTicketById(int ticketId) {
             return TicketRepo.GetEntity(x => x.Id == ticketId);
+        }
+
+        public IList<TicketNotification> GetAllNotificationsForUser(string userId)
+        {
+            return TicketNotificationRepo.GetList(x => x.UserId == userId && x.IsNew == true);
         }
 
         public List<Ticket> getAllTicket() {
@@ -117,6 +132,12 @@ namespace BugTracker.BL {
             var ticketCopy = TicketRepo.GetEntity(x => x.Id == model.Id);
             TicketTypeRepo.Update(ticketCopy.TicketTypeId, model.TicketTypeName);
             TicketPriorityRepo.Update(ticketCopy.TicketPriorityId, model.Priority);
+
+            if(ticketCopy.AssignedToUserId != null)
+            {
+                TicketNotification notification = new TicketNotification(ticketCopy.AssignedToUserId, ticketCopy.Id, true);
+                TicketNotificationRepo.Add(notification);
+            }
 
 
             TicketHistory history = new TicketHistory(model.Id, "property", ticketCopy.Description, model.Description, true, userId);

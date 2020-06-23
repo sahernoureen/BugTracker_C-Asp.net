@@ -93,5 +93,28 @@ namespace BugTracker.BL
             }
         }
 
+        public List<ProjectUserViewModel> CreateProjectViewModel(List<Project> projects )
+        {
+            var ProjectInfo = new List<ProjectUserViewModel>();
+
+            foreach (var project in projects)
+            {
+                var ProjUser = new ProjectUserViewModel();
+                ProjUser.ProjectId = project.Id;
+                ProjUser.Name = project.Name;
+                ProjUser.Priority = project.Priority;
+
+                foreach (var user in project.ProjectUsers)
+                {
+                    var userToAdd = AdminLogic.GetUserById(user.UserId);
+                    ProjUser.UserName.Add(userToAdd.UserName);
+                }
+                ProjectInfo.Add(ProjUser);
+
+            }
+            return ProjectInfo;
+
+        }
+     
     }
 }

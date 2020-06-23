@@ -82,7 +82,6 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Owin.Security.Cookies.4.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Owin.Security.Facebook, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Owin.Security.Facebook.4.1.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
@@ -200,6 +199,7 @@
     <Compile Include="DAL\ProjectUserRepo.cs" />
     <Compile Include="DAL\TicketCommentRepo.cs" />
     <Compile Include="DAL\TicketHistoryRepo.cs" />
+    <Compile Include="DAL\TicketNotificationRepo.cs" />
     <Compile Include="DAL\TicketPriorityRepo.cs" />
     <Compile Include="DAL\TicketRepo.cs" />
     <Compile Include="DAL\TicketStatusRepo.cs" />
@@ -324,20 +324,22 @@
     <Content Include="Views\TicketComment\UpdateTicketComment.cshtml" />
     <Content Include="Views\Ticket\History.cshtml" />
     <Content Include="Views\Ticket\Error.cshtml" />
+    <Content Include="Views\Developer\DeveloperNotifications.cshtml" />
+    <Content Include="Views\Developer\UpdateNotifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Migrations\202006221921167_Initial.resx">
       <DependentUpon>202006221921167_Initial.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

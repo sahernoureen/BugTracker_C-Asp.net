@@ -14,6 +14,7 @@ namespace BugTracker.Repo
 
         public IList<ApplicationUser> GetList(Func<ApplicationUser, bool> where)
         {
+            
             return db.Users.ToList();
         }
         public ApplicationUser getUserById(string userId)
@@ -29,7 +30,8 @@ namespace BugTracker.Repo
 
         public List<Project> GetList()
         {
-            return db.Projects.ToList();
+           // var users = db.Users.Include("Roles").ToList();
+            return db.Projects.Include("ProjectUsers").ToList();
         }
 
         //ADD PROJECT
