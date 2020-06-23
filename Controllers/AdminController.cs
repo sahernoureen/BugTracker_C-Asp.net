@@ -12,24 +12,7 @@ namespace BugTracker.Controllers
             return View();
         }
 
-        //get
-        public ActionResult AddUser()
-        {
-            ViewBag.AddStatus = null;
-            return View();
-        }
-        //post
-        [HttpPost]
-        public ActionResult AddUser(RegisterViewModel user)
-        {
-            ViewBag.AddStatus = null;
-            if (ModelState.IsValid)
-            {
-                ViewBag.AddStatus = AdminLogic.addUser(user);
-                return View();
-            }
-            return View();
-        }
+      
 
         public ActionResult DeleteUser(string userId)
         {
@@ -103,18 +86,6 @@ namespace BugTracker.Controllers
             return Json(roles, JsonRequestBehavior.AllowGet);
         }
 
-        //get
-        public ActionResult AddRole()
-        {
-            return View();
-        }
-        //post
-        [HttpPost]
-        public ActionResult AddRole(string roleName)
-        {
-            var result = AdminLogic.AddRole(roleName);
-            return View(result);
-        }
 
         //get
         public ActionResult GetAllRoles()

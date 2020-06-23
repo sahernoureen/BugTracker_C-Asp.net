@@ -2,7 +2,10 @@
 using BugTracker.Models.ProjectClasses;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
+using System.Web.Security;
 
 namespace BugTracker.BL
 {
@@ -12,14 +15,14 @@ namespace BugTracker.BL
         public string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
         public static List<Ticket> GetRelatedTickets(string input)
         {
-
+           
             return db.Tickets.Where(t => t.Title.Contains(input)).ToList();
 
         }
 
         public static List<Ticket> GetTicketById(int titleId)
         {
-
+            
             var result = db.Tickets.Where(t => t.Id == titleId).ToList();
             return result;
         }

@@ -16,7 +16,7 @@
         {
             <div class="form-group">
                 <div class="col-md-10">
-                    @Html.DropDownList("userId", new SelectList(ViewBag.userId, "userId"), "Select User", new { @class = "form-control", @onchange = "GetRoles()" })
+                    @Html.DropDownList("userId",null, new { @class = "form-control" })
 
                 </div>
             </div>
@@ -26,7 +26,7 @@
 
             <div class="form-group">
                 <div class="col-md-10">
-                    @Html.DropDownList("role", new SelectList(ViewBag.role, "role"), "Select Role", new { @class = "form-control" })
+                    @Html.DropDownList("role", null, new { @class = "form-control" })
 
                 </div>
             </div>
