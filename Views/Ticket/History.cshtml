@@ -4,31 +4,42 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Ticket History</h2>
+<h2 class=@ViewBag.classView>Ticket History</h2>
 
+<br />
+<br />
 
 <table class="table">
     <tr>
-      
-      
+
+
         <th>
             Ticket Description
         </th>
-       
+
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
-          
-          
+
+
             <td>
                 @Html.DisplayFor(modelItem => item.NewValue)
             </td>
-           
-           
+
+
 
         </tr>
     }
 
 </table>
+
+<br />
+<br />
+
+<div>
+    <span class="btn btn-default btnShadow">@Html.ActionLink("Back", "Index", "Ticket")</span>
+</div>
+
+<br />

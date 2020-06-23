@@ -80,7 +80,7 @@ else if (User.IsInRole("Submitter"))
     {
         <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Admin")</span>
     }
-    else
+    else if (User.IsInRole("Manager"))
     {
         <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Manager")</span>
     }

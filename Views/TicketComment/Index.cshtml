@@ -1,4 +1,5 @@
-﻿@model List<BugTracker.Models.ProjectClasses.TicketComment>
+﻿@using Microsoft.AspNet.Identity
+@model List<BugTracker.Models.ProjectClasses.TicketComment>
 
 @{
     ViewBag.Title = "Index";
@@ -6,24 +7,29 @@
     var ticketId = ViewBag.ticketId;
 }
 
-<h2>Index</h2>
+<h2 class=@ViewBag.classView>Comment</h2>
 
-<p>
+<br />
+
+<p class="btn btn-info btn-lg">
     @Html.ActionLink("New Comment", "CreateTicketComment", "TicketComment", new { ticketId = ticketId }, null)
- 
 </p>
+
+<br />
+<br />
+
 <table class="table">
     <tr>
         <th>
-           Comment
+            Comment
         </th>
         <th>
-         UserID
+            UserID
         </th>
         <th>
-           TicketId
+            TicketId
         </th>
-     @*  <th></th>*@
+        @*  <th></th>*@
     </tr>
 
     @foreach (var item in Model)
@@ -38,14 +44,25 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TicketId)
             </td>
-          
+
 
             <td>
-                @Html.ActionLink("Update", "UpdateTicketComment", "TicketComment",  new { ticketCommentId = item.Id }, null)|
-                @Html.ActionLink("Delete", "DeleteTicketComment", "TicketComment",  new { ticketCommentId = item.Id }, null)
-              
+                @if (this.User.Identity.GetUserId() == item.UserId)
+                {
+                    <span>@Html.ActionLink("Update", "UpdateTicketComment", "TicketComment", new { ticketCommentId = item.Id }, null) |</span>
+                    <span>@Html.ActionLink("Delete", "DeleteTicketComment", "TicketComment", new { ticketCommentId = item.Id }, null)</span>
+                }
             </td>
         </tr>
     }
 
 </table>
+
+<br />
+<br />
+
+<div>
+    <span class="btn btn-default btnShadow">@Html.ActionLink("Back", "Index", "Ticket")</span>
+</div>
+
+<br />

@@ -31,6 +31,9 @@ namespace BugTracker.Controllers
             return Json(titles, JsonRequestBehavior.AllowGet);
         }
 
-
+        public ActionResult Demo()
+        {
+            return View();
+        }
     }
 }

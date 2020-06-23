@@ -328,6 +328,7 @@
     <Content Include="Views\Home\GetTicketById.cshtml" />
     <Content Include="Views\Home\GetTicketByTitle.cshtml" />
     <Content Include="Views\Admin\AddRole.cshtml" />
+    <Content Include="Views\Home\Demo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

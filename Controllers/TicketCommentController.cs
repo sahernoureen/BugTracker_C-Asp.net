@@ -3,9 +3,6 @@ using BugTracker.Models;
 using BugTracker.Models.ProjectClasses;
 using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BugTracker.Controllers
@@ -18,7 +15,24 @@ namespace BugTracker.Controllers
 
         public ActionResult Index(int ticketId)
         {
-           var TicketComments =  ticketCommentLogic.getTicketCommentsById(ticketId);
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.classView = "centerTextAdmin";
+            }
+            else if (User.IsInRole("Manager"))
+            {
+                ViewBag.classView = "centerTextManager";
+            }
+            else if (User.IsInRole("Developer"))
+            {
+                ViewBag.classView = "centerTextDev";
+            }
+            else if (User.IsInRole("Submitter"))
+            {
+                ViewBag.classView = "centerTextSubmitter";
+            }
+
+            var TicketComments = ticketCommentLogic.getTicketCommentsById(ticketId);
             ViewBag.ticketId = ticketId;
             return View(TicketComments);
         }
@@ -41,11 +55,11 @@ namespace BugTracker.Controllers
             {
                 var UserId = User.Identity.GetUserId();
                 model.Created = DateTime.Now;
-                model.TicketId = ticketId;                  
+                model.TicketId = ticketId;
                 ticketCommentLogic.createTicketComment(model, UserId);
-                return RedirectToAction("Index",new { ticketId = ticketId });
+                return RedirectToAction("Index", new { ticketId = ticketId });
             }
-           
+
             return RedirectToAction("Error");
         }
 
@@ -69,7 +83,7 @@ namespace BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+
                 ticketCommentLogic.updateTicketComment(model);
                 return RedirectToAction("Index", new { ticketId = model.TicketId });
             }

@@ -210,6 +210,23 @@ namespace BugTracker.Controllers
         [HttpGet]
         public ActionResult History(int ticketId)
         {
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.classView = "centerTextAdmin";
+            }
+            else if (User.IsInRole("Manager"))
+            {
+                ViewBag.classView = "centerTextManager";
+            }
+            else if (User.IsInRole("Developer"))
+            {
+                ViewBag.classView = "centerTextDev";
+            }
+            else if (User.IsInRole("Submitter"))
+            {
+                ViewBag.classView = "centerTextSubmitter";
+            }
+
             var ticketHistory = ticketLogic.GetHistoryOfTicket(ticketId);
             if (ticketHistory == null)
             {
