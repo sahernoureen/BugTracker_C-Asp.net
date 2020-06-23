@@ -1,14 +1,13 @@
 ﻿using BugTracker.DAL;
 using BugTracker.Models;
 using BugTracker.Models.ProjectClasses;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace BugTracker.BL {
-    public class TicketLogic {
+namespace BugTracker.BL
+{
+    public class TicketLogic
+    {
         TicketRepo TicketRepo = new TicketRepo();
         TicketTypeRepo TicketTypeRepo = new TicketTypeRepo();
         TicketPriorityRepo TicketPriorityRepo = new TicketPriorityRepo();
@@ -17,12 +16,14 @@ namespace BugTracker.BL {
         TicketCommentRepo TicketCommentRepo = new TicketCommentRepo();
         //ASSIGNED TICKET
         //project manager assign ticket to developer
-        public void assignTicket(AssignTicketViewModel model) {
+        public void assignTicket(AssignTicketViewModel model)
+        {
             TicketRepo.Assign(model);
         }
 
         //CREATE TICKET
-        public void createTicket(CreateTicketViewModel model, string userId) {
+        public void createTicket(CreateTicketViewModel model, string userId)
+        {
             TicketType ticketType = new TicketType(model.TicketTypeName);
             TicketPriority ticketPriority = new TicketPriority(model.Priority);
             TicketTypeRepo.Add(ticketType);
@@ -37,7 +38,8 @@ namespace BugTracker.BL {
         }
 
         //DELETE TICKET 
-        public void deleteTicket(Ticket ticket) {
+        public void deleteTicket(Ticket ticket)
+        {
             var ticketType = TicketTypeRepo.GetEntity(x => x.Id == ticket.TicketTypeId);
             var ticketPriority = TicketPriorityRepo.GetEntity(x => x.Id == ticket.TicketPriorityId);
             var ticketStatus = TicketStatusRepo.GetEntity(x => x.Id == ticket.TicketStatusId);
@@ -45,11 +47,13 @@ namespace BugTracker.BL {
             var ticketHistory = TicketHistoryRepo.GetList(x => x.TicketId == ticket.Id);
 
 
-            foreach (var comment in ticketComments) {
+            foreach (var comment in ticketComments)
+            {
                 TicketCommentRepo.Delete(comment);
             }
 
-            foreach (var history in ticketHistory) {
+            foreach (var history in ticketHistory)
+            {
                 TicketHistoryRepo.Delete(history);
             }
 
@@ -57,39 +61,48 @@ namespace BugTracker.BL {
             TicketTypeRepo.Delete(ticketType);
             TicketPriorityRepo.Delete(ticketPriority);
 
-            if (ticketStatus != null) {
+            if (ticketStatus != null)
+            {
                 TicketStatusRepo.Delete(ticketStatus);
             }
         }
 
 
         //GET TICKET
-        public Ticket getTicketById(int ticketId) {
+        public Ticket getTicketById(int ticketId)
+        {
             return TicketRepo.GetEntity(x => x.Id == ticketId);
         }
 
-        public List<Ticket> getAllTicket() {
+        public List<Ticket> getAllTicket()
+        {
             return TicketRepo.GetAllTicketList();
         }
 
         //GET USER
-        public List<ApplicationUser> getAllManagerAndDeveloperUser(string adminId) {
+        public List<ApplicationUser> getAllManagerAndDeveloperUser(string adminId)
+        {
             var users = TicketRepo.GetAllUserList(x => x.Id != adminId);
             List<ApplicationUser> developers = new List<ApplicationUser>();
             // var list = users.Where(x => UserManager.IsInRole(x.Id, "NormalUser")).ToList();
-            foreach (var user in users) {
-                if (AdminLogic.CheckIfUserIsInRole(user.Id, "Developer") || AdminLogic.CheckIfUserIsInRole(user.Id, "Manager")) {
+            foreach (var user in users)
+            {
+                if (AdminLogic.CheckIfUserIsInRole(user.Id, "Developer") || AdminLogic.CheckIfUserIsInRole(user.Id, "Manager"))
+                {
                     developers.Add(user);
                 }
             }
             return developers;
         }
 
-        public List<ApplicationUser> getAllDeveloperUser(string projectManagerId) {
+        public List<ApplicationUser> getAllDeveloperUser(string projectManagerId)
+        {
             var users = TicketRepo.GetAllUserList(x => x.Id != projectManagerId);
             List<ApplicationUser> developers = new List<ApplicationUser>();
-            foreach (var user in users) {
-                if (AdminLogic.CheckIfUserIsInRole(user.Id, "Developer")) {
+            foreach (var user in users)
+            {
+                if (AdminLogic.CheckIfUserIsInRole(user.Id, "Developer"))
+                {
                     developers.Add(user);
                 }
             }
@@ -98,7 +111,8 @@ namespace BugTracker.BL {
 
         //UPDATE TICKET
         //creating a clone of ticket to update
-        public CreateTicketViewModel updateTicketById(int ticketId) {
+        public CreateTicketViewModel updateTicketById(int ticketId)
+        {
             var ticketCopy = TicketRepo.GetEntity(x => x.Id == ticketId);
             CreateTicketViewModel ticketViewModel = new CreateTicketViewModel();
             ticketViewModel.Id = ticketCopy.Id;
@@ -113,7 +127,8 @@ namespace BugTracker.BL {
         }
 
         //UPDATE TICKET
-        public void updateTicket(CreateTicketViewModel model, string userId) {
+        public void updateTicket(CreateTicketViewModel model, string userId)
+        {
             var ticketCopy = TicketRepo.GetEntity(x => x.Id == model.Id);
             TicketTypeRepo.Update(ticketCopy.TicketTypeId, model.TicketTypeName);
             TicketPriorityRepo.Update(ticketCopy.TicketPriorityId, model.Priority);
@@ -126,7 +141,8 @@ namespace BugTracker.BL {
         }
 
 
-        public IList<TicketHistory> GetHistoryOfTicket(int ticketId) {
+        public IList<TicketHistory> GetHistoryOfTicket(int ticketId)
+        {
             return TicketHistoryRepo.GetList(x => x.TicketId == ticketId);
         }
     }

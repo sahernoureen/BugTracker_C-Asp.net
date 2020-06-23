@@ -28,25 +28,25 @@
 <table class="table">
     <tr>
         <th>
-            Ticket Creator
+            @Html.ActionLink("Ticket Creator", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th>
-            Project Name
+            @Html.ActionLink("Project Name", "Index", new { sortOrder = ViewBag.ProjectSortParm })
         </th>
         <th>
-            Title
+            @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSortParm })
         </th>
         <th>
             Description
         </th>
         <th>
-            Date Created
+            @Html.ActionLink("Date Created", "Index", new { sortOrder = ViewBag.DateSortParm })
         </th>
         <th>
-            Priority
+            @Html.ActionLink("Priority", "Index", new { sortOrder = ViewBag.PrioritySortParm })
         </th>
         <th>
-            Developer Assign
+            @Html.ActionLink("Developer Assign", "Index", new { sortOrder = ViewBag.DevSortParm })
         </th>
         <th></th>
     </tr>

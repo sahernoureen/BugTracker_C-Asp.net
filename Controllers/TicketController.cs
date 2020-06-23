@@ -2,6 +2,7 @@
 using BugTracker.Models;
 using Microsoft.AspNet.Identity;
 using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -13,7 +14,7 @@ namespace BugTracker.Controllers
         TicketLogic ticketLogic = new TicketLogic();
         ProjectLogic projectLogic = new ProjectLogic();
 
-        public ActionResult Index(int? page)
+        public ActionResult Index(string sortOrder, int? page)
         {
 
             if (User.IsInRole("Admin"))
@@ -33,11 +34,60 @@ namespace BugTracker.Controllers
                 ViewBag.classView = "centerTextSubmitter";
             }
 
-            int pageSize = 3;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
-            var a = ticketLogic.getAllTicket().OrderByDescending(s => s.Id).ToPagedList(pageNumber, pageSize);
 
-            return View(a);
+            var allTickets = ticketLogic.getAllTicket();
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.ProjectSortParm = sortOrder == "Project" ? "project_desc" : "Project";
+            ViewBag.TitleSortParm = sortOrder == "Title" ? "title_desc" : "Title";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewBag.PrioritySortParm = sortOrder == "Priority" ? "priority_desc" : "Priority";
+            ViewBag.DevSortParm = sortOrder == "Developer" ? "dev_desc" : "Developer";
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    allTickets = allTickets.OrderByDescending(n => n.OwnerUser.UserName).ToList();
+                    break;
+                case "Date":
+                    allTickets = allTickets.OrderBy(s => s.Created).ToList();
+                    break;
+                case "date_desc":
+                    allTickets = allTickets.OrderByDescending(s => s.Created).ToList();
+                    break;
+                case "Priority":
+                    allTickets = allTickets.OrderBy(s => s.TicketPriority.Priority).ToList();
+                    break;
+                case "priority_desc":
+                    allTickets = allTickets.OrderByDescending(s => s.TicketPriority.Priority).ToList();
+                    break;
+                case "Project":
+                    allTickets = allTickets.OrderBy(s => s.Project.Name).ToList();
+                    break;
+                case "project_desc":
+                    allTickets = allTickets.OrderByDescending(s => s.Project.Name).ToList();
+                    break;
+                case "Title":
+                    allTickets = allTickets.OrderBy(s => s.Title).ToList();
+                    break;
+                case "title_desc":
+                    allTickets = allTickets.OrderByDescending(s => s.Title).ToList();
+                    break;
+                case "Developer":
+                    allTickets = allTickets.OrderBy(s => s.AssignedToUser.UserName).ToList();
+                    break;
+                case "dev_desc":
+                    allTickets = allTickets.OrderByDescending(s => s.AssignedToUser.UserName).ToList();
+                    break;
+                default:
+                    allTickets = allTickets.OrderBy(s => s.OwnerUser.UserName).ToList();
+                    break;
+            }
+
+            return View(allTickets.ToPagedList(pageNumber, pageSize));
         }
 
 

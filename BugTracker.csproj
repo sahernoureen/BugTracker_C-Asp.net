@@ -328,6 +328,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
+    <Folder Include="UserUploads\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
