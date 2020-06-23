@@ -3,6 +3,7 @@ using BugTracker.Models.ProjectClasses;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace BugTracker.BL
@@ -25,20 +26,7 @@ namespace BugTracker.BL
             return false;
         }
 
-        //USER
-        public static bool addUser(RegisterViewModel user)
-        {
-
-            if (userManager.FindByEmail(user.Email) == null)
-            {
-                ApplicationUser appUser = new ApplicationUser() { Email = user.Email, UserName = user.Email };
-                userManager.Create(appUser, user.Password);
-                return true;
-            }
-            return false;
-        }
-
-
+       
         //GetAllRoles
         public static List<IdentityRole> GetAllRoles()
         {
@@ -98,20 +86,11 @@ namespace BugTracker.BL
                 return true;
             }
         }
-        //ADD ROLE
-        public static bool AddRole(string roleName)
-        {
-            if (!roleManager.RoleExists(roleName))
-            {
-                roleManager.Create(new IdentityRole { Name = roleName });
-                return true;
-            }
-            return false;
-        }
+       
 
         public static List<UserInfoHolder> GetAllUsersInfo()
         {
-            var users = db.Users.ToList();
+            var users = db.Users.Include("Roles").ToList();
 
             var userInfo = new List<UserInfoHolder>();
 
@@ -120,7 +99,7 @@ namespace BugTracker.BL
                 var ui = new UserInfoHolder();
                 ui.Id = u.Id;
                 ui.Name = u.UserName;
-
+                 
                 foreach (var r in u.Roles)
                 {
                     var role = db.Roles.Find(r.RoleId);

@@ -1,51 +1,103 @@
 ﻿@using Microsoft.AspNet.Identity
+@Styles.Render("~/Content/css")
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-    @Html.AntiForgeryToken()
-
+    
     <ul class="nav navbar-nav navbar-right">
 
-        @if (User.IsInRole("Admin"))
+        <li class="SearchBar">
+
+            @using (Html.BeginForm("GetTicketByTitle", "Home"))
+            {
+                <div class="form-group">
+                    <div class="col-md-6">
+                        @Html.TextBox("inputStr", null, new { @class = "form-control", @onkeyup = "GetTitles()" })
+                    </div>
+                    <div class="col-md-6">
+                        <input type="submit" value="Search" class="btn btn-default" />
+                    </div>
+                </div>
+                <ul id="titles"></ul>
+            }
+        </li>
+
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
         {
-            <li class="admin">
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
+            @Html.AntiForgeryToken()
+            <ul class="nav navbar-nav navbar-right">
+
+                @if (User.IsInRole("Admin"))
+                {
+                <li class="admin">
+                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+                }
+                else if (User.IsInRole("Manager"))
+                {
+                <li class="manager">
+                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+                }
+                else if (User.IsInRole("Developer"))
+                {
+                <li class="developer">
+                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+                }
+                else if (User.IsInRole("Submitter"))
+                {
+                <li class="submitter">
+                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+                }
+                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            </ul>
         }
-        else if (User.IsInRole("Manager"))
-        {
-            <li class="manager">
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
+        <ul id="titles"></ul>
+
+    </ul>
+
         }
-        else if (User.IsInRole("Developer"))
+        else
         {
-            <li class="developer">
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        <ul class="nav navbar-nav navbar-right">
+
+            <li class="btn btn-default btn-xs"
+                style="border-color: lightblue; border-width: 3px; border-radius: 10px; margin-right: 20px; margin-top: 10px; margin-bottom: 10px">
+                @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
             </li>
-        }
-        else if (User.IsInRole("Submitter"))
-        {
-            <li class="submitter">
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            <li class="btn btn-default btn-xs"
+                style="border-color: lightblue; border-width: 3px; border-radius: 10px; margin-top: 10px; margin-bottom: 10px">
+                @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
             </li>
+        </ul>
         }
 
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
-    }
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li class="btn btn-default btn-xs"
-            style="border-color: lightblue; border-width: 3px; border-radius: 10px; margin-right: 20px; margin-top: 10px; margin-bottom: 10px">
-            @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new {id = "registerLink"})
-        </li>
-        <li class="btn btn-default btn-xs"
-            style="border-color: lightblue; border-width: 3px; border-radius: 10px; margin-top: 10px; margin-bottom: 10px">
-            @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-        </li>
-    </ul>
-}
+
+        <script type="text/javascript" src="~/packages/jQuery.3.4.1/Content/Scripts/jquery-3.4.1.min.js"></script>
+
+        <script type="text/javascript">
+            function GetTitles() {
+                var inputStr = $("#inputStr").val();
+
+                if (inputStr == "") {
+                    $("#titles").html("");
+                    return;
+                }
+                $.ajax({
+                    type: "GET",
+                    url: '/Home/GetRelatedTickets',
+                    data: { input: inputStr },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (tickets) {
+                        // Looping over emloyee list and display it
+                        $("#titles").html("");
+                        $.each(tickets, function (i, ticket) {
+                            $("#titles").append(
+                                $('<li><a href="/Home/GetTicketById/' + ticket.Id + '">' + ticket.Title + '</a></li>').val(ticket.Id));
+                        });
+                    },
+                });
+            }
+        </script>

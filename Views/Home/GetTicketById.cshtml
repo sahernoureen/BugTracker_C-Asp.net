@@ -1,0 +1,141 @@
+﻿@using Microsoft.AspNet.Identity
+@model List<BugTracker.Models.ProjectClasses.Ticket>
+@{
+    ViewBag.Title = "GetTicketById";
+}
+
+<h2>GetTicketById</h2>
+@if (User.IsInRole("Admin"))
+{
+    <h2 class="centerTextAdmin">Tickets</h2>
+}
+else if (User.IsInRole("Manager"))
+{
+    <h2 class="centerTextManager">Tickets</h2>
+}
+else if (User.IsInRole("Developer"))
+{
+    <h2 class="centerTextDev">Tickets</h2>
+}
+else if (User.IsInRole("Submitter"))
+{
+    <h2 class="centerTextSubmitter">Tickets</h2>
+}
+
+<p class="btn btn-info btn-lg btnBorder">
+    @Html.ActionLink("Create New", "CreateTicket")
+</p>
+
+<br />
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Project
+        </th>
+        @*<th>
+                Id
+            </th>*@
+        <th>
+            Title
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+
+            Date
+        </th>
+        <th>
+            DevId
+        </th>
+        @*<th>
+                Priority
+            </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerUserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectId)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.TicketTypeId)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            @if (item.AssignedToUserId != null)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssignedToUserId);
+                </td>
+            }
+            else
+            {
+                <td>
+                    Not assigned
+                </td>
+            }
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.TicketPriorityId)
+                </td>*@
+
+            <td>
+                @if (this.User.Identity.GetUserId() == item.OwnerUserId && !(User.IsInRole("Admin") || User.IsInRole("Manager")))
+                {
+                    <span>@Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |</span>
+                    <span>@Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id })</span>
+                    <span>@Html.ActionLink("Comments", "Index", "TicketComment", new { ticketId = item.Id }, null) |</span>
+                    <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>
+                }
+
+                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                {
+                    <span>@Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |</span>
+                    <span>@Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id }) |</span>
+                    <span>@Html.ActionLink("Assign", "AssignTicket", new { ticketId = item.Id })</span>
+                    <span>@Html.ActionLink("Comments", "Index", "TicketComment", new { ticketId = item.Id }, null) |</span>
+                    <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>
+
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+<br />
+
+<div>
+    @if (User.IsInRole("Admin"))
+    {
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Admin")</span>
+    }
+    else if (User.IsInRole("Manager"))
+    {
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Manager")</span>
+    }
+    else if (User.IsInRole("Developer"))
+    {
+        <span class="btn btn-default btnShadow">@Html.ActionLink("Back To DashBoard", "Index", "Developer")</span>
+
+    }
+</div>
+

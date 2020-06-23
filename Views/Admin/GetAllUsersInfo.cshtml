@@ -16,31 +16,32 @@
             @Html.DisplayName("Name")
         </th>
         <th>
-            @Html.DisplayName("Role")
+            @Html.DisplayName("Roles")
         </th>
-        <th></th>
-        <th></th>
+        <th>
+            @Html.DisplayName("Delete User")
+        </th>
+        
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            @foreach (var role in item.RolesInfo)
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => role.Name)
-                </td>
-                <td>
-                    @Html.ActionLink("Remove Role", "RemoveUserFromRole", "Admin", new { userId = item.Id, role = role.Name }, null)
-                </td>
-            }
-            <td>
-                @Html.ActionLink("Delete User", "DeleteUser", "Admin", new { userId = item.Id }, null)
-            </td>
-        </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+    @foreach (var role in item.RolesInfo)
+    {
+        
+        @Html.DisplayFor(modelItem => role.Name) <span>|</span>
+        
+    }
+    </td>
+    <td>
+        @Html.ActionLink("Delete User", "DeleteUser", "Admin", new { userId = item.Id }, null)
+    </td>
+</tr>
     }
 
 </table>
