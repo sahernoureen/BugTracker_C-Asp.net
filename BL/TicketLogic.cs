@@ -14,11 +14,21 @@ namespace BugTracker.BL
         TicketStatusRepo TicketStatusRepo = new TicketStatusRepo();
         TicketHistoryRepo TicketHistoryRepo = new TicketHistoryRepo();
         TicketCommentRepo TicketCommentRepo = new TicketCommentRepo();
+        TicketNotificationRepo TicketNotificationRepo = new TicketNotificationRepo();
+
         //ASSIGNED TICKET
         //project manager assign ticket to developer
         public void assignTicket(AssignTicketViewModel model)
         {
             TicketRepo.Assign(model);
+            TicketNotification notification = new TicketNotification(model.DeveloperId, model.TicketId, true);
+            TicketNotificationRepo.Add(notification);
+        }
+
+        public void UpdateTicketNotification(int notificationId)
+        {
+            var notification = TicketNotificationRepo.GetEntity(x => x.Id == notificationId);
+            TicketNotificationRepo.Update(notification.Id);
         }
 
         //CREATE TICKET
@@ -133,6 +143,12 @@ namespace BugTracker.BL
             TicketTypeRepo.Update(ticketCopy.TicketTypeId, model.TicketTypeName);
             TicketPriorityRepo.Update(ticketCopy.TicketPriorityId, model.Priority);
 
+            if(ticketCopy.AssignedToUserId != null)
+            {
+                TicketNotification notification = new TicketNotification(ticketCopy.AssignedToUserId, ticketCopy.Id, true);
+                TicketNotificationRepo.Add(notification);
+            }
+
 
             TicketHistory history = new TicketHistory(model.Id, "property", ticketCopy.Description, model.Description, true, userId);
             TicketHistoryRepo.Add(history);
@@ -145,5 +161,27 @@ namespace BugTracker.BL
         {
             return TicketHistoryRepo.GetList(x => x.TicketId == ticketId);
         }
+
+        public List<TicketNotificationViewModel> GetAllNotificationsForUser(string userId)
+        {
+            List<TicketNotificationViewModel> notificationsList = new List<TicketNotificationViewModel>();
+            var AllNotification = TicketNotificationRepo.GetList(x => x.UserId == userId && x.IsNew == true);
+           
+            foreach (var notification in AllNotification)
+            {
+                var ticket = TicketRepo.GetEntity(x => x.Id == notification.TicketId);
+                TicketNotificationViewModel notificationViewModel = new TicketNotificationViewModel();
+                notificationViewModel.NotificationId = notification.Id;
+                notificationViewModel.TicketId = notification.TicketId;
+                notificationViewModel.IsNew = notification.IsNew;
+                notificationViewModel.UserId = notification.UserId;
+                notificationViewModel.TicketTitle = ticket.Title;
+                notificationsList.Add(notificationViewModel);
+            }
+
+            return notificationsList;
+        }
+
+      
     }
 }

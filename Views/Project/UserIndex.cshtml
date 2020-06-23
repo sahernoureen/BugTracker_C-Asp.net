@@ -1,4 +1,6 @@
-﻿@model List<BugTracker.Models.ProjectClasses.Project>
+﻿@model List<BugTracker.Models.ProjectClasses.ProjectUserViewModel>
+ 
+
 @{
     ViewBag.Title = "UserIndex";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,28 +21,35 @@ else
 {
     <div class="projectContainer">
         <br />
+      
         @foreach (var project in Model)
         {
             <div class="projectInfo">
                 <div>
-                    <h4><label>Name :</label>  @project.Name</h4>
-                    <h4><label>Priority :</label>  @project.Priority </h4>
-                    @*@foreach (var user in project)
+                    <h4><label>Name :</label> @project.Name</h4>
+                    <h4><label>Priority :</label> @project.Priority </h4>
+                    <h4>
+                        <label>Users Assigned : </label>
+                    </h4>
+                    @foreach (var user in project.UserName)
                     {
-                        <h4><label>Name :</label>  @</h4>
-                    }*@
+
+                        <h5>
+                            @user
+                        </h5>
+                    }
                 </div>
                 <br />
 
                 <div>
                     <div class="btn btn-default btn-xs">
-                        @Html.ActionLink("Assign Users", "AssignUsersToProject", new { projectId = project.Id }, null)
+                        @Html.ActionLink("Assign Users", "AssignUsersToProject", new { projectId = project.ProjectId}, null)
                     </div>
                     <div class="btn btn-default btn-xs">
-                        @Html.ActionLink("UnAssign Users", "UnAssignUserfromProject", new { projectId = project.Id }, null)
+                        @Html.ActionLink("UnAssign Users", "UnAssignUserfromProject", new { projectId = project.ProjectId }, null)
                     </div>
-                    <div class="btn btn-default btn-xs">@Html.ActionLink("Edit", "EditProject", new { projectId = project.Id }, null)</div>
-                    <div class="btn btn-default btn-xs">@Html.ActionLink("Delete", "DeleteProject", new { projectId = project.Id }, null)</div>
+                    <div class="btn btn-default btn-xs">@Html.ActionLink("Edit", "EditProject", new { projectId = project.ProjectId }, null)</div>
+                    <div class="btn btn-default btn-xs">@Html.ActionLink("Delete", "DeleteProject", new { projectId = project.ProjectId}, null)</div>
                 </div>
 
                 <br />

@@ -12,6 +12,7 @@ namespace BugTracker.Controllers
     public class ProjectController : Controller
     {
         ProjectLogic projectLogic = new ProjectLogic();
+        ApplicationDbContext db = new ApplicationDbContext();
 
         public ActionResult Index()
         {
@@ -25,7 +26,9 @@ namespace BugTracker.Controllers
         public ActionResult UserIndex()
         {
             var projects = projectLogic.getAllProjects();
-            return View(projects);
+            var ProjectUsers = projectLogic.CreateProjectViewModel(projects);
+
+            return View(ProjectUsers);
         }
 
         [HttpGet]
@@ -49,21 +52,22 @@ namespace BugTracker.Controllers
         {
             ViewBag.projectId = projectId;
             var userId = User.Identity.GetUserId();
+            var AssignedUsersToProject = projectLogic.getAllAssignedusersToProject(projectId);
 
             List<ApplicationUser> users = new List<ApplicationUser>();
 
             if (AdminLogic.CheckIfUserIsInRole(userId, "Admin"))
             {
-                 users = AdminLogic.GetAllDevelopersAndManagers();
-
+                users = AdminLogic.GetAllDevelopersAndManagers();
+                return View(users);
             }
             else
-               if (AdminLogic.CheckIfUserIsInRole(userId, "Manager"))
 
+            if (AdminLogic.CheckIfUserIsInRole(userId, "Manager"))
             {
-                users = AdminLogic.GetAllDevelopersAndManagers();
+                users = AdminLogic.GetAllDevelopers();
             }
-          
+
             return View(users);
         }
 
@@ -84,7 +88,14 @@ namespace BugTracker.Controllers
         public ActionResult UnAssignUserfromProject(int projectId)
         {
             ViewBag.projectId = projectId;
-            var users = projectLogic.getAllAssignedusersToProject(projectId);
+            var userId = User.Identity.GetUserId();
+            List<ApplicationUser> users = new List<ApplicationUser>();
+            var usersList = projectLogic.getAllAssignedusersToProject(projectId);
+            foreach (var user in usersList)
+            {
+                if (user.Id != userId)
+                    users.Add(user);
+            }
             return View(users);
         }
 

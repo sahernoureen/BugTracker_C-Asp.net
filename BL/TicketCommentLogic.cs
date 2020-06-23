@@ -11,6 +11,7 @@ namespace BugTracker.BL
     {
         TicketCommentRepo TicketCommentRepo = new TicketCommentRepo();
         TicketRepo TicketRepo = new TicketRepo();
+        TicketNotificationRepo TicketNotificationRepo = new TicketNotificationRepo();
 
 
         //CREATE TICKET
@@ -22,11 +23,14 @@ namespace BugTracker.BL
             {
                 TicketComment newticketComment = new TicketComment(model.Comment, model.Created, userId, model.TicketId);
                 TicketCommentRepo.Add(newticketComment);
-            }      
-           
-       //    var ticket =  TicketRepo.GetEntity(x => x.Id == model.TicketId);
-         //  ticket.TicketComments.Add(ticketComment);
-            
+            }
+
+
+            if (ticket.AssignedToUserId != null)
+            {
+                TicketNotification notification = new TicketNotification(ticket.AssignedToUserId, ticket.Id, true);
+                TicketNotificationRepo.Add(notification);
+            }
         }
         public TicketComment GetTicketComment(int CommentId)
         {
