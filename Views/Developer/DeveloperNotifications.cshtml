@@ -1,4 +1,4 @@
-﻿@model IList<BugTracker.Models.ProjectClasses.TicketNotification>
+﻿@model IList<BugTracker.Models.ProjectClasses.TicketNotificationViewModel>
 @{
     ViewBag.Title = "DeveloperNotifications";
 }
@@ -22,14 +22,9 @@
                 if (Notifi.IsNew == true)
                 {
                <tr style="background-color:lightgray">
-                 
-                   @{int TicketId = Notifi.TicketId;
-                       string ticket = TicketId.ToString();}
-         
-
-
+ 
             <td>
-                @Html.ActionLink(ticket, "UpdateNotifications", "Developer",new { NotifiId = Notifi.Id }, null)
+                @Html.ActionLink( Notifi.TicketTitle, "UpdateNotifications", "Developer",new { NotifiId = Notifi.NotificationId }, null)
               
             </td>
         </tr>
@@ -37,11 +32,9 @@
                 else
                 {
         <tr>
-            @{int TicketId = Notifi.TicketId;
-                string ticket = TicketId.ToString();}
-
+          
             <td>
-                @Html.ActionLink(ticket, "UpdateNotifications", "Developer",new { NotifiId = Notifi.Id }, null)
+                @Html.ActionLink( Notifi.TicketTitle, "UpdateNotifications", "Developer",new { NotifiId = Notifi.NotificationId }, null)
             
             </td>
         </tr>

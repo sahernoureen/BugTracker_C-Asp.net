@@ -78,10 +78,7 @@ namespace BugTracker.BL {
             return TicketRepo.GetEntity(x => x.Id == ticketId);
         }
 
-        public IList<TicketNotification> GetAllNotificationsForUser(string userId)
-        {
-            return TicketNotificationRepo.GetList(x => x.UserId == userId && x.IsNew == true);
-        }
+       
 
         public List<Ticket> getAllTicket() {
             return TicketRepo.GetAllTicketList();
@@ -150,5 +147,27 @@ namespace BugTracker.BL {
         public IList<TicketHistory> GetHistoryOfTicket(int ticketId) {
             return TicketHistoryRepo.GetList(x => x.TicketId == ticketId);
         }
+
+        public List<TicketNotificationViewModel> GetAllNotificationsForUser(string userId)
+        {
+            List<TicketNotificationViewModel> notificationsList = new List<TicketNotificationViewModel>();
+            var AllNotification = TicketNotificationRepo.GetList(x => x.UserId == userId && x.IsNew == true);
+           
+            foreach (var notification in AllNotification)
+            {
+                var ticket = TicketRepo.GetEntity(x => x.Id == notification.TicketId);
+                TicketNotificationViewModel notificationViewModel = new TicketNotificationViewModel();
+                notificationViewModel.NotificationId = notification.Id;
+                notificationViewModel.TicketId = notification.TicketId;
+                notificationViewModel.IsNew = notification.IsNew;
+                notificationViewModel.UserId = notification.UserId;
+                notificationViewModel.TicketTitle = ticket.Title;
+                notificationsList.Add(notificationViewModel);
+            }
+
+            return notificationsList;
+        }
+
+      
     }
 }

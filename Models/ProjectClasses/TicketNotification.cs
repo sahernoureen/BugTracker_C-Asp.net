@@ -30,4 +30,15 @@ namespace BugTracker.Models.ProjectClasses
         public int TicketId { get; set; }
         public virtual Ticket Ticket { get; set; }
     }
-}
+
+
+    public class TicketNotificationViewModel
+    {
+        public int NotificationId { get; set; }
+        public int TicketId { get; set; }
+        public string UserId { get; set; }
+        public bool IsNew { get; set; }
+        public string TicketTitle { get; set; }
+    }
+
+    }
