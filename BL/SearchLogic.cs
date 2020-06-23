@@ -15,36 +15,9 @@ namespace BugTracker.BL
         public string userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
         public static List<Ticket> GetRelatedTickets(string input)
         {
-            var  userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            if (AdminLogic.CheckIfUserIsInRole(userId, "Admin"))
-            {
-                return db.Tickets.Where(t => t.Title.Contains(input)).ToList();
+           
+            return db.Tickets.Where(t => t.Title.Contains(input)).ToList();
 
-            }
-            else if (AdminLogic.CheckIfUserIsInRole(userId, "Submitter"))
-            {
-                return db.Tickets.Where(t => t.Title.Contains(input) && t.OwnerUserId == userId).ToList();
-
-            }
-            else if (AdminLogic.CheckIfUserIsInRole(userId, "Developer"))
-            {
-                return db.Tickets.Where(t => t.Title.Contains(input) && t.AssignedToUserId == userId).ToList();
-
-            }
-            else  
-            {
-               
-                var projectUsers = db.ProjectUsers.Where(pu=>pu.UserId==userId).ToList();
-
-                List<Ticket> allTickets = new List<Ticket>();
-                foreach (var pu in projectUsers)
-                {
-                    var ticket = db.Projects.Find(pu.Id).Tickets.ToList();
-                    allTickets = allTickets.Concat(ticket).ToList();
-                }
-
-                return allTickets;
-            }
         }
 
         public static List<Ticket> GetTicketById(int titleId)
