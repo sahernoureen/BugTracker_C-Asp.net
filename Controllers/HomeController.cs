@@ -11,12 +11,6 @@ namespace BugTracker.Controllers
         }
 
         //get
-        public ActionResult Search()
-        {
-            return View();
-        }
-
-        //get
         public ActionResult GetTicketById(int id)
         {
             var result = SearchLogic.GetTicketById(id);

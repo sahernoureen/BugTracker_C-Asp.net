@@ -14,7 +14,7 @@ namespace BugTracker.Controllers
         TicketLogic ticketLogic = new TicketLogic();
         ProjectLogic projectLogic = new ProjectLogic();
 
-        public ActionResult Index(string sortOrder, int? page)
+        public ActionResult Index(string sortOrder, int? page, string search)
         {
 
             if (User.IsInRole("Admin"))
@@ -36,6 +36,7 @@ namespace BugTracker.Controllers
 
             int pageSize = 10;
             int pageNumber = (page ?? 1);
+
 
             var allTickets = ticketLogic.getAllTicket();
 

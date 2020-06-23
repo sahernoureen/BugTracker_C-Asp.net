@@ -26,7 +26,7 @@ namespace BugTracker.BL
             return false;
         }
 
-       
+
         //GetAllRoles
         public static List<IdentityRole> GetAllRoles()
         {
@@ -86,7 +86,7 @@ namespace BugTracker.BL
                 return true;
             }
         }
-       
+
 
         public static List<UserInfoHolder> GetAllUsersInfo()
         {
@@ -99,7 +99,7 @@ namespace BugTracker.BL
                 var ui = new UserInfoHolder();
                 ui.Id = u.Id;
                 ui.Name = u.UserName;
-                 
+
                 foreach (var r in u.Roles)
                 {
                     var role = db.Roles.Find(r.RoleId);
@@ -141,6 +141,17 @@ namespace BugTracker.BL
             }
 
             return null;
+        }
+
+
+        public static bool AddRole(string roleName)
+        {
+            if (!roleManager.RoleExists(roleName))
+            {
+                roleManager.Create(new IdentityRole { Name = roleName });
+                return true;
+            }
+            return false;
         }
     }
 }

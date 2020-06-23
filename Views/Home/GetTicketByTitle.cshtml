@@ -22,9 +22,9 @@ else if (User.IsInRole("Submitter"))
     <h2 class="centerTextSubmitter">Tickets</h2>
 }
 
-<p class="btn btn-info btn-lg btnBorder">
+@*<p class="btn btn-info btn-lg btnBorder">
     @Html.ActionLink("Create New", "CreateTicket")
-</p>
+</p>*@
 
 <br />
 <br />
@@ -96,7 +96,7 @@ else if (User.IsInRole("Submitter"))
                     @Html.DisplayFor(modelItem => item.TicketPriorityId)
                 </td>*@
 
-            <td>
+            @*<td>
                 @if (this.User.Identity.GetUserId() == item.OwnerUserId && !(User.IsInRole("Admin") || User.IsInRole("Manager")))
                 {
                     <span>@Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |</span>
@@ -114,7 +114,7 @@ else if (User.IsInRole("Submitter"))
                     <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>
 
                 }
-            </td>
+            </td>*@
         </tr>
     }
 

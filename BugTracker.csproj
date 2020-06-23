@@ -317,8 +317,6 @@
     <Content Include="Views\Ticket\Index.cshtml" />
     <Content Include="Views\Ticket\UpdateTicketBySubmitter.cshtml" />
     <Content Include="Views\Ticket\AssignTicket.cshtml" />
-    <Content Include="Views\Admin\AddUser.cshtml" />
-    <Content Include="Views\Admin\AddRole.cshtml" />
     <Content Include="Views\Admin\GetAllRoles.cshtml" />
     <Content Include="Views\TicketComment\Index.cshtml" />
     <Content Include="Views\TicketComment\CreateTicketComment.cshtml" />
@@ -327,6 +325,9 @@
     <Content Include="Views\Ticket\Error.cshtml" />
     <Content Include="Views\Developer\DeveloperNotifications.cshtml" />
     <Content Include="Views\Developer\UpdateNotifications.cshtml" />
+    <Content Include="Views\Home\GetTicketById.cshtml" />
+    <Content Include="Views\Home\GetTicketByTitle.cshtml" />
+    <Content Include="Views\Admin\AddRole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

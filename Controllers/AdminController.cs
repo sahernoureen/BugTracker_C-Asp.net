@@ -1,5 +1,4 @@
 ﻿using BugTracker.BL;
-using BugTracker.Models;
 using System.Web.Mvc;
 
 namespace BugTracker.Controllers
@@ -12,7 +11,7 @@ namespace BugTracker.Controllers
             return View();
         }
 
-      
+
 
         public ActionResult DeleteUser(string userId)
         {
@@ -91,6 +90,19 @@ namespace BugTracker.Controllers
         public ActionResult GetAllRoles()
         {
             var result = AdminLogic.GetAllRoles();
+            return View(result);
+        }
+
+
+        public ActionResult AddRole()
+        {
+            return View();
+        }
+        //post
+        [HttpPost]
+        public ActionResult AddRole(string roleName)
+        {
+            var result = AdminLogic.AddRole(roleName);
             return View(result);
         }
     }

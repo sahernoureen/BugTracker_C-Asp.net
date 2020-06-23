@@ -1,0 +1,40 @@
+﻿@model Nullable<Boolean>
+@{
+    ViewBag.Title = "AddRole";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 class="centerTextAdmin">Add a Role</h2>
+<br />
+<br />
+@if (Model == true)
+{
+    <h2>Add sucessfull</h2>
+}
+else if (Model == false)
+{
+    <h2>The email in your system</h2>
+}
+else
+{
+    <div>
+        @using (Html.BeginForm("AddRole", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <div class="form-group">
+                @Html.Label("RoleName", new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBox("roleName", null, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Add Role" />
+                </div>
+            </div>
+        }
+    </div>
+}
+<br />
+<br />
+<div>
+    <span class="btn btn-default btnShadow">@Html.ActionLink("Go back", "Index", "Admin")</span>
+</div>

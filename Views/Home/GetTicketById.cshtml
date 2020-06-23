@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@*@using Microsoft.AspNet.Identity
 @model List<BugTracker.Models.ProjectClasses.Ticket>
 @{
     ViewBag.Title = "GetTicketById";
@@ -23,8 +23,24 @@ else if (User.IsInRole("Submitter"))
 }
 
 <p class="btn btn-info btn-lg btnBorder">
-    @Html.ActionLink("Create New", "CreateTicket")
+    @Html.ActionLink("Create New", "CreateTicket", "Ticket")
 </p>
+
+<br />
+<br />
+
+<br />
+<span style="float: right">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchBy = Request.QueryString["seacrhBy"], search = Request.QueryString["search"] }))
+</span>
+
+@if (User.IsInRole("Submitter"))
+{
+    <p class="btn btn-info btn-lg">
+        @Html.ActionLink("Create New", "CreateTicket")
+    </p>
+}
 
 <br />
 <br />
@@ -32,30 +48,26 @@ else if (User.IsInRole("Submitter"))
 <table class="table">
     <tr>
         <th>
-            Name
+            @Html.ActionLink("Ticket Creator", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th>
-            Project
+            @Html.ActionLink("Project Name", "Index", new { sortOrder = ViewBag.ProjectSortParm })
         </th>
-        @*<th>
-                Id
-            </th>*@
         <th>
-            Title
+            @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSortParm })
         </th>
         <th>
             Description
         </th>
         <th>
-
-            Date
+            @Html.ActionLink("Date Created", "Index", new { sortOrder = ViewBag.DateSortParm })
         </th>
         <th>
-            DevId
+            @Html.ActionLink("Priority", "Index", new { sortOrder = ViewBag.PrioritySortParm })
         </th>
-        @*<th>
-                Priority
-            </th>*@
+        <th>
+            @Html.ActionLink("Developer Assign", "Index", new { sortOrder = ViewBag.DevSortParm })
+        </th>
         <th></th>
     </tr>
 
@@ -63,14 +75,12 @@ else if (User.IsInRole("Submitter"))
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.OwnerUserId)
+                @Html.DisplayFor(modelItem => item.OwnerUser.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProjectId)
+                @Html.DisplayFor(modelItem => item.Project.Name)
             </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.TicketTypeId)
-                </td>*@
+
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
@@ -80,10 +90,13 @@ else if (User.IsInRole("Submitter"))
             <td>
                 @Html.DisplayFor(modelItem => item.Created)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketPriority.Priority)
+            </td>
             @if (item.AssignedToUserId != null)
             {
                 <td>
-                    @Html.DisplayFor(modelItem => item.AssignedToUserId);
+                    @Html.DisplayFor(modelItem => item.AssignedToUser.UserName)
                 </td>
             }
             else
@@ -92,15 +105,12 @@ else if (User.IsInRole("Submitter"))
                     Not assigned
                 </td>
             }
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.TicketPriorityId)
-                </td>*@
 
             <td>
                 @if (this.User.Identity.GetUserId() == item.OwnerUserId && !(User.IsInRole("Admin") || User.IsInRole("Manager")))
                 {
                     <span>@Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |</span>
-                    <span>@Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id })</span>
+                    <span>@Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id }) |</span>
                     <span>@Html.ActionLink("Comments", "Index", "TicketComment", new { ticketId = item.Id }, null) |</span>
                     <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>
                 }
@@ -109,7 +119,7 @@ else if (User.IsInRole("Submitter"))
                 {
                     <span>@Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |</span>
                     <span>@Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id }) |</span>
-                    <span>@Html.ActionLink("Assign", "AssignTicket", new { ticketId = item.Id })</span>
+                    <span>@Html.ActionLink("Assign", "AssignTicket", new { ticketId = item.Id }) |</span>
                     <span>@Html.ActionLink("Comments", "Index", "TicketComment", new { ticketId = item.Id }, null) |</span>
                     <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>
 
@@ -138,4 +148,6 @@ else if (User.IsInRole("Submitter"))
 
     }
 </div>
+
+<br />*@
 
