@@ -3,38 +3,65 @@
     ViewBag.Title = "FullDetailOfTicketById";
 }
 
-<h2>Full Detail Of Ticket By Id</h2>
+<h2 class=@ViewBag.classView>Full Detail Of Ticket</h2>
 
-<p>Title: @Model.Title</p>
-<p>Des: @Model.Description</p>
-<h4>Comments</h4>
-@if (Model.TicketComments != null) {
-
-    foreach (var ticketComment in Model.TicketComments) {
-        <p>@ticketComment.Comment</p>
-        <p>@ticketComment.Created</p>
+<p><label>Title: </label> @Model.Title</p>
+<p><label>Description: </label> @Model.Description</p>
+<div><label>Comments: </label></div>
+@if (Model.TicketComments != null)
+{
+    foreach (var ticketComment in Model.TicketComments)
+    {
+        <div>
+            <span>@ticketComment.Comment - </span>
+            <span>@ticketComment.Created.ToString("dd MMM yyyy")</span>
+        </div>
     }
-} else {
+}
+else
+{
     <p>no comments</p>
 }
-<h4>History</h4>
-@if (Model.TicketHistories != null) {
-    foreach (var tickethistory in Model.TicketHistories) {
 
-        
-        <p>Old: @tickethistory.NewValue</p>
-        <p>New: @tickethistory.OldValue</p>
+<br />
+
+<div><label>History: </label></div>
+@if (Model.TicketHistories != null)
+{
+    foreach (var tickethistory in Model.TicketHistories)
+    {
+        <div>
+            <span>New: @tickethistory.NewValue - </span>
+            <span>Old: @tickethistory.OldValue</span>
+        </div>
     }
-} else {
+}
+else
+{
     <p>no history</p>
 }
-<h4>Attachment</h4>
-@if (Model.TicketAttachments != null) {
-    foreach (var ticketAttachment in Model.TicketAttachments) {
-        <p>Attachments</p>
-        <p>@ticketAttachment.Created</p>
-        <p>@ticketAttachment.FilePath</p>
+
+<br />
+
+<div><label>Attachments: </label></div>
+@if (Model.TicketAttachments != null)
+{
+    foreach (var ticketAttachment in Model.TicketAttachments)
+    {
+        <div>
+            <span>@ticketAttachment.FilePath</span>
+            <span>@ticketAttachment.Created.ToString("dd MMM yyyy")</span>
+        </div>
     }
-} else {
+}
+else
+{
     <p>no Attachment</p>
 }
+
+<br />
+<br />
+
+    <span class="btn btn-default btnShadow">@Html.ActionLink("Back", "Index", "Ticket")</span>
+
+<br />

@@ -207,9 +207,28 @@ namespace BugTracker.Controllers
         }
 
         [HttpGet]
-        public ActionResult FullDetailOfTicketById(int ticketId) {
+        public ActionResult FullDetailOfTicketById(int ticketId)
+        {
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.classView = "centerTextAdmin";
+            }
+            else if (User.IsInRole("Manager"))
+            {
+                ViewBag.classView = "centerTextManager";
+            }
+            else if (User.IsInRole("Developer"))
+            {
+                ViewBag.classView = "centerTextDev";
+            }
+            else if (User.IsInRole("Submitter"))
+            {
+                ViewBag.classView = "centerTextSubmitter";
+            }
+
             var ticket = ticketLogic.getTicketById(ticketId);
-            if (ticket == null) {
+            if (ticket == null)
+            {
                 return RedirectToAction("Error");
             }
 
