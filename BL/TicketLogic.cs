@@ -3,6 +3,7 @@ using BugTracker.Models;
 using BugTracker.Models.ProjectClasses;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BugTracker.BL
 {
@@ -87,6 +88,9 @@ namespace BugTracker.BL
         public List<Ticket> getAllTicket()
         {
             return TicketRepo.GetAllTicketList();
+        }
+        public List<Ticket> getTicketByTitle(string title) {
+            return TicketRepo.GetTicketList(x => x.Title == title).ToList();
         }
 
         //GET USER

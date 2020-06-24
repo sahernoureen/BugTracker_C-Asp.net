@@ -6,14 +6,14 @@
     <ul class="nav navbar-nav navbar-right">
 
         <li class="SearchBar">
-
-            @using (Html.BeginForm("GetTicketByTitle", "Home"))
-            {
+            @*@using (Html.BeginForm("GetTicketByTitle", "Home")) {*@
+            @using (Html.BeginForm("Index", "Ticket")) {
                 <div class="form-group">
                     <div class="col-md-6">
                         @Html.TextBox("inputStr", null, new { @class = "form-control", @onkeyup = "GetTitles()" })
                     </div>
                     <div class="col-md-6">
+                        @*<input type="submit" value="Search" class="btn btn-default" />*@
                         <input type="submit" value="Search" class="btn btn-default" />
                     </div>
                 </div>
@@ -76,6 +76,13 @@
 
         <script type="text/javascript" src="~/packages/jQuery.3.4.1/Content/Scripts/jquery-3.4.1.min.js"></script>
 
+        <script>
+            $(document).ready(function () {
+                $("#SearchBtn").click(function () {
+                    var SearchValue = $("#inputStr").val();
+                });
+            });
+        </script>
         <script type="text/javascript">
             function GetTitles() {
                 var inputStr = $("#inputStr").val();
@@ -87,6 +94,7 @@
                 $.ajax({
                     type: "GET",
                     url: '/Home/GetRelatedTickets',
+                    //url: '/Home/GetRelatedTickets()',
                     data: { input: inputStr },
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -95,7 +103,9 @@
                         $("#titles").html("");
                         $.each(tickets, function (i, ticket) {
                             $("#titles").append(
-                                $('<li><a href="/Home/GetTicketById/' + ticket.Id + '">' + ticket.Title + '</a></li>').val(ticket.Id));
+                                //$('<li><a href="/Home/GetTicketById/' + ticket.Id + '">' + ticket.Title + '</a></li>').val(ticket.Id));
+
+                                $('<li><a href="/Ticket/Index/' + ticket.Id + '">' + ticket.Title + '</a></li>').val(ticket.Id));
                         });
                     },
                 });

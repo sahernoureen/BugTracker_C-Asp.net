@@ -1,5 +1,6 @@
 ﻿using BugTracker.BL;
 using BugTracker.Models;
+using BugTracker.Models.ProjectClasses;
 using Microsoft.AspNet.Identity;
 using PagedList;
 using System;
@@ -14,8 +15,9 @@ namespace BugTracker.Controllers
         TicketLogic ticketLogic = new TicketLogic();
         ProjectLogic projectLogic = new ProjectLogic();
 
-        public ActionResult Index(string sortOrder, int? page, string search)
+        public ActionResult Index(string sortOrder, int? page)
         {
+            bool isCheck = false;
 
             if (User.IsInRole("Admin"))
             {
@@ -36,9 +38,24 @@ namespace BugTracker.Controllers
 
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-
-
-            var allTickets = ticketLogic.getAllTicket();
+            string titleTemp = "";
+            
+            string title = Request.Form["inputStr"];
+            ViewBag.TitleHolder = title;
+       
+            List<Ticket> allTickets = new List<Ticket>();
+            if (title != null || isCheck && title == "") {
+                titleTemp = title;
+                allTickets = ticketLogic.getTicketByTitle(title);
+                isCheck = true;
+              
+               
+            } else {
+                allTickets = ticketLogic.getAllTicket();
+                isCheck = false;
+               // titleTemp = "";
+            }
+            
 
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";

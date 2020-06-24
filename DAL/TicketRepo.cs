@@ -34,7 +34,12 @@ namespace BugTracker.DAL {
         }
 
         public IList<Ticket> GetTicketList(Func<Ticket, bool> where) {
-            return db.Tickets.Where(where).ToList();
+            return db.Tickets.Include("Project")
+                .Include("TicketPriority")
+                .Include("OwnerUser")
+                .Include("AssignedToUser")
+                .Where(where)
+                .ToList();
         }
 
         public IList<ApplicationUser> GetAllUserList(Func<ApplicationUser, bool> where) {
