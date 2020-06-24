@@ -9,9 +9,9 @@ namespace BugTracker.BL
 {
     public class TicketCommentLogic
     {
-        TicketCommentRepo TicketCommentRepo = new TicketCommentRepo();
-        TicketRepo TicketRepo = new TicketRepo();
-        TicketNotificationRepo TicketNotificationRepo = new TicketNotificationRepo();
+        private readonly TicketCommentRepo TicketCommentRepo = new TicketCommentRepo();
+        private readonly TicketRepo TicketRepo = new TicketRepo();
+        private readonly TicketNotificationRepo TicketNotificationRepo = new TicketNotificationRepo();
 
 
         //CREATE TICKET

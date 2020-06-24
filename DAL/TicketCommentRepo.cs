@@ -15,7 +15,6 @@ namespace BugTracker.DAL
         {
             db.TicketComments.Add(entity);
             db.SaveChanges();
-            db.Dispose();
         }
 
         public void Delete(TicketComment entity)
@@ -39,9 +38,7 @@ namespace BugTracker.DAL
         {
             var ticketComment = db.TicketComments.FirstOrDefault(x => x.Id == model.Id);
             ticketComment.Comment = model.Comment;
-           
             db.SaveChanges();
-            db.Dispose();
         }
 
 

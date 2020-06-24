@@ -12,13 +12,11 @@ namespace BugTracker.DAL {
         public void Add(TicketPriority entity) {
             db.TicketPriorities.Add(entity);
             db.SaveChanges();
-            db.Dispose();
         }
 
         public void Delete(TicketPriority entity) {
             db.TicketPriorities.Remove(entity);
             db.SaveChanges();
-            db.Dispose();
         }
 
         public TicketPriority GetEntity(Func<TicketPriority, bool> where) {
@@ -30,7 +28,6 @@ namespace BugTracker.DAL {
             var ticketPriority = db.TicketPriorities.FirstOrDefault(x => x.Id == ticketPriorityId);
             ticketPriority.Priority = priority;
             db.SaveChanges();
-            db.Dispose();
         }
     }
 }

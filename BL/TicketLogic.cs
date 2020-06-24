@@ -3,18 +3,21 @@ using BugTracker.Models;
 using BugTracker.Models.ProjectClasses;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web.Helpers;
+using System.Web.Mvc;
 
 namespace BugTracker.BL
 {
     public class TicketLogic
     {
-        TicketRepo TicketRepo = new TicketRepo();
-        TicketTypeRepo TicketTypeRepo = new TicketTypeRepo();
-        TicketPriorityRepo TicketPriorityRepo = new TicketPriorityRepo();
-        TicketStatusRepo TicketStatusRepo = new TicketStatusRepo();
-        TicketHistoryRepo TicketHistoryRepo = new TicketHistoryRepo();
-        TicketCommentRepo TicketCommentRepo = new TicketCommentRepo();
-        TicketNotificationRepo TicketNotificationRepo = new TicketNotificationRepo();
+        private readonly TicketRepo TicketRepo = new TicketRepo();
+        private readonly TicketTypeRepo TicketTypeRepo = new TicketTypeRepo();
+        private readonly TicketPriorityRepo TicketPriorityRepo = new TicketPriorityRepo();
+        private readonly TicketStatusRepo TicketStatusRepo = new TicketStatusRepo();
+        private readonly TicketHistoryRepo TicketHistoryRepo = new TicketHistoryRepo();
+        private readonly TicketCommentRepo TicketCommentRepo = new TicketCommentRepo();
+        private readonly TicketNotificationRepo TicketNotificationRepo = new TicketNotificationRepo();
 
         //ASSIGNED TICKET
         //project manager assign ticket to developer
@@ -83,10 +86,16 @@ namespace BugTracker.BL
         {
             return TicketRepo.GetEntity(x => x.Id == ticketId);
         }
+        public List<Ticket> getTicketByUserId(string userId) {
+            return TicketRepo.GetTicketList(x => x.OwnerUserId == userId).ToList();
+        }
 
         public List<Ticket> getAllTicket()
         {
             return TicketRepo.GetAllTicketList();
+        }
+        public List<Ticket> getTicketByTitle(string title) {
+            return TicketRepo.GetTicketList(x => x.Title == title).ToList();
         }
 
         //GET USER
@@ -182,6 +191,9 @@ namespace BugTracker.BL
             return notificationsList;
         }
 
-      
+     
+
+
     }
+
 }

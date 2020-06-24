@@ -15,14 +15,12 @@ namespace BugTracker.DAL
         {
             db.TicketHistories.Add(entity);
             db.SaveChanges();
-           // db.Dispose();
         }
 
         public void Delete(TicketHistory entity)
         {
             db.TicketHistories.Remove(entity);
             db.SaveChanges();
-       //     db.Dispose();
         }
 
         public TicketHistory GetEntity(Func<TicketHistory, bool> where)

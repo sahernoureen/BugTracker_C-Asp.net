@@ -12,13 +12,11 @@ namespace BugTracker.DAL {
         public void Add(TicketStatus entity) {
             db.TicketStatuses.Add(entity);
             db.SaveChanges();
-            db.Dispose();
         }
 
         public void Delete(TicketStatus entity) {
             db.TicketStatuses.Remove(entity);
             db.SaveChanges();
-            db.Dispose();
         }
 
         public TicketStatus GetEntity(Func<TicketStatus, bool> where) {
