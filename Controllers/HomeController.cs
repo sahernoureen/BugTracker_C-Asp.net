@@ -35,13 +35,7 @@ namespace BugTracker.Controllers
 
         public ActionResult Demo()
         {
-            var userId = User.Identity.GetUserId();
-          if( AdminLogic.CheckIfUserIsInRole(userId,"Admin"))
-           {
-                return View();
-            }
-           
-            return View();
+            return View("Demo");
         }
 
 

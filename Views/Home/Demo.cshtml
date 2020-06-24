@@ -1,8 +1,93 @@
 ﻿
+
 @{
-    ViewBag.Title = "Demo";
+    ViewBag.Title = "UserAssignedToProject";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<html>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 
-<h2>Demo</h2>
 
+</head>
+<body>
+
+
+    <br />
+    <br />
+
+
+    <br />
+    <br />
+    <br />
+
+    <div class="carousel"
+         data-flickity='{ "lazyLoad": true }'>
+        <div class="carousel-cell">
+            <img class="carousel-cell-image"
+                 data-flickity-lazyload="/Images/Admin/login.png" alt="" />
+        </div>
+        <div class="carousel-cell">
+            <img class="carousel-cell-image"
+                 data-flickity-lazyload="/Images/Admin/goToDashboard.png" alt="" />
+        </div>
+        <div class="carousel-cell">
+            <img class="carousel-cell-image"
+                 data-flickity-lazyload="/Images/Admin/DashBoard.png" alt="" />
+        </div>
+        <div class="carousel-cell">
+            <img class="carousel-cell-image"
+                 data-flickity-lazyload="/Images/Admin/GetUserInfo.png" alt="" />
+        </div>
+        <div class="carousel-cell">
+            <img class="carousel-cell-image"
+                 data-flickity-lazyload="/Images/Admin/AddRole.png" alt="" />
+        </div>
+        <div class="carousel-cell">
+            <img class="carousel-cell-image"
+                 data-flickity-lazyload="/Images/Admin/Projects.png" alt="" />
+        </div>
+        <div class="carousel-cell">
+            <img class="carousel-cell-image"
+                 data-flickity-lazyload="/Images/Admin/AssignProject.png" alt="" />
+        </div>
+        <div class="carousel-cell">
+            <img class="carousel-cell-image"
+                 data-flickity-lazyload="/Images/Admin/UnAssignProject.png" alt="" />
+        </div>
+        <div class="carousel-cell">
+            <img class="carousel-cell-image"
+                 data-flickity-lazyload="/Images/Admin/Tickets.png" alt="leaf " />
+        </div>
+
+        <div class="carousel-cell">
+            <img class="carousel-cell-image"
+                 data-flickity-lazyload="/Images/Admin/CreateTicket.png" alt="" />
+        </div>
+        <div class="carousel-cell">
+            <img class="carousel-cell-image"
+                 data-flickity-lazyload="/Images/Admin/CreateComment.png" alt="leaf " />
+        </div>
+
+        <div class="carousel-cell">
+            <img class="carousel-cell-image"
+                 data-flickity-lazyload="/Images/Admin/TicketHistory.png" alt="leaf " />
+        </div>
+
+        <div class="carousel-cell">
+            <img class="carousel-cell-image"
+                 data-flickity-lazyload="/Images/Admin/Notifications.png" alt="leaf " />
+        </div>
+    </div>
+
+    <br />
+    <br /><br />
+    <br />
+
+</body>
+</html>
+
+<div class="btn btn-info btn-lg">
+    @Html.ActionLink("Go to the dashboard", "Index")
+</div>

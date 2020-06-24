@@ -45,6 +45,6 @@ namespace BugTracker.Controllers
             ticketLogic.UpdateTicketNotification(NotifiId);         
             return View(NotificationsOFUser);
         }
-
+   
     }
 }

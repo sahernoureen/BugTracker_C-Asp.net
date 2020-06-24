@@ -10,5 +10,6 @@ namespace BugTracker.Controllers
         {
             return View();
         }
+       
     }
 }
