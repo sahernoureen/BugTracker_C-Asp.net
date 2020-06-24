@@ -1,5 +1,4 @@
 ﻿using BugTracker.BL;
-using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 
 namespace BugTracker.Controllers
@@ -28,20 +27,14 @@ namespace BugTracker.Controllers
         //get
         public ActionResult GetRelatedTickets(string input)
         {
-            
+
             var titles = SearchLogic.GetRelatedTickets(input);
             return Json(titles, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Demo()
         {
-            var userId = User.Identity.GetUserId();
-          if( AdminLogic.CheckIfUserIsInRole(userId,"Admin"))
-           {
-                return View();
-            }
-           
-            return View();
+            return View("Demo");
         }
 
 
