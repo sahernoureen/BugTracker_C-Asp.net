@@ -136,19 +136,21 @@ textarea {
     height: 100px;
     background: transparent;
 }
-    /* arrow color */
-    .flickity-prev-next-button .arrow {
-        fill: blue;
-    }
 
-    .flickity-prev-next-button.no-svg {
-        color: blue;
-    }
+/* arrow color */
+.flickity-prev-next-button .arrow {
+    fill: blue;
+}
 
-    .flickity-prev-next-button:hover {
-        background: transparent;
-    }
-    /* hide disabled button */
-    .flickity-prev-next-button:disabled {
-        display: none;
-    }
+.flickity-prev-next-button.no-svg {
+    color: blue;
+}
+
+.flickity-prev-next-button:hover {
+    background: transparent;
+}
+
+/* hide disabled button */
+.flickity-prev-next-button:disabled {
+    display: none;
+}
