@@ -24,10 +24,10 @@
             Comment
         </th>
         <th>
-            UserID
+            Comment By
         </th>
         <th>
-            TicketId
+            Ticket Name
         </th>
         @*  <th></th>*@
     </tr>
@@ -39,10 +39,10 @@
                 @Html.DisplayFor(modelItem => item.Comment)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserId)
+                @Html.DisplayFor(modelItem => item.User.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TicketId)
+                @Html.DisplayFor(modelItem => item.Ticket.Title)
             </td>
 
 

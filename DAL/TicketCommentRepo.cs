@@ -31,7 +31,9 @@ namespace BugTracker.DAL
 
         public IList<TicketComment> GetList(Func<TicketComment, bool> where)
         {
-            return db.TicketComments.Where(where).ToList();
+            return db.TicketComments.Include("User")
+                .Include("Ticket")
+                .Where(where).ToList();
         }
 
         public void Update(TicketComment model)
