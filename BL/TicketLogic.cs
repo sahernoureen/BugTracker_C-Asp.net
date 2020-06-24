@@ -84,6 +84,8 @@ namespace BugTracker.BL
         //GET TICKET
         public Ticket getTicketById(int ticketId)
         {
+      
+           
             return TicketRepo.GetEntity(x => x.Id == ticketId);
         }
         public List<Ticket> getTicketByUserId(string userId) {

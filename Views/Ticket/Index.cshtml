@@ -5,7 +5,6 @@
 @{
     ViewBag.Title = "Index";
 }
-<p>@ViewBag.TitleHolder aaa</p>
 
 <h2 class=@ViewBag.classView>Tickets</h2>
 
@@ -92,28 +91,28 @@
             }
 
         <td>
-            @if (this.User.Identity.GetUserId() == item.OwnerUserId && !(User.IsInRole("Admin") || User.IsInRole("Manager")))
-            {
+            @if (this.User.Identity.GetUserId() == item.OwnerUserId && !(User.IsInRole("Admin") || User.IsInRole("Manager"))) {
                 <span>@Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |</span>
                 <span>@Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id }) |</span>
                 <span>@Html.ActionLink("Comments", "Index", "TicketComment", new { ticketId = item.Id }, null) |</span>
+                <span>@Html.ActionLink("Full Details", "FullDetailOfTicketById", new { ticketId = item.Id }, null) |</span>
                 <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>
             }
 
-            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
-            {
+            @if (User.IsInRole("Admin") || User.IsInRole("Manager")) {
                 <span>@Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |</span>
                 <span>@Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id }) |</span>
                 <span>@Html.ActionLink("Assign", "AssignTicket", new { ticketId = item.Id }) |</span>
                 <span>@Html.ActionLink("Comments", "Index", "TicketComment", new { ticketId = item.Id }, null) |</span>
+                <span>@Html.ActionLink("Full Details", "FullDetailOfTicketById", new { ticketId = item.Id }, null) |</span>
                 <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>
 
             }
 
-            @if (User.IsInRole("Developer") && this.User.Identity.GetUserId() == item.AssignedToUserId)
-            {
+            @if (User.IsInRole("Developer") && this.User.Identity.GetUserId() == item.AssignedToUserId) {
                 <span>@Html.ActionLink("Edit", "UpdateTicketBySubmitter", new { ticketId = item.Id }) |</span>
                 <span>@Html.ActionLink("Comments", "Index", "TicketComment", new { ticketId = item.Id }, null) |</span>
+                <span>@Html.ActionLink("Full Details", "FullDetailOfTicketById", new { ticketId = item.Id }, null) |</span>
                 <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>
             }
         </td>

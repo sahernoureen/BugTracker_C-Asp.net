@@ -25,8 +25,14 @@ namespace BugTracker.DAL {
         }
 
         public Ticket GetEntity(Func<Ticket, bool> where) {
-            return db.Tickets.Include("TicketType")
+            return db.Tickets.Include("Project")
+                .Include("TicketComments")
+                .Include("TicketHistories")
+                .Include("TicketNotifications")
                 .Include("TicketPriority")
+                .Include("TicketStatus")
+                .Include("TicketType")
+                .Include("TicketAttachments")
                 .FirstOrDefault(where);
         }
 
