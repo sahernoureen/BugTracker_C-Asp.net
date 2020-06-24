@@ -91,7 +91,7 @@ namespace BugTracker.BL
         }
 
         public List<Ticket> getAllTicket()
-        {
+        { 
             return TicketRepo.GetAllTicketList();
         }
         public List<Ticket> getTicketByTitle(string title) {
