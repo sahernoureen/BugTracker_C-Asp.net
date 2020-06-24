@@ -5,7 +5,7 @@
 @{
     ViewBag.Title = "Index";
 }
-    <p>@ViewBag.TitleHolder aaa</p>
+<p>@ViewBag.TitleHolder aaa</p>
 
 <h2 class=@ViewBag.classView>Tickets</h2>
 
@@ -15,12 +15,21 @@
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchBy = Request.QueryString["seacrhBy"], search = Request.QueryString["search"] }))
 </span>
 
-@if (User.IsInRole("Submitter"))
-    {
-        <p class="btn btn-info btn-lg">
-            @Html.ActionLink("Create New", "CreateTicket")
-        </p>
-    }
+@if (User.IsInRole("Submitter")) {
+    <p class="btn btn-info btn-lg">
+        @Html.ActionLink("Create New", "CreateTicket")
+    </p>
+}
+
+<p class="btn btn-info btn-lg">
+    @Html.ActionLink("View All Ticket", "Index")
+</p>
+
+@if (User.IsInRole("Submitter")) {
+    <p class="btn btn-info btn-lg">
+        @Html.ActionLink("My Ticket", "Index", new { userId = User.Identity.GetUserId() })
+    </p>
+}
 
 <br />
 <br />
@@ -28,25 +37,25 @@
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Ticket Creator", "Index", new { sortOrder = ViewBag.NameSortParm })
+            @Html.ActionLink("Ticket Creator", "Index", new { sortOrder = ViewBag.NameSortParm, TitleHolder = ViewBag.TitleHolder, userId = ViewBag.userId })
         </th>
         <th>
-            @Html.ActionLink("Project Name", "Index", new { sortOrder = ViewBag.ProjectSortParm })
+            @Html.ActionLink("Project Name", "Index", new { sortOrder = ViewBag.ProjectSortParm, TitleHolder = ViewBag.TitleHolder, userId = ViewBag.userId })
         </th>
         <th>
-            @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSortParm })
+            @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSortParm, TitleHolder = ViewBag.TitleHolder, userId = ViewBag.userId })
         </th>
         <th>
             Description
         </th>
         <th>
-            @Html.ActionLink("Date Created", "Index", new { sortOrder = ViewBag.DateSortParm })
+            @Html.ActionLink("Date Created", "Index", new { sortOrder = ViewBag.DateSortParm, TitleHolder = ViewBag.TitleHolder, userId = ViewBag.userId })
         </th>
         <th>
-            @Html.ActionLink("Priority", "Index", new { sortOrder = ViewBag.PrioritySortParm })
+            @Html.ActionLink("Priority", "Index", new { sortOrder = ViewBag.PrioritySortParm, TitleHolder = ViewBag.TitleHolder, userId = ViewBag.userId })
         </th>
         <th>
-            @Html.ActionLink("Developer Assign", "Index", new { sortOrder = ViewBag.DevSortParm })
+            @Html.ActionLink("Developer Assign", "Index", new { sortOrder = ViewBag.DevSortParm, TitleHolder = ViewBag.TitleHolder, userId = ViewBag.userId })
         </th>
         <th></th>
     </tr>

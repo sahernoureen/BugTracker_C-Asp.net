@@ -13,7 +13,6 @@
                         @Html.TextBox("inputStr", null, new { @class = "form-control", @onkeyup = "GetTitles()" })
                     </div>
                     <div class="col-md-6">
-                        @*<input type="submit" value="Search" class="btn btn-default" />*@
                         <input type="submit" value="Search" class="btn btn-default" />
                     </div>
                 </div>
@@ -93,8 +92,8 @@
                 }
                 $.ajax({
                     type: "GET",
-                    url: '/Home/GetRelatedTickets',
-                    //url: '/Home/GetRelatedTickets()',
+                    url: '/Ticket/GetRelatedTickets',
+                    //url: '/Home/GetRelatedTickets',
                     data: { input: inputStr },
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -104,7 +103,6 @@
                         $.each(tickets, function (i, ticket) {
                             $("#titles").append(
                                 //$('<li><a href="/Home/GetTicketById/' + ticket.Id + '">' + ticket.Title + '</a></li>').val(ticket.Id));
-
                                 $('<li><a href="/Ticket/Index/' + ticket.Id + '">' + ticket.Title + '</a></li>').val(ticket.Id));
                         });
                     },

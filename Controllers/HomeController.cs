@@ -27,6 +27,7 @@ namespace BugTracker.Controllers
         //get
         public ActionResult GetRelatedTickets(string input)
         {
+            
             var titles = SearchLogic.GetRelatedTickets(input);
             return Json(titles, JsonRequestBehavior.AllowGet);
         }
