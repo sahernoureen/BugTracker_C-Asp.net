@@ -11,8 +11,6 @@ namespace BugTracker.Controllers
             return View();
         }
 
-
-
         public ActionResult DeleteUser(string userId)
         {
             var result = AdminLogic.DeleteUser(userId);
