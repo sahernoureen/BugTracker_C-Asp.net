@@ -105,5 +105,7 @@ namespace BugTracker.Controllers
             var result = AdminLogic.AddRole(roleName);
             return View(result);
         }
+      
+
     }
 }

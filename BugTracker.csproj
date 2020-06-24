@@ -261,6 +261,12 @@
     <Content Include="Images\Admin\login.png" />
     <Content Include="Images\Admin\Projects.png" />
     <Content Include="Images\Admin\Tickets.png" />
+    <Content Include="Images\Admin\Notifications.png" />
+    <Content Include="Images\Admin\AssignProject.png" />
+    <Content Include="Images\Admin\UnAssignProject.png" />
+    <Content Include="Images\Admin\CreateComment.png" />
+    <Content Include="Images\Admin\CreateTicket.png" />
+    <Content Include="Images\Admin\TicketHistory.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
