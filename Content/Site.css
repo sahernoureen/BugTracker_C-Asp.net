@@ -119,8 +119,35 @@ textarea {
 }
 
 .carousel {
+    background: #EEE;
     width: 900px;
-    background-color: white;
+}
+
+.carousel-cell {
+    width: 100%;
+    height: 330px;
+}
+/* big buttons, no circle */
+.flickity-prev-next-button {
+    /*width: 20px;*/
+    height: 100px;
+    background: transparent;
+}
+/* arrow color */
+.flickity-prev-next-button .arrow {
+    fill: blue;
+}
+
+.flickity-prev-next-button.no-svg {
+    color: blue;
+}
+
+.flickity-prev-next-button:hover {
+    background: transparent;
+}
+/* hide disabled button */
+.flickity-prev-next-button:disabled {
+    display: none;
 }
 
 .carousel-cell {
