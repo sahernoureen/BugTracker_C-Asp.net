@@ -206,6 +206,16 @@ namespace BugTracker.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public ActionResult FullDetailOfTicketById(int ticketId) {
+            var ticket = ticketLogic.getTicketById(ticketId);
+            if (ticket == null) {
+                return RedirectToAction("Error");
+            }
+
+            return View(ticket);
+        }
+
         // GET: Update Ticket By Submitter
         [HttpGet]
         public ActionResult UpdateTicketBySubmitter(int ticketId)

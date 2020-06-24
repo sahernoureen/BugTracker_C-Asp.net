@@ -1,0 +1,40 @@
+﻿@model BugTracker.Models.ProjectClasses.Ticket
+@{
+    ViewBag.Title = "FullDetailOfTicketById";
+}
+
+<h2>Full Detail Of Ticket By Id</h2>
+
+<p>Title: @Model.Title</p>
+<p>Des: @Model.Description</p>
+<h4>Comments</h4>
+@if (Model.TicketComments != null) {
+
+    foreach (var ticketComment in Model.TicketComments) {
+        <p>@ticketComment.Comment</p>
+        <p>@ticketComment.Created</p>
+    }
+} else {
+    <p>no comments</p>
+}
+<h4>History</h4>
+@if (Model.TicketHistories != null) {
+    foreach (var tickethistory in Model.TicketHistories) {
+
+        
+        <p>Old: @tickethistory.NewValue</p>
+        <p>New: @tickethistory.OldValue</p>
+    }
+} else {
+    <p>no history</p>
+}
+<h4>Attachment</h4>
+@if (Model.TicketAttachments != null) {
+    foreach (var ticketAttachment in Model.TicketAttachments) {
+        <p>Attachments</p>
+        <p>@ticketAttachment.Created</p>
+        <p>@ticketAttachment.FilePath</p>
+    }
+} else {
+    <p>no Attachment</p>
+}
