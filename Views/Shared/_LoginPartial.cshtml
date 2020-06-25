@@ -6,7 +6,6 @@
     <ul class="nav navbar-nav navbar-right">
 
         <li class="SearchBar">
-            @*@using (Html.BeginForm("GetTicketByTitle", "Home")) {*@
             @using (Html.BeginForm("Index", "Ticket")) {
                 <div class="form-group">
                     <div class="col-md-6">
@@ -93,17 +92,17 @@
                 $.ajax({
                     type: "GET",
                     url: '/Ticket/GetRelatedTickets',
-                    //url: '/Home/GetRelatedTickets',
+                   
                     data: { input: inputStr },
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (tickets) {
-                        // Looping over emloyee list and display it
+                       
                         $("#titles").html("");
                         $.each(tickets, function (i, ticket) {
                             $("#titles").append(
-                                //$('<li><a href="/Home/GetTicketById/' + ticket.Id + '">' + ticket.Title + '</a></li>').val(ticket.Id));
-                                $('<li><a href="/Ticket/Index/' + ticket.Id + '">' + ticket.Title + '</a></li>').val(ticket.Id));
+                                
+                                $('<li><a href="/Ticket/FullDetailOfTicketById/?ticketId=' + ticket.Id + '">' + ticket.Title + '</a></li>').val(ticket.Id));
                         });
                     },
                 });
