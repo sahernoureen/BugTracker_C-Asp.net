@@ -23,6 +23,7 @@ namespace BugTracker.BL
             return TicketAttachmentRepo.GetList(x => x.TicketId == ticketId).ToList();
         }
 
+        
         public void createTicketAttachment(TicketAttachmentViewModel ticketAttachmentViewModel)
         {
             Ticket ticket = TicketRepo.GetEntity(x => x.Id == ticketAttachmentViewModel.TicketId);
@@ -32,8 +33,8 @@ namespace BugTracker.BL
             string projectName = ticket.Project.Name;
             string ticketTitle = ticket.Title;
            
-            var stresm = ticketAttachmentViewModel.FileURL.InputStream;
-            var fileName = ticketAttachmentViewModel.FileURL.FileName;
+            var stream = ticketAttachmentViewModel.FileData.InputStream;
+            var fileName = ticketAttachmentViewModel.FileData.FileName;
 
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
             string source = baseDir + "Content\\UserImage\\" + userName + "\\" + projectName + "\\" + ticketTitle + "\\" + fileName;
@@ -52,7 +53,7 @@ namespace BugTracker.BL
             ticketAttachment.Created = DateTime.Now;
             TicketAttachmentRepo.Add(ticketAttachment);
 
-            using (ticketAttachmentViewModel.FileURL.InputStream)
+            using (stream)
             {
 
                 using (FileStream fsWrite = new FileStream(source, FileMode.OpenOrCreate, FileAccess.Write))
@@ -61,7 +62,7 @@ namespace BugTracker.BL
 
                     while (true) 
                     {
-                        int r = stresm.Read(buffer, 0, buffer.Length);
+                        int r = stream.Read(buffer, 0, buffer.Length);
                         if (r == 0) 
                         {
                             break;
@@ -82,14 +83,55 @@ namespace BugTracker.BL
             return TicketAttachmentRepo.GetEntity(x => x.Id == AttachmentId);
         }
 
-        public void updateTicketAttachment(TicketAttachment model)
+        public void updateTicketAttachment(TicketAttachmentViewModel ticketAttachmentViewModel)
         {
-            TicketAttachmentRepo.Update(model);
+            TicketAttachment ticketAttachment = TicketAttachmentRepo.GetEntity(x => x.Id == ticketAttachmentViewModel.Id);
+
+            Ticket ticket = TicketRepo.GetEntity(x => x.Id == ticketAttachment.TicketId);
+            var stream = ticketAttachmentViewModel.FileData.InputStream;
+            var fileName = ticketAttachmentViewModel.FileData.FileName;
+            File.Delete(ticketAttachment.FilePath);
+
+            string source = Path.GetDirectoryName(ticketAttachment.FilePath)+ "\\" + fileName;
+
+            FileInfo fi = new FileInfo(source);
+            var di = fi.Directory;
+            di.Create();
+            
+            ticketAttachment.FilePath = source;
+            ticketAttachment.Description = ticketAttachmentViewModel.Description;
+            ticketAttachment.Created = DateTime.Now;
+            TicketAttachmentRepo.Update(ticketAttachment);
+
+            using (stream)
+            {
+
+                using (FileStream fsWrite = new FileStream(source, FileMode.OpenOrCreate, FileAccess.Write))
+                {
+                    byte[] buffer = new byte[1024 * 1024 * 5];
+
+                    while (true)
+                    {
+                        int r = stream.Read(buffer, 0, buffer.Length);
+                        if (r == 0)
+                        {
+                            break;
+                        }
+                        fsWrite.Write(buffer, 0, r);
+                    }
+                }
+            }
+
+            if (ticket.AssignedToUserId != null)
+            {
+                TicketNotification notification = new TicketNotification(ticket.AssignedToUserId, ticket.Id, true);
+                TicketNotificationRepo.Add(notification);
+            }
         }
 
         public void deleteTicketAttachment(TicketAttachment ticketAttachment)
         {
-
+            File.Delete(ticketAttachment.FilePath);
             TicketAttachmentRepo.Delete(ticketAttachment);
 
         }

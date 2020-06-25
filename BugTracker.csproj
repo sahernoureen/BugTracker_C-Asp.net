@@ -333,8 +333,9 @@
     <Content Include="Views\Home\GetTicketByTitle.cshtml" />
     <Content Include="Views\Admin\AddRole.cshtml" />
     <Content Include="Views\Home\Demo.cshtml" />
-    <Content Include="Views\TicketAttachment\UploadFile.cshtml" />
+    <Content Include="Views\TicketAttachment\CreateTicketAttachment.cshtml" />
     <Content Include="Views\TicketAttachment\Index.cshtml" />
+    <Content Include="Views\TicketAttachment\UpdateTicketAttachment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

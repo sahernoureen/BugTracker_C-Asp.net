@@ -27,12 +27,15 @@ namespace BugTracker.DAL
 
         public TicketAttachment GetEntity(Func<TicketAttachment, bool> where)
         {
-            return db.TicketAttachments.FirstOrDefault(where);
+            return db.TicketAttachments.Include("User")
+                .Include("Ticket").FirstOrDefault(where);
         }
 
         public IList<TicketAttachment> GetList(Func<TicketAttachment, bool> where)
         {
-            return db.TicketAttachments.Where(where).ToList();
+            return db.TicketAttachments.Include("User")
+                .Include("Ticket")
+                .Where(where).ToList();
         }
 
         public void Update(TicketAttachment model)

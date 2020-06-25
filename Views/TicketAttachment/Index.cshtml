@@ -49,8 +49,8 @@
             <td>
                 @if (this.User.Identity.GetUserId() == item.UserId)
                 {
-                    <span>@Html.ActionLink("Update", "UpdateTicketAttachment", "TicketAttachment", new { ticketAttachment = item.Id }, null) |</span>
-                    <span>@Html.ActionLink("Delete", "DeleteTicketAttachment", "TicketAttachment", new { ticketAttachment = item.Id }, null)</span>
+                    <span>@Html.ActionLink("Update", "UpdateTicketAttachment", "TicketAttachment", new { ticketAttachmentId = item.Id }, null) |</span>
+                    <span>@Html.ActionLink("Delete", "DeleteTicketAttachment", "TicketAttachment", new { ticketAttachmentId = item.Id }, null)</span>
                 }
             </td>
         </tr>

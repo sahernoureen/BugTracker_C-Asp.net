@@ -1,5 +1,6 @@
 ﻿using BugTracker.BL;
 using BugTracker.Models.ProjectClasses;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,30 +42,48 @@ namespace BugTracker.Controllers
             ViewBag.ticketId = ticketId;
             return View(TicketAttachments);
         }
+
+        [HttpGet]
+        public ActionResult CreateTicketAttachment(int ticketId)
+        {
+            var userId = User.Identity.GetUserId();
+            ViewBag.userId = userId;
+            ViewBag.ticketId = ticketId;
+            return View();
+        }
+
         //post
         [HttpPost]
-        public ActionResult createTicketAttachment(TicketAttachmentViewModel ticketAttachmentViewModel)
+        public ActionResult CreateTicketAttachment(TicketAttachmentViewModel ticketAttachmentViewModel)
         {
-
+           
             ticketAttachmentLogic.createTicketAttachment(ticketAttachmentViewModel);
-            return View();
+            return RedirectToAction("Index", new { ticketId = ticketAttachmentViewModel.TicketId });
         }
 
         [HttpGet]
         public ActionResult UpdateTicketAttachment(int ticketAttachmentId)
         {
+           
             var ticketAttachment = ticketAttachmentLogic.GetTicketAttachment(ticketAttachmentId);
             if (ticketAttachment == null)
             {
                 return RedirectToAction("Error");
             }
-            ViewBag.AttachmentId = ticketAttachment.Id;
-            return View(ticketAttachment);
+            //ViewBag.AttachmentId = ticketAttachment.Id;
+            TicketAttachmentViewModel ticketAttachmentViewModel = new TicketAttachmentViewModel();
+            ticketAttachmentViewModel.Description = ticketAttachment.Description;
+            ticketAttachmentViewModel.Id= ticketAttachment.Id;
+            ticketAttachmentViewModel.FilePath = ticketAttachment.FilePath;
+            ticketAttachmentViewModel.TicketId = ticketAttachment.TicketId;
+
+
+            return View(ticketAttachmentViewModel);
         }
 
         // POST: Update Ticket By Submitter
         [HttpPost]
-        public ActionResult UpdateTicketAttachment(TicketAttachment model)
+        public ActionResult UpdateTicketAttachment(TicketAttachmentViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -77,14 +96,14 @@ namespace BugTracker.Controllers
 
         public ActionResult DeleteTicketAttachment(int ticketAttachmentId)
         {
-            var ticketComment = ticketAttachmentLogic.GetTicketAttachment(ticketAttachmentId);
-            if (ticketComment == null)
+            var ticketAttachment = ticketAttachmentLogic.GetTicketAttachment(ticketAttachmentId);
+            if (ticketAttachment == null)
             {
                 return RedirectToAction("Error");
             }
 
-            ticketAttachmentLogic.deleteTicketAttachment(ticketComment);
-            return RedirectToAction("Index", new { ticketId = ticketComment.TicketId });
+            ticketAttachmentLogic.deleteTicketAttachment(ticketAttachment);
+            return RedirectToAction("Index", new { ticketId = ticketAttachment.TicketId });
         }
 
         public ActionResult Error()

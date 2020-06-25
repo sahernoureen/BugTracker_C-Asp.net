@@ -1,16 +1,17 @@
-﻿
-
-@model BugTracker.Models.ProjectClasses.TicketAttachmentViewModel
+﻿@model BugTracker.Models.ProjectClasses.TicketAttachmentViewModel
 @{
-    ViewBag.Title = "AddAttachment";
+    ViewBag.Title = "UpdateTicketAttachment";
 }
 
+<h2>UpdateTicketAttachment</h2>
+
 <h2>Add Attachment</h2>
-@using (Html.BeginForm("UploadFile", "TicketAttachment", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("UpdateTicketAttachment", "TicketAttachment", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
 
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.TicketId, new { Value = @ViewBag.TicketId })
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.TicketId)
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
@@ -19,17 +20,17 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.FileURL, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.FileData, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.FileURL, new { type = "file" })
+            @Html.TextBoxFor(m => m.FileData, new { type = "file" })
         </div>
     </div>
 
     @*<div class="form-group">
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.TicketId, new { @class = "hidden", @value = "" })
-        </div>
-    </div>*@
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.TicketId, new { @class = "hidden", @value = "" })
+            </div>
+        </div>*@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Upload" />
