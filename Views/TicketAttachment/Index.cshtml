@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNet.Identity
+@model List<BugTracker.Models.ProjectClasses.TicketAttachment>
+
+@{
+    ViewBag.Title = "Index";
+    //     ViewBag.TicketId = ticketId;
+    var ticketId = ViewBag.ticketId;
+}
+
+<h2 class=@ViewBag.classView>Attachment</h2>
+
+<br />
+
+<p class="btn btn-info btn-lg">
+    @Html.ActionLink("New Attachment", "CreateTicketAttachment", "TicketAttachment", new { ticketId = ticketId }, null)
+</p>
+
+<br />
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            Descripation
+        </th>
+        <th>
+            UserName
+        </th>
+        <th>
+            TicketTitle
+        </th>
+        @*  <th></th>*@
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ticket.Title)
+            </td>
+
+
+            <td>
+                @if (this.User.Identity.GetUserId() == item.UserId)
+                {
+                    <span>@Html.ActionLink("Update", "UpdateTicketAttachment", "TicketAttachment", new { ticketAttachmentId = item.Id }, null) |</span>
+                    <span>@Html.ActionLink("Delete", "DeleteTicketAttachment", "TicketAttachment", new { ticketAttachmentId = item.Id }, null)</span>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+<br />
+
+<div>
+    <span class="btn btn-default btnShadow">@Html.ActionLink("Back", "Index", "Ticket")</span>
+</div>
+
+<br />
