@@ -94,7 +94,7 @@ namespace BugTracker.BL
 
             string source = Path.GetDirectoryName(ticketAttachment.FilePath) + "\\" + fileName;
             int n = ticketAttachment.FileURL.LastIndexOf("/");
-            string fileURL = ticketAttachment.FileURL.Substring(0,n) + "/" + fileName;
+            string fileURL = ticketAttachment.FileURL.Substring(0, n) + "/" + fileName;
 
             FileInfo fi = new FileInfo(source);
             var di = fi.Directory;
@@ -140,11 +140,11 @@ namespace BugTracker.BL
             {
                 di.Create();
             }
-            else 
-            { 
-                File.Delete(ticketAttachment.FilePath); 
+            else
+            {
+                File.Delete(ticketAttachment.FilePath);
             }
-           
+
             TicketAttachmentRepo.Delete(ticketAttachment);
 
         }
