@@ -1,10 +1,6 @@
 ﻿using BugTracker.BL;
 using BugTracker.Models.ProjectClasses;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BugTracker.Controllers
@@ -13,7 +9,7 @@ namespace BugTracker.Controllers
     {
         TicketAttachmentLogic ticketAttachmentLogic = new TicketAttachmentLogic();
         //get
-        public  ActionResult UploadFile(int ticketId) 
+        public ActionResult UploadFile(int ticketId)
         {
             ViewBag.TicketId = ticketId;
             return View();
@@ -46,6 +42,23 @@ namespace BugTracker.Controllers
         [HttpGet]
         public ActionResult CreateTicketAttachment(int ticketId)
         {
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.classView = "centerTextAdmin";
+            }
+            else if (User.IsInRole("Manager"))
+            {
+                ViewBag.classView = "centerTextManager";
+            }
+            else if (User.IsInRole("Developer"))
+            {
+                ViewBag.classView = "centerTextDev";
+            }
+            else if (User.IsInRole("Submitter"))
+            {
+                ViewBag.classView = "centerTextSubmitter";
+            }
+
             var userId = User.Identity.GetUserId();
             ViewBag.userId = userId;
             ViewBag.ticketId = ticketId;
@@ -56,7 +69,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         public ActionResult CreateTicketAttachment(TicketAttachmentViewModel ticketAttachmentViewModel)
         {
-           
+
             ticketAttachmentLogic.createTicketAttachment(ticketAttachmentViewModel);
             return RedirectToAction("Index", new { ticketId = ticketAttachmentViewModel.TicketId });
         }
@@ -64,7 +77,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public ActionResult UpdateTicketAttachment(int ticketAttachmentId)
         {
-           
+
             var ticketAttachment = ticketAttachmentLogic.GetTicketAttachment(ticketAttachmentId);
             if (ticketAttachment == null)
             {
@@ -73,7 +86,7 @@ namespace BugTracker.Controllers
             //ViewBag.AttachmentId = ticketAttachment.Id;
             TicketAttachmentViewModel ticketAttachmentViewModel = new TicketAttachmentViewModel();
             ticketAttachmentViewModel.Description = ticketAttachment.Description;
-            ticketAttachmentViewModel.Id= ticketAttachment.Id;
+            ticketAttachmentViewModel.Id = ticketAttachment.Id;
             ticketAttachmentViewModel.FilePath = ticketAttachment.FilePath;
             ticketAttachmentViewModel.TicketId = ticketAttachment.TicketId;
 

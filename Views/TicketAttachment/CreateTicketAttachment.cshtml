@@ -4,7 +4,7 @@
     ViewBag.Title = "AddAttachment";
 }
 
-<h2>Add Attachment</h2>
+<h2 class=@ViewBag.classView>Add Attachment</h2>
 @using (Html.BeginForm("CreateTicketAttachment", "TicketAttachment", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
 
@@ -39,3 +39,6 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<br/>
+<span class="btn btn-default btnShadow">@Html.ActionLink("Back", "Index", "Ticket")</span>

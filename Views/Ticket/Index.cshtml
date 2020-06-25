@@ -97,7 +97,7 @@
                 <span>@Html.ActionLink("Delete", "DeleteTicket", new { ticketId = item.Id }) |</span>
                 <span>@Html.ActionLink("Comments", "Index", "TicketComment", new { ticketId = item.Id }, null) |</span>
                 <span>@Html.ActionLink("Full Details", "FullDetailOfTicketById", new { ticketId = item.Id }, null) |</span>
-                <span>@Html.ActionLink("History", "History", new { ticketId = item.Id })</span>
+                <span>@Html.ActionLink("History", "History", new { ticketId = item.Id }) |</span>
                 <span>@Html.ActionLink("Attachments", "Index", "TicketAttachment", new { ticketId = item.Id }, null) |</span>
             }
 

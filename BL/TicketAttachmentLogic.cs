@@ -4,15 +4,13 @@ using BugTracker.Models.ProjectClasses;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Web;
 
 namespace BugTracker.BL
 {
-    public class TicketAttachmentLogic 
+    public class TicketAttachmentLogic
     {
         TicketAttachmentRepo TicketAttachmentRepo = new TicketAttachmentRepo();
         TicketRepo TicketRepo = new TicketRepo();
@@ -23,7 +21,7 @@ namespace BugTracker.BL
             return TicketAttachmentRepo.GetList(x => x.TicketId == ticketId).ToList();
         }
 
-        
+
         public void createTicketAttachment(TicketAttachmentViewModel ticketAttachmentViewModel)
         {
             Ticket ticket = TicketRepo.GetEntity(x => x.Id == ticketAttachmentViewModel.TicketId);
@@ -32,12 +30,12 @@ namespace BugTracker.BL
             string userName = db.Users.Find(userId).UserName;
             string projectName = ticket.Project.Name;
             string ticketTitle = ticket.Title;
-           
+
             var stream = ticketAttachmentViewModel.FileData.InputStream;
             var fileName = ticketAttachmentViewModel.FileData.FileName;
 
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string source = baseDir + "Content\\UserImage\\" + userName + "\\" + projectName + "\\" + ticketTitle + "\\" + fileName;
+            string source = baseDir + "Content\\Attachements\\" + userName + "\\" + projectName + "\\" + ticketTitle + "\\" + fileName;
             FileInfo fi = new FileInfo(source);
             var di = fi.Directory;
             if (!di.Exists)
@@ -60,10 +58,10 @@ namespace BugTracker.BL
                 {
                     byte[] buffer = new byte[1024 * 1024 * 5];
 
-                    while (true) 
+                    while (true)
                     {
                         int r = stream.Read(buffer, 0, buffer.Length);
-                        if (r == 0) 
+                        if (r == 0)
                         {
                             break;
                         }
@@ -92,12 +90,12 @@ namespace BugTracker.BL
             var fileName = ticketAttachmentViewModel.FileData.FileName;
             File.Delete(ticketAttachment.FilePath);
 
-            string source = Path.GetDirectoryName(ticketAttachment.FilePath)+ "\\" + fileName;
+            string source = Path.GetDirectoryName(ticketAttachment.FilePath) + "\\" + fileName;
 
             FileInfo fi = new FileInfo(source);
             var di = fi.Directory;
             di.Create();
-            
+
             ticketAttachment.FilePath = source;
             ticketAttachment.Description = ticketAttachmentViewModel.Description;
             ticketAttachment.Created = DateTime.Now;
