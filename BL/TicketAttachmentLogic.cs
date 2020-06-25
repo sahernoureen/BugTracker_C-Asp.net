@@ -36,6 +36,7 @@ namespace BugTracker.BL
 
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
             string source = baseDir + "Content\\Attachements\\" + userName + "\\" + projectName + "\\" + ticketTitle + "\\" + fileName;
+            string fileURL = "/Content/Attachements/" + userName + "/" + projectName + "/" + ticketTitle + "/" + fileName;
             FileInfo fi = new FileInfo(source);
             var di = fi.Directory;
             if (!di.Exists)
@@ -49,6 +50,7 @@ namespace BugTracker.BL
             ticketAttachment.TicketId = ticketAttachmentViewModel.TicketId;
             ticketAttachment.UserId = userId;
             ticketAttachment.Created = DateTime.Now;
+            ticketAttachment.FileURL = fileURL;
             TicketAttachmentRepo.Add(ticketAttachment);
 
             using (stream)
@@ -91,6 +93,8 @@ namespace BugTracker.BL
             File.Delete(ticketAttachment.FilePath);
 
             string source = Path.GetDirectoryName(ticketAttachment.FilePath) + "\\" + fileName;
+            int n = ticketAttachment.FileURL.LastIndexOf("/");
+            string fileURL = ticketAttachment.FileURL.Substring(0,n) + "/" + fileName;
 
             FileInfo fi = new FileInfo(source);
             var di = fi.Directory;
@@ -99,6 +103,7 @@ namespace BugTracker.BL
             ticketAttachment.FilePath = source;
             ticketAttachment.Description = ticketAttachmentViewModel.Description;
             ticketAttachment.Created = DateTime.Now;
+            ticketAttachment.FileURL = fileURL;
             TicketAttachmentRepo.Update(ticketAttachment);
 
             using (stream)
@@ -129,7 +134,17 @@ namespace BugTracker.BL
 
         public void deleteTicketAttachment(TicketAttachment ticketAttachment)
         {
-            File.Delete(ticketAttachment.FilePath);
+            FileInfo fi = new FileInfo(ticketAttachment.FilePath);
+            var di = fi.Directory;
+            if (!di.Exists)
+            {
+                di.Create();
+            }
+            else 
+            { 
+                File.Delete(ticketAttachment.FilePath); 
+            }
+           
             TicketAttachmentRepo.Delete(ticketAttachment);
 
         }

@@ -48,7 +48,8 @@ else
 {
     foreach (var ticketAttachment in Model.TicketAttachments)
     {
-        <img src="/Content/Attachements/Amy/App/Amy2/matrix.jpg" style="width: 200px; height: 200px"/>
+        <img src=@ticketAttachment.FileURL style="width: 300px; height:300px"/>
+        
     }
 }
 else
@@ -59,6 +60,6 @@ else
 <br />
 <br />
 
-    <span class="btn btn-default btnShadow">@Html.ActionLink("Back", "Index", "Ticket")</span>
+<span class="btn btn-default btnShadow">@Html.ActionLink("Back", "Index", "Ticket")</span>
 
 <br />
